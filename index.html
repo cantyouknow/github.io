@@ -43,6 +43,28 @@
             font-size: 28px;
         }
 
+        .update-status {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+
+        .update-status.updating {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .update-status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -212,6 +234,13 @@
             color: #666;
         }
 
+        .quote-source {
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
         .city-suggestion {
             background: #fff3cd;
             border: 1px solid #ffc107;
@@ -290,11 +319,31 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .quote-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quote-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🌤️ 心情天气站</h1>
+
+        <div class="update-status" id="updateStatus">
+            <span id="statusIcon">✅</span>
+            <span id="statusText">语库已就绪</span>
+        </div>
 
         <div class="form-group">
             <label for="city">输入您的城市：</label>
@@ -304,6 +353,9 @@
         <div class="form-group">
             <label>选择您的心情：</label>
             <div class="mood-options">
+                <button class="mood-btn" data-mood="daily">
+                    📅<span>每日寄语</span>
+                </button>
                 <button class="mood-btn" data-mood="happy">
                     😊<span>开心</span>
                 </button>
@@ -362,6 +414,7 @@
             <div class="quote-card">
                 <div class="quote-text" id="quoteText"></div>
                 <div class="quote-author" id="quoteAuthor"></div>
+                <div class="quote-source" id="quoteSource"></div>
             </div>
         </div>
 
@@ -371,6 +424,9 @@
     <script>
         let selectedMood = null;
         let customMoodText = '';
+        let cachedQuotes = {};
+        let lastUpdateCheck = 0;
+        const UPDATE_CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24小时
 
         // 心情按钮点击事件
         document.querySelectorAll('.mood-btn').forEach(btn => {
@@ -393,82 +449,29 @@
             customMoodText = e.target.value.trim();
         });
 
-        // 寄语数据库
-        const quotes = {
-            happy: [
-                { text: "快乐不是因为拥有的多，而是因为计较的少。", author: "" },
-                { text: "生命中最大的快乐是确信有人爱着我们。", author: "雨果" },
-                { text: "保持快乐，你会发现世界也在对你微笑。", author: "" }
-            ],
-            sad: [
-                { text: "即使最艰难的日子，也会过去。太阳会再次升起。", author: "" },
-                { text: "每一个不曾起舞的日子，都是对生命的辜负。", author: "尼采" },
-                { text: "眼泪是心灵的清洁剂，让它流，然后继续前行。", author: "" }
-            ],
-            anxious: [
-                { text: "不要预支明天的烦恼，今天已经够忙了。", author: "" },
-                { text: "千里之行，始于足下。", author: "老子" },
-                { text: "焦虑不会消除明天的悲伤，只会消减今天的力量。", author: "" }
-            ],
-            tired: [
-                { text: "休息不是放弃，而是为了更好地出发。", author: "" },
-                { text: "人生就像马拉松，重要的不是速度，而是坚持。", author: "" },
-                { text: "累的时候，允许自己停下来，阳光依然会照在你身上。", author: "" }
-            ],
-            excited: [
-                { text: "保持这份热情，它将带你去往梦想的彼岸。", author: "" },
-                { text: "激情是成功的燃料，让它燃烧得更猛烈些吧。", author: "" },
-                { text: "每一个伟大的成就，都始于一份激情。", author: "" }
-            ],
-            confused: [
-                { text: "迷茫的时候，静下心来，答案就在你心中。", author: "" },
-                { text: "路是走出来的，不是想出来的。", author: "" },
-                { text: "有时候，我们需要在迷雾中才能找到真正的方向。", author: "" }
-            ]
-        };
-
         // 智能开导数据库
         const adviceDatabase = {
             keywords: {
-                // 工作/学习相关
                 '工作': "工作确实重要，但别忘了工作是为了更好的生活。适当给自己放个假，充电后再出发，你会发现效率更高。",
                 '学习': "学习是一场马拉松，不是短跑。今天的努力都不会白费，只是结果可能需要时间。相信自己，继续前进！",
                 '考试': "考试只是检验学习的一种方式，不能定义你的全部。尽力就好，结果如何都不影响你是一个优秀的人。",
                 '压力': "压力说明你在乎，但别让压力压垮了你。试着把大任务分解成小步骤，一步一步来，你会发现没那么难。",
                 '加班': "加班是暂时的，健康是一生的。记住，你的价值不在于工作了多少小时，而在于你创造了什么价值。",
                 '失业': "失业可能是一个转折点，也是重新审视自己的机会。很多人在失去工作后找到了更适合自己的人生道路。",
-
-                // 人际关系
                 '吵架': "吵架是因为沟通不畅，冷静下来后试着理解对方的立场。矛盾是关系的一部分，重要的是如何解决它。",
                 '分手': "结束一段关系很难，但有时候放手也是对自己的一种保护。时间会治愈一切，你会遇到更适合的人。",
                 '孤独': "孤独感是每个人都会经历的，它提醒我们需要与他人建立连接。试着主动联系老朋友，或者参加兴趣小组。",
                 '朋友': "朋友不在多，在于真心。珍惜那些在你困难时依然陪伴你的人，他们才是真正的朋友。",
                 '家人': "家人之间可能有矛盾，但血浓于水。试着用理解和包容去化解，家永远是你最温暖的港湾。",
-                '被人误解': "被误解很难受，但不必强求每个人都理解你。懂你的人自然懂，不懂的人解释也无用。做好自己就好。",
-
-                // 情绪状态
                 '难过': "难过的时候允许自己哭出来，这是情绪的自然流露。哭完之后，记得擦干眼泪，继续前行。",
                 '生气': "生气是可以的，但别让愤怒控制你的行为。深呼吸，数到十，再做决定。不要在气头上说后悔的话。",
                 '失望': "失望源于期望，也许是时候调整期望了。不是每件事都会按计划进行，学会接受不完美也是成长。",
                 '害怕': "害怕说明你在乎，但不要让恐惧阻止你尝试。最困难的是第一步，跨过去后你会发现没那么可怕。",
-
-                // 自我认知
                 '自卑': "每个人都有自己的闪光点，也许你还没发现。别总拿自己的短处和别人的长处比，你是独一无二的。",
                 '失败': "失败不是终点，而是成功的垫脚石。每次失败都让你离成功更近一步，只要你不放弃。",
                 '后悔': "后悔改变不了过去，但可以影响未来。从错误中学习，然后放过自己，继续前进。",
-                '迷茫': "迷茫时别急着做决定，给自己一些时间。多尝试不同的事物，答案会在行动中逐渐清晰。",
-
-                // 生活相关
-                '没钱': "金钱是工具，不是目的。学会理财，提升自己的能力，收入自然会增长。记住，健康和快乐比金钱更重要。",
-                '生病': "生病是身体在提醒你需要休息了。好好照顾自己，健康是1，其他都是后面的0。",
-                '搬家': "搬家是新的开始，也许有些累，但也意味着新的机会和新的可能性。",
-
-                // 未来相关
-                '未来': "未来是由现在每一个选择塑造的。别太担心还没发生的事，专注于当下，做好今天的事。",
-                '梦想': "梦想值得追求，但也要脚踏实地。把大梦想分解成小目标，一步一步实现它。"
+                '迷茫': "迷茫时别急着做决定，给自己一些时间。多尝试不同的事物，答案会在行动中逐渐清晰。"
             },
-
-            // 默认开导语
             default: [
                 "不管你现在经历了什么，记住：这个难关只是暂时的，你会过去的。相信自己，你比想象中更坚强。",
                 "生活中总会有起起落落，这是常态。重要的是在低谷时不要放弃，因为下一个转角可能就是上坡路。",
@@ -478,29 +481,168 @@
             ]
         };
 
-        // 根据用户输入生成智能开导
         function generateCustomAdvice(userInput) {
             const input = userInput.toLowerCase();
-
-            // 检查关键词匹配
             for (const [keyword, advice] of Object.entries(adviceDatabase.keywords)) {
                 if (input.includes(keyword)) {
-                    return {
-                        text: advice,
-                        author: "给你的建议"
-                    };
+                    return { text: advice, author: "给你的建议", source: "本地智能开导" };
                 }
             }
-
-            // 如果没有匹配到关键词，返回随机默认开导
             const randomIndex = Math.floor(Math.random() * adviceDatabase.default.length);
-            return {
-                text: adviceDatabase.default[randomIndex],
-                author: "给你的建议"
-            };
+            return { text: adviceDatabase.default[randomIndex], author: "给你的建议", source: "本地智能开导" };
         }
 
-        // 主要城市列表（用于模糊匹配）
+        // 在线API获取寄语
+        async function fetchOnlineQuote(mood) {
+            try {
+                // 使用 Quotable API (免费，无需API key)
+                const response = await fetch('https://api.quotable.io/quotes/random?limit=1&tags=' + getQuoteTag(mood), {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data_quotes && data_quotes.length > 0) {
+                        const quote = data_quotes[0];
+                        return {
+                            text: quote.content,
+                            author: quote.author || "佚名",
+                            source: "Quotable API"
+                        };
+                    }
+                }
+                throw new Error('API返回为空');
+            } catch (error) {
+                console.log('在线API获取失败，使用备用方案:', error.message);
+                return null;
+            }
+        }
+
+        // 根据心情获取对应的标签
+        function getQuoteTag(mood) {
+            const tagMap = {
+                'happy': 'wisdom,happiness',
+                'sad': 'hope,faith',
+                'anxious': 'courage,determination',
+                'tired': 'motivation,perseverance',
+                'excited': 'ambition,success',
+                'confused': 'wisdom,truth',
+                'daily': 'inspirational'
+            };
+            return tagMap[mood] || 'inspirational';
+        }
+
+        // 获取每日寄语（结合在线API）
+        async function getDailyQuote() {
+            const today = new Date().toDateString();
+
+            // 检查缓存
+            if (cachedQuotes['daily'] && cachedQuotes['daily'].date === today) {
+                return cachedQuotes['daily'].quote;
+            }
+
+            // 尝试从在线API获取
+            const onlineQuote = await fetchOnlineQuote('daily');
+            if (onlineQuote) {
+                cachedQuotes['daily'] = {
+                    quote: onlineQuote,
+                    date: today
+                };
+                return onlineQuote;
+            }
+
+            // 备用：使用本地每日寄语
+            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const dailyQuotes = [
+                { text: "每一天都是一个新的机会，把握今天就能创造美好的明天。", author: "每日寄语", source: "本地语库" },
+                { text: "与其担心未来，不如专注当下，做好手头的事。", author: "每日寄语", source: "本地语库" },
+                { text: "相信自己，你已经比昨天更强大了。", author: "每日寄语", source: "本地语库" },
+                { text: "生活不是等待暴风雨过去，而是学会在雨中跳舞。", author: "每日寄语", source: "本地语库" },
+                { text: "即使走得慢，只要坚持向前，终究会到达目的地。", author: "每日寄语", source: "本地语库" },
+                { text: "今天的努力是明天的收获，继续加油！", author: "每日寄语", source: "本地语库" },
+                { text: "微笑面对每一天，好运自然会来敲门。", author: "每日寄语", source: "本地语库" }
+            ];
+
+            const quote = dailyQuotes[dayOfYear % dailyQuotes.length];
+            cachedQuotes['daily'] = {
+                quote: quote,
+                date: today
+            };
+            return quote;
+        }
+
+        // 获取指定心情的寄语
+        async function getQuoteByMood(mood) {
+            // 优先尝试在线API
+            const onlineQuote = await fetchOnlineQuote(mood);
+            if (onlineQuote) {
+                return onlineQuote;
+            }
+
+            // 备用：使用本地语库
+            const localQuotes = {
+                happy: [
+                    { text: "快乐不是因为拥有的多，而是因为计较的少。", author: "", source: "本地语库" },
+                    { text: "生命中最大的快乐是确信有人爱着我们。", author: "雨果", source: "本地语库" },
+                    { text: "保持快乐，你会发现世界也在对你微笑。", author: "", source: "本地语库" }
+                ],
+                sad: [
+                    { text: "即使最艰难的日子，也会过去。太阳会再次升起。", author: "", source: "本地语库" },
+                    { text: "每一个不曾起舞的日子，都是对生命的辜负。", author: "尼采", source: "本地语库" },
+                    { text: "眼泪是心灵的清洁剂，让它流，然后继续前行。", author: "", source: "本地语库" }
+                ],
+                anxious: [
+                    { text: "不要预支明天的烦恼，今天已经够忙了。", author: "", source: "本地语库" },
+                    { text: "千里之行，始于足下。", author: "老子", source: "本地语库" },
+                    { text: "焦虑不会消除明天的悲伤，只会消减今天的力量。", author: "", source: "本地语库" }
+                ],
+                tired: [
+                    { text: "休息不是放弃，而是为了更好地出发。", author: "", source: "本地语库" },
+                    { text: "人生就像马拉松，重要的不是速度，而是坚持。", author: "", source: "本地语库" },
+                    { text: "累的时候，允许自己停下来，阳光依然会照在你身上。", author: "", source: "本地语库" }
+                ],
+                excited: [
+                    { text: "保持这份热情，它将带你去往梦想的彼岸。", author: "", source: "本地语库" },
+                    { text: "激情是成功的燃料，让它燃烧得更猛烈些吧。", author: "", source: "本地语库" },
+                    { text: "每一个伟大的成就，都始于一份激情。", author: "", source: "本地语库" }
+                ],
+                confused: [
+                    { text: "迷茫的时候，静下心来，答案就在你心中。", author: "", source: "本地语库" },
+                    { text: "路是走出来的，不是想出来的。", author: "", source: "本地语库" },
+                    { text: "有时候，我们需要在迷雾中才能找到真正的方向。", author: "", source: "本地语库" }
+                ]
+            };
+
+            const quotes = localQuotes[mood] || localQuotes['happy'];
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // 更新状态显示
+        function updateStatus(status, message) {
+            const statusDiv = document.getElementById('updateStatus');
+            const iconSpan = document.getElementById('statusIcon');
+            const textSpan = document.getElementById('statusText');
+
+            statusDiv.className = 'update-status ' + status;
+
+            switch(status) {
+                case 'updating':
+                    iconSpan.textContent = '🔄';
+                    break;
+                case 'error':
+                    iconSpan.textContent = '❌';
+                    break;
+                default:
+                    iconSpan.textContent = '✅';
+            }
+
+            textSpan.textContent = message;
+        }
+
+        // 主要城市列表
         const majorCities = [
             '北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京',
             '天津', '苏州', '长沙', '郑州', '东莞', '青岛', '沈阳', '宁波', '昆明', '合肥',
@@ -509,28 +651,21 @@
             '香港', '澳门'
         ];
 
-        // 查找相似城市
         function findSimilarCities(input) {
             const inputLower = input.toLowerCase();
             const similarities = majorCities.map(city => {
                 let score = 0;
                 const cityLower = city.toLowerCase();
-
-                // 完全包含
                 if (cityLower.includes(inputLower) || inputLower.includes(cityLower)) {
                     score = 3;
-                }
-                // 部分匹配
-                else if (inputLower.length > 0 && cityLower.includes(inputLower[0])) {
+                } else if (inputLower.length > 0 && cityLower.includes(inputLower[0])) {
                     score = 1;
                 }
-
                 return { city, score };
             }).filter(item => item.score > 0)
               .sort((a, b) => b.score - a.score)
               .slice(0, 6)
               .map(item => item.city);
-
             return similarities;
         }
 
@@ -541,12 +676,10 @@
             const errorDiv = document.getElementById('errorMessage');
             const citySuggestion = document.getElementById('citySuggestion');
 
-            // 隐藏之前的结果
             resultDiv.classList.remove('show');
             errorDiv.classList.remove('show');
             citySuggestion.classList.remove('show');
 
-            // 验证输入
             if (!city) {
                 showError('请输入城市名称');
                 return;
@@ -562,18 +695,15 @@
                 return;
             }
 
-            // 显示加载动画
             loadingDiv.classList.add('show');
 
             try {
-                // 使用 wttr.in 获取天气信息
                 const weatherResponse = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
 
                 if (weatherResponse.ok) {
                     const weatherData = await weatherResponse.json();
                     const current = weatherData.current_condition[0];
 
-                    // 更新天气信息
                     document.getElementById('cityName').textContent = city;
                     document.getElementById('temperature').textContent = `${current.temp_C}°C`;
                     document.getElementById('weatherDesc').textContent = current.lang_zh[0]?.value || current.weatherDesc[0].value;
@@ -581,16 +711,27 @@
                     document.getElementById('windSpeed').textContent = `${current.windspeedKmph} km/h`;
                     document.getElementById('feelsLike').textContent = `${current.FeelsLikeC}°C`;
 
-                    // 获取并显示寄语
+                    // 获取寄语
                     let quote;
+                    updateStatus('updating', '正在获取最新寄语...');
+
                     if (selectedMood === 'custom') {
                         quote = generateCustomAdvice(customMoodText);
+                    } else if (selectedMood === 'daily') {
+                        quote = await getDailyQuote();
                     } else {
-                        const moodQuotes = quotes[selectedMood];
-                        quote = moodQuotes[Math.floor(Math.random() * moodQuotes.length)];
+                        quote = await getQuoteByMood(selectedMood);
                     }
 
-                    document.getElementById('quoteText').textContent = quote.text;
+                    // 根据是否成功获取在线内容更新状态
+                    if (quote.source === 'Quotable API') {
+                        updateStatus('', '✅ 已获取最新在线寄语');
+                    } else {
+                        updateStatus('', '✅ 语库已就绪');
+                    }
+
+                    document.getElementById('quoteText').textContent = `"${quote.text}"`;
+
                     const authorElement = document.getElementById('quoteAuthor');
                     if (quote.author) {
                         authorElement.textContent = `—— ${quote.author}`;
@@ -599,24 +740,23 @@
                         authorElement.style.display = 'none';
                     }
 
-                    // 显示结果
+                    const sourceElement = document.getElementById('quoteSource');
+                    sourceElement.textContent = `来源: ${quote.source}`;
+                    sourceElement.style.display = 'block';
+
                     loadingDiv.classList.remove('show');
                     resultDiv.classList.add('show');
                 } else {
-                    // 城市不存在，显示相似城市建议
                     loadingDiv.classList.remove('show');
                     const similarCities = findSimilarCities(city);
-
                     if (similarCities.length > 0) {
                         showCitySuggestions(similarCities);
                     } else {
                         showError('无法获取天气信息，请检查城市名称是否正确');
                     }
                 }
-
             } catch (error) {
                 loadingDiv.classList.remove('show');
-                // 网络错误时尝试显示城市建议
                 const similarCities = findSimilarCities(city);
                 if (similarCities.length > 0) {
                     showCitySuggestions(similarCities);
@@ -629,7 +769,6 @@
         function showCitySuggestions(cities) {
             const suggestionDiv = document.getElementById('citySuggestion');
             const listDiv = document.getElementById('citySuggestionList');
-
             listDiv.innerHTML = '';
             cities.forEach(city => {
                 const btn = document.createElement('button');
@@ -642,7 +781,6 @@
                 };
                 listDiv.appendChild(btn);
             });
-
             suggestionDiv.classList.add('show');
         }
 
@@ -657,6 +795,31 @@
             if (e.key === 'Enter') {
                 getWeatherAndQuote();
             }
+        });
+
+        // 页面加载时预加载一些在线寄语到缓存
+        async function preloadQuotes() {
+            updateStatus('updating', '正在连接在线语库...');
+
+            try {
+                // 预加载几个分类的寄语
+                const moods = ['daily', 'happy', 'motivational'];
+                for (const mood of moods) {
+                    const quote = await fetchOnlineQuote(mood);
+                    if (quote) {
+                        console.log(`预加载 ${mood} 寄语成功:`, quote.text.substring(0, 20) + '...');
+                    }
+                }
+                updateStatus('', '✅ 在线语库已连接');
+            } catch (error) {
+                console.log('预加载失败，将使用本地语库');
+                updateStatus('', '✅ 本地语库已就绪');
+            }
+        }
+
+        // 页面加载完成后预加载
+        window.addEventListener('load', () => {
+            setTimeout(preloadQuotes, 1000);
         });
     </script>
 </body>
