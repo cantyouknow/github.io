@@ -340,11 +340,6 @@
     <div class="container">
         <h1>🌤️ 心情天气站</h1>
 
-        <div class="update-status" id="updateStatus">
-            <span id="statusIcon">✅</span>
-            <span id="statusText">语库已就绪</span>
-        </div>
-
         <div class="form-group">
             <label for="city">输入您的城市：</label>
             <input type="text" id="city" placeholder="例如：北京、上海、广州...">
@@ -620,28 +615,6 @@
             return quotes[Math.floor(Math.random() * quotes.length)];
         }
 
-        // 更新状态显示
-        function updateStatus(status, message) {
-            const statusDiv = document.getElementById('updateStatus');
-            const iconSpan = document.getElementById('statusIcon');
-            const textSpan = document.getElementById('statusText');
-
-            statusDiv.className = 'update-status ' + status;
-
-            switch(status) {
-                case 'updating':
-                    iconSpan.textContent = '🔄';
-                    break;
-                case 'error':
-                    iconSpan.textContent = '❌';
-                    break;
-                default:
-                    iconSpan.textContent = '✅';
-            }
-
-            textSpan.textContent = message;
-        }
-
         // 主要城市列表
         const majorCities = [
             '北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京',
@@ -713,7 +686,6 @@
 
                     // 获取寄语
                     let quote;
-                    updateStatus('updating', '正在获取最新寄语...');
 
                     if (selectedMood === 'custom') {
                         quote = generateCustomAdvice(customMoodText);
@@ -721,13 +693,6 @@
                         quote = await getDailyQuote();
                     } else {
                         quote = await getQuoteByMood(selectedMood);
-                    }
-
-                    // 根据是否成功获取在线内容更新状态
-                    if (quote.source === 'Quotable API') {
-                        updateStatus('', '✅ 已获取最新在线寄语');
-                    } else {
-                        updateStatus('', '✅ 语库已就绪');
                     }
 
                     document.getElementById('quoteText').textContent = `"${quote.text}"`;
@@ -799,8 +764,6 @@
 
         // 页面加载时预加载一些在线寄语到缓存
         async function preloadQuotes() {
-            updateStatus('updating', '正在连接在线语库...');
-
             try {
                 // 预加载几个分类的寄语
                 const moods = ['daily', 'happy', 'motivational'];
@@ -810,10 +773,8 @@
                         console.log(`预加载 ${mood} 寄语成功:`, quote.text.substring(0, 20) + '...');
                     }
                 }
-                updateStatus('', '✅ 在线语库已连接');
             } catch (error) {
                 console.log('预加载失败，将使用本地语库');
-                updateStatus('', '✅ 本地语库已就绪');
             }
         }
 
