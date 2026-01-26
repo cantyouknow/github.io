@@ -29,6 +29,8 @@
             max-width: 500px;
             width: 100%;
             animation: fadeIn 0.5s ease-in;
+            display: block !important;
+            opacity: 1 !important;
         }
 
         @keyframes fadeIn {
@@ -408,12 +410,7 @@
         }
 
         .main-content {
-            opacity: 0;
-            transition: opacity 0.5s ease-in;
-        }
-
-        .main-content.visible {
-            opacity: 1;
+            /* 不影响主界面显示 */
         }
     </style>
 </head>
@@ -515,6 +512,12 @@
         let lastUpdateCheck = 0;
         const UPDATE_CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24小时
         const WEATHER_CACHE_DURATION = 10 * 60 * 1000; // 天气缓存10分钟
+
+        // 主要城市列表（用于预加载）
+        const majorCitiesForPreload = [
+            '北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京',
+            '天津', '苏州', '长沙', '郑州', '东莞', '青岛', '沈阳', '宁波', '昆明', '合肥'
+        ];
 
         // 心情按钮点击事件
         document.querySelectorAll('.mood-btn').forEach(btn => {
@@ -971,23 +974,40 @@
             }, 2000); // 2秒后开始预加载
         }
 
+        // 预加载主要城市的天气
+        async function preloadMajorCitiesWeather() {
+            console.log('开始预加载主要城市天气...');
+            const startTime = Date.now();
+
+            // 并行预加载所有主要城市
+            const promises = majorCitiesForPreload.map(city =>
+                getWeatherData(city).catch(err => {
+                    console.log(`${city} 天气预加载失败`);
+                })
+            );
+
+            await Promise.all(promises);
+            const elapsed = Date.now() - startTime;
+            console.log(`主要城市天气预加载完成，耗时 ${elapsed}ms`);
+        }
+
         // 页面加载完成后显示启动画面
         window.addEventListener('load', async () => {
-            await showSplashScreen();
+            // 在显示启动画面的同时，后台预加载天气和寄语
+            showSplashScreen();
             preloadQuotes();
+            preloadMajorCitiesWeather();
         });
 
         // 显示启动画面
-        async function showSplashScreen() {
+        function showSplashScreen() {
             const splashScreen = document.getElementById('splashScreen');
             const splashQuote = document.getElementById('splashQuote');
             const splashAuthor = document.getElementById('splashAuthor');
             const mainContent = document.getElementById('mainContent');
 
-            // 获取每日寄语
-            try {
-                // 尝试从在线API获取
-                const onlineQuote = await fetchOnlineQuote('daily');
+            // 获取每日寄语（异步，不阻塞）
+            fetchOnlineQuote('daily').then(onlineQuote => {
                 if (onlineQuote) {
                     splashQuote.textContent = `"${onlineQuote.text}"`;
                     if (onlineQuote.author) {
@@ -1011,15 +1031,14 @@
                         splashAuthor.textContent = `—— ${quote.author}`;
                     }
                 }
-            } catch (error) {
+            }).catch(error => {
                 console.log('获取每日寄语失败，使用默认寄语');
                 splashQuote.textContent = "\"每一天都是一个新的开始，愿今天充满阳光和希望。\"";
-            }
+            });
 
-            // 3秒后隐藏启动画面，显示主界面
+            // 3秒后隐藏启动画面
             setTimeout(() => {
                 splashScreen.classList.add('hidden');
-                mainContent.classList.add('visible');
 
                 // 动画完成后移除启动画面DOM
                 setTimeout(() => {
