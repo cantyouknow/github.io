@@ -25,8 +25,8 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 600px;
+            padding: 30px 50px;
+            max-width: 500px;
             width: 100%;
             animation: fadeIn 0.5s ease-in;
             display: block !important;
@@ -516,7 +516,9 @@
         // 主要城市列表（用于预加载）
         const majorCitiesForPreload = [
             '北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京',
-            '天津', '苏州', '长沙', '郑州', '东莞', '青岛', '沈阳', '宁波', '昆明', '合肥'
+            '天津', '苏州', '长沙', '郑州', '东莞', '青岛', '沈阳', '宁波', '昆明', '合肥',
+            '福州', '厦门', '哈尔滨', '济南', '大连', '长春', '太原', '贵阳', '南昌', '南宁',
+            '石家庄', '兰州', '乌鲁木齐', '呼和浩特', '海口', '银川', '西宁', '拉萨'
         ];
 
         // 心情按钮点击事件
@@ -850,7 +852,81 @@
             }
         }
 
-        // 获取天气数据（带缓存）
+        // 城市名称到经纬度的映射（主要中国城市）
+        const cityCoordinates = {
+            '北京': { lat: 39.9042, lon: 116.4074 },
+            '上海': { lat: 31.2304, lon: 121.4737 },
+            '广州': { lat: 23.1291, lon: 113.2644 },
+            '深圳': { lat: 22.5431, lon: 114.0579 },
+            '杭州': { lat: 30.2741, lon: 120.1551 },
+            '成都': { lat: 30.5728, lon: 104.0668 },
+            '重庆': { lat: 29.4316, lon: 106.9123 },
+            '武汉': { lat: 30.5928, lon: 114.3055 },
+            '西安': { lat: 34.3416, lon: 108.9398 },
+            '南京': { lat: 32.0603, lon: 118.7969 },
+            '天津': { lat: 39.0842, lon: 117.2010 },
+            '苏州': { lat: 31.2989, lon: 120.5853 },
+            '长沙': { lat: 28.2282, lon: 112.9388 },
+            '郑州': { lat: 34.7466, lon: 113.6253 },
+            '东莞': { lat: 23.0430, lon: 113.7633 },
+            '青岛': { lat: 36.0671, lon: 120.3826 },
+            '沈阳': { lat: 41.8057, lon: 123.4315 },
+            '宁波': { lat: 29.8683, lon: 121.5440 },
+            '昆明': { lat: 25.0389, lon: 102.7183 },
+            '合肥': { lat: 31.8206, lon: 117.2272 },
+            '福州': { lat: 26.0745, lon: 119.2965 },
+            '厦门': { lat: 24.4798, lon: 118.0819 },
+            '哈尔滨': { lat: 45.8038, lon: 126.5340 },
+            '济南': { lat: 36.6512, lon: 117.1201 },
+            '大连': { lat: 38.9140, lon: 121.6147 },
+            '长春': { lat: 43.8171, lon: 125.3235 },
+            '太原': { lat: 37.8706, lon: 112.5489 },
+            '贵阳': { lat: 26.6470, lon: 106.6302 },
+            '南昌': { lat: 28.6820, lon: 115.8579 },
+            '南宁': { lat: 22.8170, lon: 108.3661 },
+            '石家庄': { lat: 38.0428, lon: 114.5149 },
+            '兰州': { lat: 36.0611, lon: 103.8343 },
+            '乌鲁木齐': { lat: 43.8256, lon: 87.6168 },
+            '呼和浩特': { lat: 40.8414, lon: 111.7519 },
+            '海口': { lat: 20.0444, lon: 110.1999 },
+            '银川': { lat: 38.4681, lon: 106.2731 },
+            '西宁': { lat: 36.6171, lon: 101.7782 },
+            '拉萨': { lat: 29.6500, lon: 91.1000 }
+        };
+
+        // 天气代码到中文描述的映射
+        const weatherCodeMap = {
+            0: '晴朗',
+            1: '大部晴朗',
+            2: '多云',
+            3: '阴天',
+            45: '有雾',
+            48: '雾凇',
+            51: '毛毛雨',
+            53: '中度毛毛雨',
+            55: '浓毛毛雨',
+            56: '冻毛毛雨',
+            57: '强冻毛毛雨',
+            61: '小雨',
+            63: '中雨',
+            65: '大雨',
+            66: '冻雨',
+            67: '强冻雨',
+            71: '小雪',
+            73: '中雪',
+            75: '大雪',
+            77: '雪粒',
+            80: '阵雨',
+            81: '中度阵雨',
+            82: '暴雨',
+            85: '小阵雪',
+            86: '大阵雪',
+            95: '雷暴',
+            96: '雷暴伴有冰雹',
+            99: '强雷暴伴有冰雹'
+        };
+
+        // 使用 Open-Meteo API 获取天气数据
         async function getWeatherData(city) {
             // 检查缓存
             const cached = cachedWeather[city];
@@ -860,26 +936,36 @@
                 return cached.data;
             }
 
+            // 获取城市坐标
+            const coords = cityCoordinates[city];
+            if (!coords) {
+                console.log('未找到城市坐标:', city);
+                return null;
+            }
+
             try {
                 // 添加超时控制
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 8000); // 8秒超时
 
-                const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`, {
+                // 使用 Open-Meteo API (免费，无需API key)
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&wind_speed_unit=kmh&timezone=auto`;
+
+                const response = await fetch(url, {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId);
 
                 if (response.ok) {
                     const data = await response.json();
-                    const current = data.current_condition[0];
+                    const current = data.current;
 
                     const weatherData = {
-                        temp_C: current.temp_C,
-                        weatherDesc: current.lang_zh[0]?.value || current.weatherDesc[0].value,
-                        humidity: current.humidity,
-                        windSpeed: current.windspeedKmph,
-                        feelsLike: current.FeelsLikeC
+                        temp_C: Math.round(current.temperature_2m),
+                        weatherDesc: weatherCodeMap[current.weather_code] || '未知',
+                        humidity: current.relative_humidity_2m,
+                        windSpeed: Math.round(current.wind_speed_10m),
+                        feelsLike: Math.round(current.apparent_temperature)
                     };
 
                     // 缓存数据
