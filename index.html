@@ -800,15 +800,40 @@
             loadingDiv.classList.add('show');
 
             try {
-                // 并行请求：天气和寄语同时获取
-                const weatherPromise = getWeatherData(city);
-                const quotePromise = getQuoteData(selectedMood, customMoodText);
+                let weatherData = null;
+                let displayCity = city;
+                let nearestCityInfo = null;
 
-                // 等待两个请求都完成
-                const [weatherData, quote] = await Promise.all([
-                    weatherPromise,
-                    quotePromise
-                ]);
+                // 首先尝试直接从数据库获取天气
+                weatherData = await getWeatherData(city);
+
+                // 如果数据库中没有该城市，尝试通过地理编码API获取坐标
+                if (!weatherData) {
+                    console.log('尝试通过地理编码API查找城市:', city);
+                    const geoCoords = await getCityCoordinates(city);
+
+                    if (geoCoords) {
+                        console.log('找到城市坐标:', geoCoords);
+                        // 找到距离该城市最近的数据库中的城市
+                        nearestCityInfo = findNearestCity(geoCoords.lat, geoCoords.lon);
+                        console.log('最近城市:', nearestCityInfo);
+
+                        if (nearestCityInfo) {
+                            // 获取最近城市的天气数据
+                            weatherData = await getWeatherData(nearestCityInfo.name);
+                            if (weatherData) {
+                                weatherData.actualCity = nearestCityInfo.name;
+                                weatherData.isNearestCity = true;
+                                weatherData.distance = nearestCityInfo.distance;
+                                weatherData.inputCity = city;
+                            }
+                        }
+                    }
+                }
+
+                // 并行请求：天气和寄语同时获取
+                const quotePromise = getQuoteData(selectedMood, customMoodText);
+                const quote = await quotePromise;
 
                 // 检查天气数据
                 if (!weatherData) {
@@ -822,8 +847,17 @@
                     return;
                 }
 
-                // 显示天气信息
-                document.getElementById('cityName').textContent = city;
+                // 显示城市名称（如果是最近城市，显示提示）
+                if (weatherData.isNearestCity) {
+                    const distanceText = weatherData.distance < 1 ?
+                        `${Math.round(weatherData.distance * 1000)}米` :
+                        `${Math.round(weatherData.distance)}公里`;
+                    document.getElementById('cityName').textContent =
+                        `${weatherData.inputCity} (显示${weatherData.actualCity}天气, 距离${distanceText})`;
+                } else {
+                    document.getElementById('cityName').textContent = displayCity;
+                }
+
                 document.getElementById('temperature').textContent = `${weatherData.temp_C}°C`;
                 document.getElementById('weatherDesc').textContent = weatherData.weatherDesc;
                 document.getElementById('humidity').textContent = `${weatherData.humidity}%`;
@@ -1499,6 +1533,34 @@
             99: '强雷暴伴有冰雹'
         };
 
+        // 计算两个坐标之间的距离（Haversine公式，单位：千米）
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // 地球半径，单位：千米
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // 查找距离指定坐标最近的城市
+        function findNearestCity(targetLat, targetLon) {
+            let nearestCity = null;
+            let minDistance = Infinity;
+
+            for (const [cityName, coords] of Object.entries(cityCoordinates)) {
+                const distance = calculateDistance(targetLat, targetLon, coords.lat, coords.lon);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestCity = { name: cityName, distance: distance };
+                }
+            }
+
+            return nearestCity;
+        }
+
         // 使用 Open-Meteo API 获取天气数据
         async function getWeatherData(city) {
             // 检查缓存
@@ -1510,7 +1572,10 @@
             }
 
             // 获取城市坐标
-            const coords = cityCoordinates[city];
+            let coords = cityCoordinates[city];
+            let actualCity = city;
+            let isNearestCity = false;
+
             if (!coords) {
                 console.log('未找到城市坐标:', city);
                 return null;
@@ -1538,7 +1603,9 @@
                         weatherDesc: weatherCodeMap[current.weather_code] || '未知',
                         humidity: current.relative_humidity_2m,
                         windSpeed: Math.round(current.wind_speed_10m),
-                        feelsLike: Math.round(current.apparent_temperature)
+                        feelsLike: Math.round(current.apparent_temperature),
+                        actualCity: actualCity,
+                        isNearestCity: isNearestCity
                     };
 
                     // 缓存数据
@@ -1560,6 +1627,39 @@
                     return cached.data;
                 }
                 throw error;
+            }
+        }
+
+        // 尝试通过地理编码API获取城市坐标
+        async function getCityCoordinates(city) {
+            try {
+                // 使用Open-Meteo的地理编码API（免费，无需API key）
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000); // 3秒超时
+
+                const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=zh&format=json`;
+
+                const response = await fetch(url, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.results && data.results.length > 0) {
+                        const result = data.results[0];
+                        return {
+                            lat: result.latitude,
+                            lon: result.longitude,
+                            name: result.name,
+                            country: result.country
+                        };
+                    }
+                }
+                return null;
+            } catch (error) {
+                console.log('获取城市坐标失败:', error.message);
+                return null;
             }
         }
 
