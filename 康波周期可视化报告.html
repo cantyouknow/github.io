@@ -540,10 +540,60 @@
             margin-top: 50px;
         }
 
+        /* 移动端优化 */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            /* 导航按钮优化 */
+            .container > div[style*="position: absolute"] {
+                position: static !important;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .container > div[style*="position: absolute"] a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 10px 20px !important;
+                font-size: 14px !important;
+            }
+
             .allocation-chart {
                 flex-direction: column;
                 height: auto;
+                gap: 10px;
             }
 
             .allocation-bar {
@@ -553,11 +603,143 @@
 
             .cycle-diagram {
                 flex-direction: column;
+                gap: 10px;
+            }
+
+            .cycle-stage {
+                padding: 15px 10px;
+                margin: 0;
+            }
+
+            .stage-title {
+                font-size: 1.1em;
+            }
+
+            .stage-desc {
+                font-size: 0.85em;
             }
 
             .chart-visual {
                 flex-wrap: wrap;
                 height: auto;
+                padding: 10px;
+            }
+
+            .chart-bar {
+                width: 45%;
+                margin: 2.5%;
+                height: 100px !important;
+            }
+
+            /* 表格优化 */
+            .asset-table {
+                font-size: 0.85em;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .asset-table th,
+            .asset-table td {
+                padding: 10px 8px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding: 0 0 0 50px;
+                text-align: left !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                margin: 0 0 0 10px;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 20px 15px;
+            }
+
+            .stat-value {
+                font-size: 2em;
+            }
+
+            .current-position {
+                padding: 20px;
+            }
+
+            .current-position h3 {
+                font-size: 1.3em;
+            }
+
+            .opportunity-box {
+                padding: 20px;
+            }
+
+            .opportunity-box h3 {
+                font-size: 1.3em;
+            }
+
+            .risk-pyramid {
+                margin: 20px 0;
+            }
+
+            .pyramid-level {
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+
+            .action-item {
+                padding: 15px;
+                font-size: 0.95em;
+            }
+
+            .action-checkbox {
+                width: 25px;
+                height: 25px;
+            }
+
+            /* 隐藏一些不太重要的元素 */
+            .bar-year {
+                display: none;
+            }
+        }
+
+        /* 超小屏幕优化 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .mood-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-bar {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .asset-table {
+                font-size: 0.75em;
+            }
+
+            .star-rating {
+                font-size: 1em;
             }
         }
     </style>
