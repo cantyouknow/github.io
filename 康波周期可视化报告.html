@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周金涛康波周期理论 - 未来五年资产走势预测</title>
+    <title>2026年康波周期投资策略报告</title>
     <style>
         * {
             margin: 0;
@@ -12,38 +12,62 @@
         }
 
         body {
-            font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.8;
-            color: #333;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 60px 40px;
+            padding: 40px;
             text-align: center;
         }
 
         .header h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: 1.1em;
             opacity: 0.9;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .nav-button a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
         }
 
         .content {
@@ -51,503 +75,198 @@
         }
 
         .section {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .section-title {
             font-size: 2em;
-            color: #667eea;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #667eea;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: "▶";
-            margin-right: 15px;
-            color: #764ba2;
+            color: #333;
+            margin-bottom: 20px;
+            border-left: 5px solid #f5576c;
+            padding-left: 15px;
         }
 
         .card {
             background: #f8f9fa;
-            border-radius: 15px;
             padding: 25px;
+            border-radius: 15px;
             margin-bottom: 20px;
-            border-left: 5px solid #667eea;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .card-title {
             font-size: 1.4em;
-            color: #764ba2;
+            color: #f5576c;
             margin-bottom: 15px;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        .cycle-diagram {
+        .price-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .price-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 30px 0;
-            position: relative;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .cycle-stage {
-            flex: 1;
-            text-align: center;
-            padding: 20px 10px;
-            margin: 0 5px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .price-item:last-child {
+            border-bottom: none;
         }
 
-        .cycle-stage:hover {
-            transform: scale(1.05);
-        }
-
-        .stage-recovery {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-        }
-
-        .stage-prosperity {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .stage-recession {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: white;
-        }
-
-        .stage-depression {
-            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
-            color: white;
-        }
-
-        .stage-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .stage-desc {
-            font-size: 0.9em;
-            opacity: 0.95;
-        }
-
-        .current-position {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 30px 0;
-            text-align: center;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        .current-position h3 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        .asset-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .asset-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
+        .price-label {
             font-size: 1.1em;
         }
 
-        .asset-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
+        .price-value {
+            font-size: 1.3em;
+            font-weight: 700;
         }
 
-        .asset-table tr:hover {
-            background: #f0f0f0;
+        .forecast-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
         }
 
-        .star-rating {
-            color: #ffc107;
-            font-size: 1.2em;
+        .risk-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
         }
 
-        .allocation-chart {
-            display: flex;
-            height: 400px;
-            margin: 30px 0;
-            gap: 20px;
-        }
-
-        .allocation-bar {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            position: relative;
-            border-radius: 10px 10px 0 0;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .allocation-bar:hover {
-            transform: scaleY(1.05);
-            filter: brightness(1.1);
-        }
-
-        .bar-stocks { background: linear-gradient(to top, #f093fb, #f5576c); }
-        .bar-bonds { background: linear-gradient(to top, #4facfe, #00f2fe); }
-        .bar-gold { background: linear-gradient(to top, #fa709a, #fee140); }
-        .bar-commodities { background: linear-gradient(to top, #43e97b, #38f9d7); }
-        .bar-realestate { background: linear-gradient(to top, #fa709a, #fee140); }
-
-        .bar-label {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .bar-value {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            color: #333;
-        }
-
-        .bar-year {
-            position: absolute;
-            bottom: -55px;
-            left: 50%;
-            transform: translateX(-50%);
+        .rating {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
             font-size: 0.9em;
-            color: #666;
+            margin: 5px;
+        }
+
+        .rating-high {
+            background: #4caf50;
+            color: white;
+        }
+
+        .rating-medium {
+            background: #ff9800;
+            color: white;
+        }
+
+        .rating-low {
+            background: #f44336;
+            color: white;
+        }
+
+        .allocation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .allocation-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .allocation-item:hover {
+            border-color: #f5576c;
+            transform: scale(1.05);
+        }
+
+        .allocation-percent {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .timeline {
             position: relative;
-            padding: 30px 0;
+            padding-left: 30px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 0;
             top: 0;
             bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, #667eea, #764ba2);
+            width: 3px;
+            background: linear-gradient(to bottom, #f093fb, #f5576c);
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 40px;
-            padding: 0 50%;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
         }
 
-        .timeline-item:nth-child(odd) {
-            padding: 0 50% 0 0;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) {
-            padding: 0 0 0 50%;
-            text-align: left;
-        }
-
-        .timeline-dot {
+        .timeline-item::before {
+            content: '';
             position: absolute;
-            left: 50%;
+            left: -36px;
             top: 20px;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
-            background: #667eea;
-            border: 4px solid white;
-            box-shadow: 0 0 0 4px #667eea;
+            background: #f5576c;
+            border: 3px solid white;
         }
 
-        .timeline-content {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 0 30px;
-            border-left: 4px solid #667eea;
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
         }
 
-        .timeline-year {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .opportunity-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0;
-            border-left: 6px solid #ff6b6b;
-        }
-
-        .opportunity-box h3 {
-            color: #d63031;
-            margin-bottom: 15px;
-            font-size: 1.6em;
-        }
-
-        .price-chart {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .chart-visual {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 300px;
-            margin: 30px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-        }
-
-        .chart-bar {
-            width: 60px;
-            background: linear-gradient(to top, #667eea, #764ba2);
-            border-radius: 5px 5px 0 0;
-            position: relative;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .chart-bar:hover {
-            filter: brightness(1.2);
-            transform: scaleY(1.05);
-        }
-
-        .chart-bar::before {
-            content: attr(data-value);
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            font-size: 0.9em;
-            color: #333;
-        }
-
-        .chart-bar::after {
-            content: attr(data-label);
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
+        .source {
             font-size: 0.85em;
             color: #666;
-            white-space: nowrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
         }
 
-        .action-list {
-            list-style: none;
-            padding: 0;
+        .source a {
+            color: #667eea;
+            text-decoration: none;
         }
 
-        .action-item {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
+        .source a:hover {
+            text-decoration: underline;
         }
 
-        .action-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .action-checkbox {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #667eea;
-            border-radius: 5px;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .risk-pyramid {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 30px 0;
-        }
-
-        .pyramid-level {
-            text-align: center;
-            padding: 15px 30px;
-            margin: 5px 0;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .pyramid-level:hover {
-            transform: scale(1.05);
-        }
-
-        .level-1 {
-            width: 30%;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .level-2 {
-            width: 50%;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
-        .level-3 {
-            width: 70%;
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
-        }
-
-        .level-4 {
-            width: 90%;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: white;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 5px solid #2196f3;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .warning-box {
-            background: #fff3e0;
-            border-left: 5px solid #ff9800;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .success-box {
-            background: #e8f5e9;
-            border-left: 5px solid #4caf50;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .stat-value {
-            font-size: 2.5em;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            transition: width 0.5s;
-        }
-
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 30px;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        /* 移动端优化 */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
-            }
-
-            .container {
-                border-radius: 15px;
             }
 
             .header {
@@ -558,10 +277,6 @@
                 font-size: 1.8em;
             }
 
-            .header p {
-                font-size: 1em;
-            }
-
             .content {
                 padding: 20px;
             }
@@ -570,152 +285,29 @@
                 font-size: 1.5em;
             }
 
-            .card {
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-
-            /* 导航按钮优化 */
-            .container > div[style*="position: absolute"] {
-                position: static !important;
+            .nav-button {
+                position: static;
                 text-align: center;
                 margin-bottom: 15px;
             }
 
-            .container > div[style*="position: absolute"] a {
+            .nav-button a {
                 display: block;
                 width: 100%;
                 text-align: center;
-                padding: 10px 20px !important;
-                font-size: 14px !important;
             }
 
-            .allocation-chart {
-                flex-direction: column;
-                height: auto;
-                gap: 10px;
-            }
-
-            .allocation-bar {
-                height: 60px;
-                margin-bottom: 60px;
-            }
-
-            .cycle-diagram {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .cycle-stage {
-                padding: 15px 10px;
-                margin: 0;
-            }
-
-            .stage-title {
-                font-size: 1.1em;
-            }
-
-            .stage-desc {
-                font-size: 0.85em;
-            }
-
-            .chart-visual {
-                flex-wrap: wrap;
-                height: auto;
-                padding: 10px;
-            }
-
-            .chart-bar {
-                width: 45%;
-                margin: 2.5%;
-                height: 100px !important;
-            }
-
-            /* 表格优化 */
-            .asset-table {
-                font-size: 0.85em;
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-
-            .asset-table th,
-            .asset-table td {
-                padding: 10px 8px;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                padding: 0 0 0 50px;
-                text-align: left !important;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .timeline-content {
-                margin: 0 0 0 10px;
-            }
-
-            .grid-container {
+            .allocation-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
             }
 
-            .stat-card {
-                padding: 20px 15px;
-            }
-
-            .stat-value {
-                font-size: 2em;
-            }
-
-            .current-position {
-                padding: 20px;
-            }
-
-            .current-position h3 {
-                font-size: 1.3em;
-            }
-
-            .opportunity-box {
-                padding: 20px;
-            }
-
-            .opportunity-box h3 {
-                font-size: 1.3em;
-            }
-
-            .risk-pyramid {
-                margin: 20px 0;
-            }
-
-            .pyramid-level {
-                padding: 12px 20px;
-                font-size: 0.9em;
-            }
-
-            .action-item {
-                padding: 15px;
-                font-size: 0.95em;
-            }
-
-            .action-checkbox {
-                width: 25px;
-                height: 25px;
-            }
-
-            /* 隐藏一些不太重要的元素 */
-            .bar-year {
-                display: none;
+            .price-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
             }
         }
 
-        /* 超小屏幕优化 */
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 1.5em;
@@ -725,716 +317,305 @@
                 font-size: 1.3em;
             }
 
-            .mood-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .chart-bar {
-                width: 100%;
-                margin: 5px 0;
-            }
-
-            .asset-table {
-                font-size: 0.75em;
-            }
-
-            .star-rating {
-                font-size: 1em;
+            .price-value {
+                font-size: 1.1em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 导航链接 -->
-        <div style="position: absolute; top: 20px; right: 20px; z-index: 100;">
-            <a href="index.html" style="
-                display: inline-block;
-                padding: 12px 25px;
-                background: white;
-                color: #667eea;
-                text-decoration: none;
-                border-radius: 25px;
-                font-size: 16px;
-                font-weight: 600;
-                transition: all 0.3s;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            " onmouseover="this.style.background='#667eea'; this.style.color='white'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='white'; this.style.color='#667eea'; this.style.transform='translateY(0)'">
-                🌤️ 返回心情天气站
-            </a>
+        <!-- 导航按钮 -->
+        <div class="nav-button">
+            <a href="index.html">🌤️ 返回心情天气站</a>
         </div>
 
         <div class="header">
-            <h1>📊 周金涛康波周期理论</h1>
-            <p>未来五年资产走势预测报告（2025-2030）</p>
-            <p style="margin-top: 15px; font-size: 0.9em;">基于《涛动周期论》与康德拉季耶夫长波周期研究</p>
+            <h1>📊 2026年康波周期投资策略报告</h1>
+            <p>基于2026年1月实时价格与市场环境的务实分析</p>
+            <p style="margin-top: 10px; font-size: 0.95em;">数据更新：2026年1月 | 周金涛康波周期理论实战应用</p>
         </div>
 
         <div class="content">
-            <!-- 第一部分：康波周期核心框架 -->
-            <section class="section">
-                <h2 class="section-title">一、康波周期核心框架</h2>
+            <!-- 当前价格现状 -->
+            <div class="section">
+                <h2 class="section-title">📈 当前市场现状（2026年1月）</h2>
 
                 <div class="card">
-                    <div class="card-title">什么是康波周期？</div>
-                    <p><strong>康德拉季耶夫周期（Kondratiev Wave）</strong>，简称"康波"，是经济长波周期理论，全长约<strong>50-60年</strong>。它由苏联经济学家康德拉季耶夫在1925年提出，周金涛先生将其发展并应用于投资实践。</p>
-                </div>
+                    <div class="card-title">⚠️ 重要提示：价格已达历史高位</div>
+                    <p>当前贵金属和基本金属价格已经历大幅上涨，处于历史高位区间。投资决策需更加谨慎。</p>
 
-                <div class="cycle-diagram">
-                    <div class="cycle-stage stage-recovery">
-                        <div class="stage-title">📈 回升期</div>
-                        <div class="stage-desc">
-                            经济↑ 通胀↓<br>
-                            新技术应用<br>
-                            10-15年
+                    <div class="price-box">
+                        <div class="price-item">
+                            <span class="price-label">🥇 黄金</span>
+                            <span class="price-value">$5,100+ /盎司</span>
                         </div>
-                    </div>
-                    <div class="cycle-stage stage-prosperity">
-                        <div class="stage-title">🔥 繁荣期</div>
-                        <div class="stage-desc">
-                            经济↑↑ 通胀↑<br>
-                            泡沫形成<br>
-                            10-15年
+                        <div class="price-item">
+                            <span class="price-label">🥈 白银</span>
+                            <span class="price-value">$102.89 /盎司</span>
                         </div>
-                    </div>
-                    <div class="cycle-stage stage-recession">
-                        <div class="stage-title">📉 衰退期</div>
-                        <div class="stage-desc">
-                            经济↓ 通胀↑<br>
-                            滞胀危机<br>
-                            10-15年
+                        <div class="price-item">
+                            <span class="price-label">🥉 铜</span>
+                            <span class="price-value">110,990 元/吨</span>
                         </div>
-                    </div>
-                    <div class="cycle-stage stage-depression">
-                        <div class="stage-title">❄️ 萧条期</div>
-                        <div class="stage-desc">
-                            经济↓↓ 通胀↓<br>
-                            出清债务<br>
-                            10-15年
+                        <div class="price-item">
+                            <span class="price-label">📊 沪银主力</span>
+                            <span class="price-value">7,687 元/千克</span>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- 2026年展望 -->
+            <div class="section">
+                <h2 class="section-title">🔮 2026年全年展望</h2>
 
                 <div class="card">
-                    <div class="card-title">四周期嵌套模型</div>
-                    <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 1.2em; line-height: 2;">
-                            🌀 <strong>康波周期</strong>（50-60年）
-                            <br>├─ 🏠 房地产周期（15-20年）× 3
-                            <br>│  └─ ⚙️ 朱格拉周期（10年）× 2
-                            <br>│     └─ 📦 基钦周期（3-4年）× 3
-                        </div>
-                        <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 10px;">
-                            <strong>"人生就是一场康波，三次房地产周期，九次固定资产投资"</strong>
-                            <br>—— 周金涛
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 第二部分：当前周期位置 -->
-            <section class="section">
-                <h2 class="section-title">二、当前周期位置判断</h2>
-
-                <div class="current-position">
-                    <h3>📍 我们现在在哪里？</h3>
-                    <p style="font-size: 1.3em; margin: 15px 0;"><strong>第五波康波（1991-2025）萧条期末端</strong></p>
-                    <p>即将进入第六波康波（2025-2085）回升期</p>
-                    <div style="margin-top: 20px; font-size: 0.95em;">
-                        <span style="display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 20px; margin: 5px;">✓ 全球债务高企</span>
-                        <span style="display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 20px; margin: 5px;">✓ 低增长环境</span>
-                        <span style="display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 20px; margin: 5px;">✓ 新技术蓄势待发</span>
-                        <span style="display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 20px; margin: 5px;">✓ 地缘风险上升</span>
-                    </div>
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">1991-2000</div>
-                            <p><strong>第五波康波回升期</strong><br>PC/互联网技术兴起，信息技术革命启动</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">2000-2008</div>
-                            <p><strong>第五波康波繁荣期</strong><br>互联网泡沫破裂后复苏，全球经济高速增长</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">2008-2015</div>
-                            <p><strong>第五波康波衰退期</strong><br>次贷危机爆发，全球进入量化宽松时代</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">2015-2025</div>
-                            <p><strong>第五波康波萧条期</strong><br>去杠杆、出清产能，等待新技术革命</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">2025-2030</div>
-                            <p><strong>第六波康波回升期（即将开始）</strong><br>AI/新能源/生物技术驱动，新周期启动</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 第三部分：资产表现对比 -->
-            <section class="section">
-                <h2 class="section-title">三、康波各阶段资产表现对比</h2>
-
-                <table class="asset-table">
-                    <thead>
-                        <tr>
-                            <th>资产类别</th>
-                            <th>回升期</th>
-                            <th>繁荣期</th>
-                            <th>衰退期</th>
-                            <th>萧条期</th>
-                            <th>2025-2030</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>📈 股票</strong></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★☆☆☆☆</span></td>
-                            <td><span class="star-rating">★★★☆☆→★★★★★</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>🛢️ 大宗商品</strong></td>
-                            <td><span class="star-rating">★★★☆☆</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆→★★★★★</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>🥇 黄金</strong></td>
-                            <td><span class="star-rating">★★★☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★★★★→★★☆☆☆</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>🏠 房地产</strong></td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★☆☆☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆→★★★★☆</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>💰 债券</strong></td>
-                            <td><span class="star-rating">★★★☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><span class="star-rating">★★★★☆→★★☆☆☆</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>💵 现金</strong></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★☆☆☆</span></td>
-                            <td><span class="star-rating">★★★★☆</span></td>
-                            <td><span class="star-rating">★★★★★</span></td>
-                            <td><span class="star-rating">★★★★☆→★★☆☆☆</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- 第四部分：2025-2030资产配置 -->
-            <section class="section">
-                <h2 class="section-title">四、2025-2030年资产配置路线图</h2>
-
-                <div class="grid-container">
-                    <div class="stat-card">
-                        <div class="stat-value">2025</div>
-                        <div class="stat-label">防守反击年</div>
-                        <p style="margin-top: 10px; color: #999;">萧条期末端</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">2026</div>
-                        <div class="stat-label">谨慎乐观年</div>
-                        <p style="margin-top: 10px; color: #999;">过渡期</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">2027</div>
-                        <div class="stat-label">积极布局年</div>
-                        <p style="margin-top: 10px; color: #999;">回升初期</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">2030</div>
-                        <div class="stat-label">财富机会年</div>
-                        <p style="margin-top: 10px; color: #999;">人生第三次机会</p>
-                    </div>
-                </div>
-
-                <h3 style="margin: 30px 0 20px 0; color: #667eea;">资产配置变化趋势（2025-2030）</h3>
-                <div class="allocation-chart">
-                    <div class="allocation-bar bar-stocks" style="height: 30%;">
-                        <span class="bar-value">30%</span>
-                        <span class="bar-label">股票</span>
-                        <span class="bar-year">2025→50%</span>
-                    </div>
-                    <div class="allocation-bar bar-bonds" style="height: 35%;">
-                        <span class="bar-value">35%</span>
-                        <span class="bar-label">现金/债券</span>
-                        <span class="bar-year">2025→10%</span>
-                    </div>
-                    <div class="allocation-bar bar-gold" style="height: 25%;">
-                        <span class="bar-value">25%</span>
-                        <span class="bar-label">黄金</span>
-                        <span class="bar-year">2025→5%</span>
-                    </div>
-                    <div class="allocation-bar bar-commodities" style="height: 10%;">
-                        <span class="bar-value">10%</span>
-                        <span class="bar-label">商品</span>
-                        <span class="bar-year">2025→30%</span>
-                    </div>
+                    <div class="card-title">宏观经济环境</div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 10px 0;">✅ <strong>美联储政策</strong>：处于持续降息通道，预期宽松政策延续</li>
+                        <li style="margin: 10px 0;">✅ <strong>通胀预期</strong>：温和修复，中国CPI约0.5%，美国回升至3%左右</li>
+                        <li style="margin: 10px 0;">✅ <strong>经济增长</strong>：全球经济增长稳健，AI热潮持续</li>
+                        <li style="margin: 10px 0;">✅ <strong>地缘政治</strong>：避险需求仍存，支撑贵金属</li>
+                    </ul>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">📊 分年度配置建议</div>
-
-                    <div style="margin: 20px 0;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">2025年：萧条期末端 - 防守反击</h4>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 30%;">现金/债券 30%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #fa709a, #fee140);">黄金 25%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 15%; background: linear-gradient(90deg, #f093fb, #f5576c);">股票 15%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 15%; background: linear-gradient(90deg, #4facfe, #00f2fe);">高等级债券 15%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 5%; background: linear-gradient(90deg, #43e97b, #38f9d7);">商品 5%</div>
-                        </div>
-                    </div>
-
-                    <div style="margin: 30px 0; padding-top: 20px; border-top: 2px solid #e0e0e0;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">2028-2030年：繁荣初期 - 拥抱泡沫</h4>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 50%; background: linear-gradient(90deg, #f093fb, #f5576c);">股票 50%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #43e97b, #38f9d7);">商品 25%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 15%; background: linear-gradient(90deg, #fa709a, #fee140);">房地产 15%</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 10%; background: linear-gradient(90deg, #4facfe, #00f2fe);">现金/债券 10%</div>
-                        </div>
-                    </div>
+                    <div class="card-title">🎯 核心判断：分化与轮动</div>
+                    <p>2026年市场将呈现明显的<span class="highlight">分化特征</span>，不再是普涨行情。</p>
+                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                        <li style="margin: 10px 0;">• 贵金属可能在高位震荡，涨幅有限</li>
+                        <li style="margin: 10px 0;">• 基本金属（铜）可能接棒，表现优于黄金</li>
+                        <li style="margin: 10px 0;">• 股票市场（中美）受益于财政刺激</li>
+                        <li style="margin: 10px 0;">• AI相关资产仍具成长空间</li>
+                    </ul>
                 </div>
-            </section>
+            </div>
 
-            <!-- 第五部分：黄金预测 -->
-            <section class="section">
-                <h2 class="section-title">五、黄金价格走势预测</h2>
+            <!-- 各资产类别分析 -->
+            <div class="section">
+                <h2 class="section-title">💼 2026年资产配置建议</h2>
 
-                <div class="price-chart">
-                    <h3 style="color: #667eea; margin-bottom: 20px;">🥇 黄金价格预测（美元/盎司）</h3>
-                    <div class="chart-visual">
-                        <div class="chart-bar" style="height: 70%;" data-value="2400" data-label="2025"></div>
-                        <div class="chart-bar" style="height: 80%;" data-value="2700" data-label="2026"></div>
-                        <div class="chart-bar" style="height: 95%;" data-value="3000" data-label="2027"></div>
-                        <div class="chart-bar" style="height: 85%;" data-value="2800" data-label="2028"></div>
-                        <div class="chart-bar" style="height: 75%;" data-value="2600" data-label="2029"></div>
-                        <div class="chart-bar" style="height: 70%;" data-value="2500" data-label="2030"></div>
-                    </div>
-                    <div class="info-box">
-                        <strong>核心逻辑：</strong>
+                <!-- 黄金 -->
+                <div class="card">
+                    <div class="card-title">🥇 黄金 <span class="rating rating-medium">谨慎持有</span></div>
+                    <p><strong>当前价格</strong>：$5,100+/盎司（历史高位）</p>
+                    <p><strong>2026年预测</strong>：机构预测区间$4,500-$5,000（可能弱于2025年）</p>
+
+                    <div class="risk-box">
+                        <strong>⚠️ 风险提示</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>2025-2027：美元信用风险、地缘政治、滞胀驱动</li>
-                            <li>2028后：经济复苏，避险需求下降</li>
+                            <li>价格已处于历史高位，短期波动风险累积</li>
+                            <li>部分机构认为2026年表现可能弱于2025年</li>
+                            <li>建议：持有仓位可继续观望，新资金谨慎入场</li>
                         </ul>
                     </div>
-                    <div class="warning-box">
-                        <strong>⚠️ 配置策略：</strong> 2025-2027年超配（20-25%），享受独立行情；2028年后逐步减仓（5-10%），转配风险资产
+
+                    <div class="forecast-box">
+                        <strong>✅ 机会</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>地缘政治危机支撑避险需求</li>
+                            <li>美联储降息预期利好</li>
+                            <li>央行购金需求持续</li>
+                        </ul>
                     </div>
                 </div>
-            </section>
 
-            <!-- 第六部分：股市预测 -->
-            <section class="section">
-                <h2 class="section-title">六、股票市场走势预测</h2>
+                <!-- 白银 -->
+                <div class="card">
+                    <div class="card-title">🥈 白银 <span class="rating rating-high">高波动高机会</span></div>
+                    <p><strong>当前价格</strong>：$102.89/盎司（首次突破$100）</p>
+                    <p><strong>2026年预测</strong>：机构预测区间$50-$150（波动极大）</p>
+
+                    <div class="forecast-box">
+                        <strong>💡 核心观点</strong>
+                        <p style="margin-top: 10px;">白银2026年初表现一度超越黄金，成为贵金属板块最亮眼品种。但波动性极大，风险承受能力弱的投资者需谨慎。</p>
+                    </div>
+
+                    <div class="risk-box">
+                        <strong>⚠️ 适用人群</strong>
+                        <p>仅适合风险偏好高、对白银市场有深入了解的投资者。普通投资者建议小仓位试探或观望。</p>
+                    </div>
+                </div>
+
+                <!-- 铜 -->
+                <div class="card">
+                    <div class="card-title">🥉 铜 <span class="rating rating-high">重点关注</span></div>
+                    <p><strong>当前价格</strong>：110,990元/吨（持续创新高）</p>
+                    <p><strong>2026年预测</strong>：机构普遍乐观，可能接棒黄金</p>
+
+                    <div class="forecast-box">
+                        <strong>🚀 核心逻辑</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li><strong>AI革命</strong>：人工智能和数据中心建设推动铜需求</li>
+                            <li><strong>供应短缺</strong>：摩根大通预测2026年精炼铜缺口约33万吨</li>
+                            <li><strong>资金轮动</strong>：大型投资者正从贵金属转向基本金属</li>
+                            <li><strong>机构看好</strong>：中信建投认为2026年铜将"完美接力"黄金</li>
+                        </ul>
+                    </div>
+
+                    <p style="margin-top: 15px;"><strong>配置建议</strong>：作为2026年重点关注的品种，但需等待回调机会入场，避免追高。</p>
+                </div>
+
+                <!-- 股票 -->
+                <div class="card">
+                    <div class="card-title">📈 股票市场 <span class="rating rating-high">结构性机会</span></div>
+
+                    <div class="forecast-box">
+                        <strong>🇺🇸 美股</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>受益于"财政货币双宽松"政策</li>
+                            <li>AI相关板块持续强势</li>
+                            <li>中金公司看好中美股市表现</li>
+                        </ul>
+                    </div>
+
+                    <div class="forecast-box">
+                        <strong>🇨🇳 A股</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>CPI温和修复，经济基本面改善</li>
+                            <li>政策支持力度加大</li>
+                            <li>关注AI、新能源、高端制造等成长板块</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 规避资产 -->
+                <div class="card">
+                    <div class="card-title">🚫 2026年建议规避或降低配置</div>
+
+                    <div class="risk-box">
+                        <ul style="padding-left: 20px;">
+                            <li><strong>房地产</strong>：流动性差，政策前景不明朗</li>
+                            <li><strong>铝、锌、锂</strong>：机构态度偏谨慎，缺乏明确催化剂</li>
+                            <li><strong>高收益债</strong>：信用风险上升，需谨慎</li>
+                            <li><strong>新三板</strong>：流动性差，风险高</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配置建议 -->
+            <div class="section">
+                <h2 class="section-title">🎯 2026年核心配置策略</h2>
 
                 <div class="card">
-                    <div class="card-title">📈 A股走势预测（沪深300指数）</div>
-                    <div class="chart-visual">
-                        <div class="chart-bar" style="height: 35%; background: linear-gradient(to top, #43e97b, #38f9d7);" data-value="3500" data-label="2025"></div>
-                        <div class="chart-bar" style="height: 45%; background: linear-gradient(to top, #4facfe, #00f2fe);" data-value="4000" data-label="2026"></div>
-                        <div class="chart-bar" style="height: 55%; background: linear-gradient(to top, #667eea, #764ba2);" data-value="4500" data-label="2027"></div>
-                        <div class="chart-bar" style="height: 70%; background: linear-gradient(to top, #f093fb, #f5576c);" data-value="5500" data-label="2028"></div>
-                        <div class="chart-bar" style="height: 85%; background: linear-gradient(to top, #fa709a, #fee140);" data-value="6500" data-label="2029"></div>
-                        <div class="chart-bar" style="height: 100%; background: linear-gradient(to top, #f093fb, #f5576c);" data-value="8000" data-label="2030"></div>
+                    <div class="card-title">💎 稳健型投资者</div>
+                    <div class="allocation-grid">
+                        <div class="allocation-item">
+                            <div class="allocation-percent">40%</div>
+                            <p>现金/货币基金</p>
+                            <p style="font-size: 0.9em; color: #666;">保持流动性</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">30%</div>
+                            <p>债券（国债）</p>
+                            <p style="font-size: 0.9em; color: #666;">保守配置</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">20%</div>
+                            <p>股票指数基金</p>
+                            <p style="font-size: 0.9em; color: #666;">结构性机会</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">10%</div>
+                            <p>黄金ETF</p>
+                            <p style="font-size: 0.9em; color: #666;">避险配置</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid-container">
-                    <div class="card">
-                        <div class="card-title">🤖 人工智能</div>
-                        <p>算力基础设施、AGI应用、AI芯片</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🔋 新能源</div>
-                        <p>储能技术、氢能、锂电、核聚变</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">💊 生物医药</div>
-                        <p>基因治疗、抗衰老、脑机接口</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🏭 高端制造</div>
-                        <p>机器人、航空航天、新材料</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">⛏️ 资源类</div>
-                        <p>锂、铜、稀土、钴、镍</p>
+                <div class="card">
+                    <div class="card-title">🚀 成长型投资者</div>
+                    <div class="allocation-grid">
+                        <div class="allocation-item">
+                            <div class="allocation-percent">35%</div>
+                            <p>股票（AI、科技）</p>
+                            <p style="font-size: 0.9em; color: #666;">核心持仓</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">25%</div>
+                            <p>铜等基本金属</p>
+                            <p style="font-size: 0.9em; color: #666;">等待回调入场</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">20%</div>
+                            <p>现金</p>
+                            <p style="font-size: 0.9em; color: #666;">等待机会</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">20%</div>
+                            <p>黄金/白银</p>
+                            <p style="font-size: 0.9em; color: #666;">小仓位试探</p>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- 第七部分：人生财富机会 -->
-            <section class="section">
-                <h2 class="section-title">七、人生财富三次机会</h2>
-
-                <div class="opportunity-box">
-                    <h3>💎 周金涛经典论断</h3>
-                    <p style="font-size: 1.1em; line-height: 1.8;">
-                        "人的一生中，所能获得的机会，理论上只有<strong>三次</strong>，如果每一个机会都没抓到，你的一生肯定就是穷人了。而抓住任何一个机会，都能使你至少成为<strong>中产阶级</strong>。"
-                    </p>
-                </div>
+            <!-- 时间轴 -->
+            <div class="section">
+                <h2 class="section-title">📅 2026年关键时间节点</h2>
 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">1999年 & 2008年</div>
-                            <p><strong>第一次机会（已结束）</strong></p>
-                            <ul style="margin-top: 10px; padding-left: 20px;">
-                                <li>1999：互联网泡沫</li>
-                                <li>2008：房地产/大宗商品牛市</li>
-                            </ul>
-                        </div>
+                        <strong>Q1（1-3月）</strong>
+                        <p>观察期：确认美联储政策方向，贵金属高位震荡</p>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-year">2019年</div>
-                            <p><strong>第二次机会（已结束）</strong></p>
-                            <ul style="margin-top: 10px; padding-left: 20px;">
-                                <li>A股科技股牛市起点</li>
-                                <li>疫情后流动性宽松</li>
-                            </ul>
-                        </div>
+                        <strong>Q2（4-6月）</strong>
+                        <p>观察期：关注资金轮动，基本金属可能启动</p>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-dot" style="background: #ff6b6b; box-shadow: 0 0 0 4px #ff6b6b;"></div>
-                        <div class="timeline-content" style="border-left-color: #ff6b6b; background: #fff3e0;">
-                            <div class="timeline-year" style="color: #ff6b6b;">2030年 ⭐</div>
-                            <p><strong>第三次机会（即将到来！）</strong></p>
-                            <ul style="margin-top: 10px; padding-left: 20px;">
-                                <li>AI/新能源/生物技术革命</li>
-                                <li>人生最重要的一次机会</li>
-                                <li>建议：2025-2027年开始布局</li>
-                            </ul>
-                        </div>
+                        <strong>Q3（7-9月）</strong>
+                        <p>关键期：美联储政策可能调整，市场波动加大</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Q4（10-12月）</strong>
+                        <p>布局期：为2027年做准备，关注年底行情</p>
                     </div>
                 </div>
+            </div>
 
-                <div class="card">
-                    <div class="card-title">🎯 不同年龄段的机会</div>
-                    <table class="asset-table">
-                        <thead>
-                            <tr>
-                                <th>出生年份</th>
-                                <th>2008年年龄</th>
-                                <th>2019年年龄</th>
-                                <th>2030年年龄</th>
-                                <th>机会次数</th>
-                                <th>建议</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1985年前</td>
-                                <td>23+</td>
-                                <td>34+</td>
-                                <td>45+</td>
-                                <td>3次（已过2次）</td>
-                                <td><strong>把握最后一次，稳健投资</strong></td>
-                            </tr>
-                            <tr>
-                                <td>1986-1990</td>
-                                <td>18-22</td>
-                                <td>29-33</td>
-                                <td>40-44</td>
-                                <td>2-3次</td>
-                                <td><strong>2030是关键一战</strong></td>
-                            </tr>
-                            <tr>
-                                <td>1991-1995</td>
-                                <td>13-17</td>
-                                <td>24-28</td>
-                                <td>35-39</td>
-                                <td>1-2次</td>
-                                <td><strong>重点把握2030</strong></td>
-                            </tr>
-                            <tr>
-                                <td>1996年后</td>
-                                <td>12岁以下</td>
-                                <td>23岁以下</td>
-                                <td>34岁以下</td>
-                                <td>1次</td>
-                                <td><strong>2030是第一次机会</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <!-- 核心提示 -->
+            <div class="section">
+                <h2 class="section-title">⚡ 2026年核心提示</h2>
 
-            <!-- 第八部分：风险控制 -->
-            <section class="section">
-                <h2 class="section-title">八、风险控制金字塔</h2>
-
-                <div class="risk-pyramid">
-                    <div class="pyramid-level level-1">
-                        高风险资产（10-20%）<br>
-                        <small>加密货币、期权等投机性资产</small>
-                    </div>
-                    <div class="pyramid-level level-2">
-                        成长型资产（40-60%）<br>
-                        <small>股票、股票基金、大宗商品</small>
-                    </div>
-                    <div class="pyramid-level level-3">
-                        稳健型资产（30-40%）<br>
-                        <small>高等级债券、定期存款</small>
-                    </div>
-                    <div class="pyramid-level level-4">
-                        防御型资产（30%）<br>
-                        <small>现金、国债、黄金（安全垫）</small>
-                    </div>
+                <div class="card" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: none;">
+                    <div class="card-title" style="color: #e65100;">🔥 最重要的三句话</div>
+                    <ol style="padding-left: 20px; font-size: 1.1em;">
+                        <li style="margin: 15px 0;"><strong>价格已高，追高需谨慎</strong> — 当前贵金属价格处于历史高位，切忌盲目追高</li>
+                        <li style="margin: 15px 0;"><strong>分化加剧，选对赛道</strong> — 不同资产表现将分化，铜等基本金属可能优于贵金属</li>
+                        <li style="margin: 15px 0;"><strong>保持流动性，等待机会</strong> — 现金为王，等待市场回调后再入场</li>
+                    </ol>
                 </div>
 
-                <div class="warning-box">
-                    <h4 style="color: #ff9800; margin-bottom: 10px;">⚠️ 主要风险因素</h4>
-                    <ul style="line-height: 2; padding-left: 20px;">
-                        <li><strong>地缘政治冲突升级</strong> - 战争、贸易战</li>
-                        <li><strong>新技术突破不及预期</strong> - AI发展瓶颈</li>
-                        <li><strong>全球债务危机爆发</strong></li>
-                        <li><strong>极端气候/自然灾害</strong></li>
-                        <li><strong>康波萧条期延长至2035年</strong></li>
-                    </ul>
+                <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: none;">
+                    <div class="card-title" style="color: #1565c0;">💡 康波周期视角</div>
+                    <p>根据周金涛的康波周期理论，当前处于第五次康波周期的"回升期"起点附近。这是一个<span class="highlight">长期结构性机会</span>的开端，但短期内价格已高，需要耐心等待回调。</p>
+                    <p style="margin-top: 15px;">对于1985-1995年出生的人来说，这是人生中重要的财富积累窗口。但切忌急躁，在错误的时间以错误的价格入场，会损失惨重。</p>
                 </div>
+            </div>
 
-                <div class="success-box">
-                    <h4 style="color: #4caf50; margin-bottom: 10px;">✅ 风险控制铁律</h4>
-                    <ul style="line-height: 2; padding-left: 20px;">
-                        <li>任何时候都要保留<strong>30%现金/短债</strong>作为安全垫</li>
-                        <li>配置<strong>5-15%黄金</strong>作为极端风险对冲</li>
-                        <li><strong>分散投资</strong>，单一资产不超过50%</li>
-                        <li>定期再平衡，动态调整配置</li>
-                    </ul>
-                </div>
-            </section>
+            <!-- 免责声明和来源 -->
+            <div class="source">
+                <p><strong>数据来源</strong>：</p>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>中国黄金基础金价 - <a href="http://gold.cnfol.com/jinshijiage/20250124/31128026.shtml" target="_blank">东方财富网</a></li>
+                    <li>白银期货价格 - <a href="https://ag.cngold.org/c/2025-01-29/c9705681.html" target="_blank">中国白银网</a></li>
+                    <li>铜价格行情 - <a href="https://finance.eastmoney.com/a/202512213597625748.html" target="_blank">东方财富网</a></li>
+                    <li>2026年宏观经济展望 - <a href="https://www.21jingji.com/article/20251229/herald/1228df47b7337a2eb7f4ff2f28aeacee.html" target="_blank">招商银行</a></li>
+                    <li>2026年大类资产配置 - <a href="https://finance.sina.com.cn/roll/2026-01-28/doc-inhivfcc9149838.shtml" target="_blank">新浪财经</a></li>
+                    <li>康波周期理论 - 周金涛《涛动周期论》</li>
+                </ul>
 
-            <!-- 第九部分：行动清单 -->
-            <section class="section">
-                <h2 class="section-title">九、2025年行动清单</h2>
+                <p style="margin-top: 20px;"><strong>⚠️ 免责声明</strong></p>
+                <p>本报告仅供学习参考，不构成任何投资建议。市场有风险，投资需谨慎。所有预测基于当前市场信息和公开数据分析，实际情况可能与预测存在偏差。请根据自身风险承受能力和投资目标，独立做出投资决策。</p>
 
-                <div class="card">
-                    <div class="card-title">🚀 立即执行（本月内）</div>
-                    <ul class="action-list">
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>梳理现有资产，卖出非优质资产</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>建立现金储备（目标：30%仓位）</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>配置黄金（目标：20-25%仓位）</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>开始定投优质股票基金（每月定期投入）</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>学习AI、新能源、生物医药知识</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">📅 2025-2026年逐步推进</div>
-                    <ul class="action-list">
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>关注美联储降息信号</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>研究核心城市房产投资机会</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>小额试探新技术相关投资</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>积累投资知识，提升认知水平</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">🎯 2027年重点布局</div>
-                    <ul class="action-list">
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>加大股票配置至35%以上</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>布局大宗商品（目标15%）</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>关注核心城市房产</span>
-                        </li>
-                        <li class="action-item">
-                            <input type="checkbox" class="action-checkbox">
-                            <span>减少黄金和现金配置</span>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- 第十部分：核心结论 -->
-            <section class="section">
-                <h2 class="section-title">十、核心结论与行动指南</h2>
-
-                <div class="grid-container">
-                    <div class="stat-card">
-                        <div class="stat-value">1</div>
-                        <div class="stat-label">当前处于萧条期末端</div>
-                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">即将进入回升期</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">未来五年关键期</div>
-                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">2025防守 2027进攻</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">人生财富机会</div>
-                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">2030年最重要</p>
-                    </div>
-                </div>
-
-                <div class="opportunity-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-left: none;">
-                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.8em;">🎯 一句话总结</h3>
-                    <p style="font-size: 1.3em; line-height: 2; text-align: center;">
-                        <strong>2025-2026防守，2027进攻，2028-2030激进<br>2030把握人生第三次财富机会！</strong>
-                    </p>
-                </div>
-
-                <div class="info-box">
-                    <h4 style="color: #2196f3; margin-bottom: 10px;">📚 推荐学习资源</h4>
-                    <ul style="line-height: 2; padding-left: 20px;">
-                        <li><strong>《涛动周期论》</strong> - 周金涛著（必读）</li>
-                        <li><strong>《康德拉季耶夫经济长波论》</strong></li>
-                        <li>中信建投证券研究-周金涛系列报告</li>
-                        <li>长江证券研究-周期系列报告</li>
-                    </ul>
-                </div>
-
-                <div class="warning-box">
-                    <h4 style="color: #ff9800; margin-bottom: 10px;">⚠️ 免责声明</h4>
-                    <p>本文档仅供学习研究参考，不构成投资建议。市场有风险，投资需谨慎。请根据自身风险承受能力和投资目标做出独立判断。</p>
-                </div>
-            </section>
-
-            <!-- 结语 -->
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 15px; text-align: center; margin-top: 50px;">
-                <h2 style="margin-bottom: 20px;">💫 周金涛名言</h2>
-                <p style="font-size: 1.3em; line-height: 2; font-style: italic;">
-                    "在长周期的面前，你的一生的努力可能都是微不足道的，<br>
-                    但是你如果踩准了周期的节拍，<br>
-                    你的财富会呈指数级增长。"
+                <p style="margin-top: 10px; font-size: 0.9em; color: #999;">
+                    报告生成时间：2026年1月 | 基于2026年1月实时数据 | 康波周期理论应用
                 </p>
             </div>
         </div>
-
-        <div class="footer">
-            <p>基于周金涛康波周期理论研究 | 更新时间：2026年1月</p>
-            <p style="margin-top: 10px; opacity: 0.8;">市场有风险，投资需谨慎</p>
-        </div>
     </div>
-
-    <script>
-        // 添加交互效果
-        document.querySelectorAll('.allocation-bar').forEach(bar => {
-            bar.addEventListener('mouseenter', function() {
-                this.style.filter = 'brightness(1.2)';
-            });
-            bar.addEventListener('mouseleave', function() {
-                this.style.filter = 'brightness(1)';
-            });
-        });
-
-        // 复选框功能
-        document.querySelectorAll('.action-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const parent = this.closest('.action-item');
-                if (this.checked) {
-                    parent.style.background = '#e8f5e9';
-                    parent.style.borderLeftColor = '#4caf50';
-                } else {
-                    parent.style.background = 'white';
-                    parent.style.borderLeftColor = '#667eea';
-                }
-            });
-        });
-
-        // 添加滚动动画
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.card, .stat-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s, transform 0.5s';
-            observer.observe(card);
-        });
-    </script>
 </body>
 </html>
