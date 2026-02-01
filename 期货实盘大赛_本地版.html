@@ -39,11 +39,12 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
             font-size: 1.1em;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .nav-button {
@@ -82,12 +83,50 @@
             border-radius: 8px;
         }
 
+        .update-info strong {
+            color: #1976d2;
+        }
+
+        /* 数据统计概览 */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stat-card-label {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
         /* 前三名卡片 */
         .top-players {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .player-card {
@@ -96,6 +135,7 @@
             padding: 25px;
             position: relative;
             transition: all 0.3s;
+            border: 2px solid transparent;
         }
 
         .player-card:hover {
@@ -104,86 +144,81 @@
         }
 
         .player-card.gold {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #333;
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            border: 3px solid #ffd700;
         }
 
         .player-card.silver {
-            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
-            color: #333;
+            background: linear-gradient(135deg, #e8e8e8 0%, #b8b8b8 100%);
+            border: 3px solid #c0c0c0;
         }
 
         .player-card.bronze {
-            background: linear-gradient(135deg, #cd7f32 0%, #e6a068 100%);
+            background: linear-gradient(135deg, #f5e6d3 0%, #cd7f32 100%);
             color: white;
+            border: 3px solid #cd7f32;
         }
 
         .rank-badge {
             position: absolute;
-            top: -15px;
-            right: 20px;
+            top: -10px;
+            left: -10px;
             width: 50px;
             height: 50px;
-            background: #f5576c;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.3em;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-card.gold .rank-badge {
+            background: #ffd700;
+        }
+
+        .player-card.silver .rank-badge {
+            background: #c0c0c0;
+        }
+
+        .player-card.bronze .rank-badge {
+            background: #cd7f32;
         }
 
         .player-name {
             font-size: 1.5em;
-            font-weight: 700;
+            font-weight: bold;
             margin-bottom: 15px;
         }
 
-        .player-stats {
-            display: grid;
-            gap: 10px;
+        .player-info {
+            margin: 10px 0;
+            font-size: 1em;
         }
 
-        .player-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .player-stat:last-child {
-            border-bottom: none;
-        }
-
-        .stat-label-small {
-            font-size: 0.9em;
-            opacity: 0.7;
-        }
-
-        .stat-value-small {
+        .player-info strong {
             font-weight: 600;
         }
 
-        /* 排行榜样式 */
+        /* 表格样式 */
         .section {
             margin-bottom: 40px;
         }
 
         .section-title {
             font-size: 1.8em;
-            color: #333;
+            color: #19547b;
             margin-bottom: 20px;
-            border-left: 5px solid #19547b;
-            padding-left: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #19547b;
         }
 
-        /* 表格样式 */
         .table-container {
             overflow-x: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         table {
@@ -193,52 +228,47 @@
         }
 
         thead {
-            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
-        th, td {
+        th {
             padding: 15px;
             text-align: left;
-        }
-
-        th {
             font-weight: 600;
-            white-space: nowrap;
+            text-transform: uppercase;
+            font-size: 0.9em;
         }
 
-        tbody tr {
+        td {
+            padding: 15px;
             border-bottom: 1px solid #e0e0e0;
-            transition: background 0.2s;
         }
 
         tbody tr:hover {
             background: #f5f5f5;
+            transition: background 0.3s;
         }
 
-        .rank-number {
-            display: inline-block;
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            text-align: center;
-            border-radius: 50%;
-            background: #f5f5f5;
-            font-weight: 600;
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: #f0f0f0;
         }
 
         .rank-top1 {
-            background: #ffd700;
-            color: #333;
+            background: #fff8e1;
+            font-weight: bold;
         }
 
         .rank-top2 {
-            background: #c0c0c0;
+            background: #f5f5f5;
         }
 
         .rank-top3 {
-            background: #cd7f32;
-            color: white;
+            background: #fff3e0;
         }
 
         .profit-positive {
@@ -251,51 +281,34 @@
             font-weight: 600;
         }
 
-        /* 统计卡片 */
-        .stats-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .stat-card-value {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .stat-card-label {
-            font-size: 1em;
-            opacity: 0.9;
-        }
-
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-        }
-
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
+            .container {
+                margin: 10px;
+                border-radius: 15px;
             }
 
             .content {
                 padding: 20px;
             }
 
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+
             .top-players {
                 grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
             }
         }
     </style>
@@ -303,62 +316,45 @@
 <body>
     <div class="container">
         <div class="header">
+            <h1>📊 期货日报第十九届实盘大赛</h1>
+            <p>轻量组前100名排行榜（按净利润额排序）</p>
             <div class="nav-button">
-                <a href="index.html">← 返回主页</a>
+                <a href="https://spdspc.qhrb.com.cn/#/" target="_blank">前往官网查询</a>
             </div>
-            <h1>📊 期货日报第十九届实盘大赛 - 轻量组前100名</h1>
-            <p>第十九届（2025年）收益额组排行榜</p>
         </div>
 
         <div class="content">
             <!-- 更新信息 -->
             <div class="update-info">
-                <div>
-                    <strong>📊 数据来源</strong>：期货日报第十九届实盘大赛 - 收益额组排行榜
-                    <br>
-                    <strong>📅 数据截止</strong>：2025年9月26日
-                    <br>
-                    <strong>💰 排名规则</strong>：按净利润额（收益额）从高到低排序
-                </div>
-            </div>
-
-            <!-- 官方查询链接 -->
-            <div style="background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%); border-left: 4px solid #ffa000; padding: 25px; margin-bottom: 30px; border-radius: 10px; text-align: center;">
-                <a href="https://spdspc.qhrb.com.cn/#/" target="_blank" style="
-                    display: inline-block;
-                    padding: 12px 30px;
-                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                    color: white;
-                    text-decoration: none;
-                    border-radius: 25px;
-                    font-weight: 600;
-                    font-size: 16px;
-                    transition: all 0.3s;
-                    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
-                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(240, 147, 251, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(240, 147, 251, 0.3)'">
-                    🎯 前往期货日报官方查询网站
-                </a>
+                <strong>📅 数据信息</strong><br>
+                数据来源：期货日报第十九届实盘大赛轻量组<br>
+                数据截止：2025-09-26 | 更新时间：2026-02-01 12:44:19<br>
+                排名说明：按累计净利润额从高到低排序
             </div>
 
             <!-- 数据统计概览 -->
             <div class="stats-overview">
                 <div class="stat-card">
-                    <div class="stat-card-value" id="totalProfit">13213.99</div>
-                    <div class="stat-card-label">榜单总净利润(万)</div>
+                    <div class="stat-card-value">100</div>
+                    <div class="stat-card-label">榜单人数</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-card-value" id="avgProfit">132.14</div>
-                    <div class="stat-card-label">平均净利润(万)</div>
+                    <div class="stat-card-value">13213.99</div>
+                    <div class="stat-card-label">榜单总净利润(万元)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-card-value" id="topProfit">622.34</div>
-                    <div class="stat-card-label">最高净利润(万)</div>
+                    <div class="stat-card-value">132.14</div>
+                    <div class="stat-card-label">平均净利润(万元)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value">622.34</div>
+                    <div class="stat-card-label">最高净利润(万元)</div>
                 </div>
             </div>
 
             <!-- 前三名选手 -->
             <div class="section">
-                <h2 class="section-title">🏆 收益额组前三名</h2>
+                <h2 class="section-title">🏆 前三名选手</h2>
                 <div class="top-players" id="topPlayers">
                     <!-- 动态填充 -->
                 </div>
@@ -366,7 +362,7 @@
 
             <!-- 完整排行榜 -->
             <div class="section">
-                <h2 class="section-title">📋 完整排行榜（前100名）</h2>
+                <h2 class="section-title">📋 完整排行榜（轻量组前100名）</h2>
                 <div class="table-container">
                     <table>
                         <thead>
@@ -379,136 +375,29 @@
                                 <th>期货公司</th>
                             </tr>
                         </thead>
-                        <tbody id="rankingsBody">
+                        <tbody id="rankingTable">
                             <!-- 动态填充 -->
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <div class="footer">
-            <p>数据来源：期货日报第届全国期货实盘交易大赛官方网站</p>
-            <p>数据截止：2025年9月26日 | 本页面仅供参考，请以官方数据为准</p>
+            <!-- 底部信息 -->
+            <div class="update-info" style="text-align: center; margin-top: 40px;">
+                <p><strong>数据声明</strong></p>
+                <p style="margin-top: 10px;">本页面数据来源于期货日报实盘大赛官方网站，仅供参考，不构成投资建议。</p>
+                <p>如需查看完整数据或最新排名，请访问<a href="https://spdspc.qhrb.com.cn/#/" target="_blank" style="color: #1976d2;">官方网站</a>。</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // 数据来源：期货日报第十九届实盘大赛
+        // 数据来源：期货日报第十九届实盘大赛轻量组
         // 排名方式：按净利润额（收益额）从高到低排序
         // 数据截止：2025-09-26
-                // 数据来源：期货日报第十九届实盘大赛轻量组
-        // 排名方式：按净利润额（收益额）从高到低排序
-        // 数据截止：2025-09-26
-        // 更新时间：2026-02-01 12:32:59
-        // 数据条数：400条
-                // 数据来源：期货日报第十九届实盘大赛轻量组
-        // 排名方式：按净利润额（收益额）从高到低排序
-        // 数据截止：2025-09-26
-        // 更新时间：2026-02-01 12:36:39
-        // 数据条数：100条（前100名）
-        const PLAYERS_DATA = [
-            {"rank": 1, "name": "Quant", "score": 50.313, "return_rate": -17.223, "total_profit": 6223396.58, "broker": "宏源期货"}
-            {"rank": 2, "name": "民", "score": 47.483, "return_rate": 4.567999999999998, "total_profit": 5505751.11, "broker": "瑞达期货"}
-            {"rank": 3, "name": "纯纯", "score": 75.48, "return_rate": -20.307000000000002, "total_profit": 4887003.21, "broker": "国泰君安期货"}
-            {"rank": 4, "name": "无名之辈", "score": 49.736, "return_rate": 0.0, "total_profit": 4607595.99, "broker": "正信期货"}
-            {"rank": 5, "name": "牛没有上牙", "score": 52.245, "return_rate": 3.9949999999999903, "total_profit": 3892979.85, "broker": "中信期货"}
-            {"rank": 6, "name": "稳健盈利", "score": 50.147, "return_rate": -4.373999999999995, "total_profit": 3863772.04, "broker": "弘业期货"}
-            {"rank": 7, "name": "黑旋风", "score": 49.446, "return_rate": 17.707000000000008, "total_profit": 3395133.06, "broker": "中信建投期货"}
-            {"rank": 8, "name": "YY", "score": 50.282, "return_rate": -2.1480000000000103, "total_profit": 3046506.11, "broker": "国贸期货"}
-            {"rank": 9, "name": "乘风破浪", "score": 47.505, "return_rate": 2.8029999999999973, "total_profit": 2913789.99, "broker": "中信期货"}
-            {"rank": 10, "name": "成冠财富24号", "score": 49.306, "return_rate": -7.698999999999998, "total_profit": 2663801.61, "broker": "海通期货"}
-            {"rank": 11, "name": "一路向北", "score": 47.483, "return_rate": 5.668999999999997, "total_profit": 2490633.99, "broker": "山西三立期货"}
-            {"rank": 12, "name": "羊羊得亿", "score": 48.564, "return_rate": -6.927000000000007, "total_profit": 2463068.98, "broker": "中泰期货"}
-            {"rank": 13, "name": "Xf", "score": 48.734, "return_rate": 13.081999999999994, "total_profit": 2263984.76, "broker": "大有期货"}
-            {"rank": 14, "name": "世泽", "score": 47.456, "return_rate": -2.971999999999994, "total_profit": 2149312.7, "broker": "中辉期货"}
-            {"rank": 15, "name": "白云", "score": 47.43, "return_rate": -2.108000000000004, "total_profit": 2129313.5, "broker": "中衍期货"}
-            {"rank": 16, "name": "?鵐龘", "score": 47.692, "return_rate": 3.004000000000005, "total_profit": 2026861.13, "broker": "中信建投期货"}
-            {"rank": 17, "name": "乔纳森资本", "score": 48.431, "return_rate": 10.807000000000016, "total_profit": 2024515.66, "broker": "银河期货"}
-            {"rank": 18, "name": "小白", "score": 49.224, "return_rate": -6.054999999999993, "total_profit": 2016155.99, "broker": "长安期货"}
-            {"rank": 19, "name": "江浩02", "score": 48.598, "return_rate": -5.911000000000001, "total_profit": 2014352.58, "broker": "东证期货"}
-            {"rank": 20, "name": "炒股养猪猪", "score": 47.55, "return_rate": -1.1710000000000065, "total_profit": 1971302.38, "broker": "中泰期货"}
-            {"rank": 21, "name": "馆陶", "score": 48.304, "return_rate": 1.757000000000005, "total_profit": 1944923.01, "broker": "东航期货"}
-            {"rank": 22, "name": "汪老师", "score": 48.499, "return_rate": -2.8370000000000033, "total_profit": 1934843.02, "broker": "信达期货"}
-            {"rank": 23, "name": "小镰刀", "score": 48.469, "return_rate": -1.6460000000000008, "total_profit": 1925285.24, "broker": "正信期货"}
-            {"rank": 24, "name": "觅知行者", "score": 48.418, "return_rate": -4.963999999999999, "total_profit": 1922896.44, "broker": "方正中期期货"}
-            {"rank": 25, "name": "象牙村格格巫", "score": 48.045, "return_rate": 3.799999999999997, "total_profit": 1895215.23, "broker": "华安期货"}
-            {"rank": 26, "name": "煜弟哥哥", "score": 48.052, "return_rate": -4.561000000000007, "total_profit": 1880161.98, "broker": "平安期货"}
-            {"rank": 27, "name": "云淡风轻bj", "score": 47.646, "return_rate": 7.9210000000000065, "total_profit": 1706090.93, "broker": "中国国际期货"}
-            {"rank": 28, "name": "YY", "score": 47.808, "return_rate": 1.5039999999999907, "total_profit": 1641903.93, "broker": "方正中期期货"}
-            {"rank": 29, "name": "陈先生", "score": 47.74, "return_rate": -4.619, "total_profit": 1626728.9, "broker": "国贸期货"}
-            {"rank": 30, "name": "宏", "score": 47.795, "return_rate": -4.459999999999994, "total_profit": 1618987.99, "broker": "国贸期货"}
-            {"rank": 31, "name": "天边一匹马", "score": 47.446, "return_rate": -5.409999999999997, "total_profit": 1604041.36, "broker": "新湖期货"}
-            {"rank": 32, "name": "陶瓷", "score": 48.015, "return_rate": -6.438000000000002, "total_profit": 1594243.98, "broker": "大越期货"}
-            {"rank": 33, "name": "乘风一号", "score": 48.091, "return_rate": -7.481999999999999, "total_profit": 1579022.9, "broker": "国贸期货"}
-            {"rank": 34, "name": "lyyy", "score": 48.376, "return_rate": 0.1490000000000009, "total_profit": 1568143.31, "broker": "齐盛期货"}
-            {"rank": 35, "name": "天边一匹马", "score": 47.603, "return_rate": -5.006, "total_profit": 1559836.72, "broker": "海通期货"}
-            {"rank": 36, "name": "龙飞凤舞", "score": 48.293, "return_rate": -5.969000000000008, "total_profit": 1529209.5, "broker": "福能期货"}
-            {"rank": 37, "name": "之乎者也", "score": 49.221, "return_rate": 0.0, "total_profit": 1447180.74, "broker": "广发期货"}
-            {"rank": 38, "name": "三个月", "score": 51.136, "return_rate": -4.810000000000002, "total_profit": 1433429.06, "broker": "广发期货"}
-            {"rank": 39, "name": "超华中信", "score": 48.029, "return_rate": 0.20999999999999375, "total_profit": 1385485.22, "broker": "中信期货"}
-            {"rank": 40, "name": "威廉斯", "score": 48.295, "return_rate": -3.227000000000004, "total_profit": 1346658.33, "broker": "海通期货"}
-            {"rank": 41, "name": "指术投资", "score": 48.098, "return_rate": -3.129000000000005, "total_profit": 1269702.38, "broker": "华鑫期货"}
-            {"rank": 42, "name": "越简单越好", "score": 47.822, "return_rate": 0.0, "total_profit": 1257737.96, "broker": "宝城期货"}
-            {"rank": 43, "name": "小贤", "score": 47.452, "return_rate": 0.0, "total_profit": 1221272.19, "broker": "格林大华期货"}
-            {"rank": 44, "name": "无所吊谓", "score": 48.058, "return_rate": -1.0120000000000005, "total_profit": 1213032.37, "broker": "东航期货"}
-            {"rank": 45, "name": "27", "score": 47.822, "return_rate": 0.9309999999999974, "total_profit": 1157057.92, "broker": "徽商期货"}
-            {"rank": 46, "name": "期迹", "score": 48.372, "return_rate": -1.2329999999999899, "total_profit": 1104818.88, "broker": "正信期货"}
-            {"rank": 47, "name": "禾汝鬼", "score": 47.692, "return_rate": 60.535, "total_profit": 1095114.24, "broker": "金瑞期货"}
-            {"rank": 48, "name": "神秘剑客_8067", "score": 47.465, "return_rate": -1.7680000000000007, "total_profit": 1079284.46, "broker": "海通期货"}
-            {"rank": 49, "name": "心动百倍", "score": 47.913, "return_rate": -1.7240000000000038, "total_profit": 1074172.22, "broker": "银河期货"}
-            {"rank": 50, "name": "C1D1", "score": 47.875, "return_rate": -3.7439999999999998, "total_profit": 1064320.07, "broker": "华泰期货"}
-            {"rank": 51, "name": "陈*妹", "score": 47.826, "return_rate": -4.625999999999991, "total_profit": 1056442.0, "broker": "国贸期货"}
-            {"rank": 52, "name": "JYl壮强", "score": 47.633, "return_rate": -0.9480000000000075, "total_profit": 1056068.26, "broker": "华联期货"}
-            {"rank": 53, "name": "骏", "score": 47.991, "return_rate": -2.8760000000000048, "total_profit": 1043519.4, "broker": "国贸期货"}
-            {"rank": 54, "name": "万马奔腾", "score": 47.814, "return_rate": -0.416000000000011, "total_profit": 989196.53, "broker": "中粮期货"}
-            {"rank": 55, "name": "fyy", "score": 48.003, "return_rate": -2.8599999999999994, "total_profit": 968625.7, "broker": "国贸期货"}
-            {"rank": 56, "name": "小鹏", "score": 47.709, "return_rate": -2.944999999999993, "total_profit": 960196.9, "broker": "上海中期期货"}
-            {"rank": 57, "name": "绵羊", "score": 48.087, "return_rate": -1.9190000000000111, "total_profit": 957906.64, "broker": "国泰君安期货"}
-            {"rank": 58, "name": "candy-boy", "score": 48.643, "return_rate": 16.665999999999997, "total_profit": 955649.52, "broker": "福能期货"}
-            {"rank": 59, "name": "晟品兴", "score": 47.945, "return_rate": 0.0, "total_profit": 941205.67, "broker": "国贸期货"}
-            {"rank": 60, "name": "ADHD", "score": 47.912, "return_rate": 0.0, "total_profit": 930608.13, "broker": "国联期货"}
-            {"rank": 61, "name": "飞得更高", "score": 47.606, "return_rate": -1.3850000000000051, "total_profit": 925979.71, "broker": "中泰期货"}
-            {"rank": 62, "name": "侯门", "score": 47.469, "return_rate": -2.608000000000004, "total_profit": 923775.79, "broker": "中财期货"}
-            {"rank": 63, "name": "钱塘潮信", "score": 47.684, "return_rate": 1.3670000000000044, "total_profit": 860278.33, "broker": "东证期货"}
-            {"rank": 64, "name": "中鑫资本", "score": 47.493, "return_rate": -3.686000000000007, "total_profit": 836973.12, "broker": "中信期货"}
-            {"rank": 65, "name": "小美", "score": 47.737, "return_rate": -5.840999999999994, "total_profit": 827304.77, "broker": "国贸期货"}
-            {"rank": 66, "name": "胤摷季＊弗吏", "score": 48.103, "return_rate": 10.358000000000004, "total_profit": 798717.46, "broker": "中粮期货"}
-            {"rank": 67, "name": "惠丰顾盈2号", "score": 47.457, "return_rate": -5.405000000000001, "total_profit": 758555.07, "broker": "华联期货"}
-            {"rank": 68, "name": "whday", "score": 47.593, "return_rate": 0.0, "total_profit": 706224.87, "broker": "东证期货"}
-            {"rank": 69, "name": "虎哥", "score": 47.571, "return_rate": -4.308000000000007, "total_profit": 696498.38, "broker": "创元期货"}
-            {"rank": 70, "name": "沙漠草", "score": 47.901, "return_rate": 0.0, "total_profit": 681577.87, "broker": "华金期货"}
-            {"rank": 71, "name": "钟*豪", "score": 48.594, "return_rate": 0.0, "total_profit": 667800.92, "broker": "国海良时期货"}
-            {"rank": 72, "name": "曹", "score": 47.935, "return_rate": 1.1679999999999922, "total_profit": 609149.06, "broker": "福能期货"}
-            {"rank": 73, "name": "真名怕被打", "score": 47.435, "return_rate": -5.081999999999994, "total_profit": 596721.8, "broker": "东证期货"}
-            {"rank": 74, "name": "十门", "score": 47.527, "return_rate": 1.0750000000000028, "total_profit": 579499.15, "broker": "华金期货"}
-            {"rank": 75, "name": "往是如风", "score": 47.861, "return_rate": 0.05500000000000682, "total_profit": 530966.52, "broker": "徽商期货"}
-            {"rank": 76, "name": "皮皮虾24号", "score": 48.09, "return_rate": -0.08799999999999386, "total_profit": 528900.24, "broker": "国富期货"}
-            {"rank": 77, "name": "武林侠客_8036", "score": 57.772, "return_rate": -42.662, "total_profit": 462388.21, "broker": "海通期货"}
-            {"rank": 78, "name": "静夜思", "score": 52.994, "return_rate": 5.128, "total_profit": 376121.96, "broker": "光大期货"}
-            {"rank": 79, "name": "本格量化-王哥", "score": 48.467, "return_rate": 0.26900000000000546, "total_profit": 371318.11, "broker": "宝城期货"}
-            {"rank": 80, "name": "小虎生威", "score": 47.61, "return_rate": 0.0, "total_profit": 284394.12, "broker": "徽商期货"}
-            {"rank": 81, "name": "东西堂主", "score": 51.279, "return_rate": 5.037000000000006, "total_profit": 254835.52, "broker": "华安期货"}
-            {"rank": 82, "name": "龙哥", "score": 79.241, "return_rate": 0.07099999999999795, "total_profit": 227882.92, "broker": "国元期货"}
-            {"rank": 83, "name": "玮我有琳", "score": 47.679, "return_rate": 0.5260000000000105, "total_profit": 203488.26, "broker": "国金期货"}
-            {"rank": 84, "name": "翘辫子", "score": 60.938, "return_rate": 12.264999999999986, "total_profit": 192305.59, "broker": "银河期货"}
-            {"rank": 85, "name": "吾剑", "score": 79.428, "return_rate": 3.1239999999999952, "total_profit": 175945.23, "broker": "中衍期货"}
-            {"rank": 86, "name": "鸿云投资", "score": 47.792, "return_rate": 0.0, "total_profit": 158615.34, "broker": "国贸期货"}
-            {"rank": 87, "name": "挖矿工", "score": 48.052, "return_rate": -13.038000000000011, "total_profit": 127917.6, "broker": "徽商期货"}
-            {"rank": 88, "name": "龙蛇灵变", "score": 63.509, "return_rate": 0.9470000000000027, "total_profit": 124518.05, "broker": "民生期货"}
-            {"rank": 89, "name": "蔡神驾到", "score": 59.242, "return_rate": 13.382000000000005, "total_profit": 88979.79, "broker": "山西三立期货"}
-            {"rank": 90, "name": "常红", "score": 55.285, "return_rate": 0.0, "total_profit": 76236.31, "broker": "中衍期货"}
-            {"rank": 91, "name": "剑破苍穹", "score": 50.389, "return_rate": 5.9140000000000015, "total_profit": 66818.61, "broker": "徽商期货"}
-            {"rank": 92, "name": "金汐", "score": 48.053, "return_rate": -0.35999999999999943, "total_profit": 65527.73, "broker": "中泰期货"}
-            {"rank": 93, "name": "勇猛精进", "score": 49.103, "return_rate": 0.0, "total_profit": 60931.74, "broker": "山金期货"}
-            {"rank": 94, "name": "争霸平安", "score": 55.245, "return_rate": 0.0, "total_profit": 53173.25, "broker": "平安期货"}
-            {"rank": 95, "name": "防守进攻", "score": 47.493, "return_rate": 0.0, "total_profit": 47129.26, "broker": "创元期货"}
-            {"rank": 96, "name": "药师", "score": 48.293, "return_rate": 0.0, "total_profit": 44817.7, "broker": "海通期货"}
-            {"rank": 97, "name": "九十一", "score": 47.952, "return_rate": 0.0, "total_profit": 25021.62, "broker": "国元期货"}
-            {"rank": 98, "name": "星月神话", "score": 48.535, "return_rate": 0.0, "total_profit": 17349.03, "broker": "兴业期货"}
-            {"rank": 99, "name": "剑斩虚空", "score": 48.369, "return_rate": 0.0, "total_profit": 10940.73, "broker": "大越期货"}
-            {"rank": 100, "name": "凤舞九天", "score": 47.52, "return_rate": 0.0, "total_profit": 4918.38, "broker": "山金期货"}
-        ];
+        // 更新时间：2026-02-01 12:44:19
+        // 数据条数：100条（轻量组前100名）
+        const PLAYERS_DATA = [{"rank": 15, "name": "Quant", "broker": "宏源期货", "total_profit": 6223396.58, "return_rate": -17.223, "score": 50.313, "daily_equity": 6770255.04, "total_net_worth": 10.21385, "profit_rank": 1}, {"rank": 92, "name": "民", "broker": "瑞达期货", "total_profit": 5505751.11, "return_rate": 4.567999999999998, "score": 47.483, "daily_equity": 5849410.12, "total_net_worth": 2.7516, "profit_rank": 2}, {"rank": 3, "name": "纯纯", "broker": "国泰君安期货", "total_profit": 4887003.21, "return_rate": -20.307000000000002, "score": 75.48, "daily_equity": 286493.78, "total_net_worth": 7.67137, "profit_rank": 3}, {"rank": 18, "name": "无名之辈", "broker": "正信期货", "total_profit": 4607595.99, "return_rate": 0.0, "score": 49.736, "daily_equity": 1708.95, "total_net_worth": 17.19009, "profit_rank": 4}, {"rank": 11, "name": "牛没有上牙", "broker": "中信期货", "total_profit": 3892979.85, "return_rate": 3.9949999999999903, "score": 52.245, "daily_equity": 98926.73, "total_net_worth": 13.21701, "profit_rank": 5}, {"rank": 17, "name": "稳健盈利", "broker": "弘业期货", "total_profit": 3863772.04, "return_rate": -4.373999999999995, "score": 50.147, "daily_equity": 4140397.19, "total_net_worth": 5.36645, "profit_rank": 6}, {"rank": 19, "name": "黑旋风", "broker": "中信建投期货", "total_profit": 3395133.06, "return_rate": 17.707000000000008, "score": 49.446, "daily_equity": 3695923.1, "total_net_worth": 9.91637, "profit_rank": 7}, {"rank": 16, "name": "YY", "broker": "国贸期货", "total_profit": 3046506.11, "return_rate": -2.1480000000000103, "score": 50.282, "daily_equity": 4032342.56, "total_net_worth": 4.09035, "profit_rank": 8}, {"rank": 88, "name": "乘风破浪", "broker": "中信期货", "total_profit": 2913789.99, "return_rate": 2.8029999999999973, "score": 47.505, "daily_equity": 1545158.58, "total_net_worth": 16.0268, "profit_rank": 9}, {"rank": 20, "name": "成冠财富24号", "broker": "海通期货", "total_profit": 2663801.61, "return_rate": -7.698999999999998, "score": 49.306, "daily_equity": 3411088.83, "total_net_worth": 4.43184, "profit_rank": 10}, {"rank": 91, "name": "一路向北", "broker": "山西三立期货", "total_profit": 2490633.99, "return_rate": 5.668999999999997, "score": 47.483, "daily_equity": 410013.99, "total_net_worth": 6.33252, "profit_rank": 11}, {"rank": 28, "name": "羊羊得亿", "broker": "中泰期货", "total_profit": 2463068.98, "return_rate": -6.927000000000007, "score": 48.564, "daily_equity": 3289834.02, "total_net_worth": 3.8726, "profit_rank": 12}, {"rank": 24, "name": "Xf", "broker": "大有期货", "total_profit": 2263984.76, "return_rate": 13.081999999999994, "score": 48.734, "daily_equity": 1989068.45, "total_net_worth": 5.17268, "profit_rank": 13}, {"rank": 96, "name": "世泽", "broker": "中辉期货", "total_profit": 2149312.7, "return_rate": -2.971999999999994, "score": 47.456, "daily_equity": 789596.44, "total_net_worth": 3.64818, "profit_rank": 14}, {"rank": 100, "name": "白云", "broker": "中衍期货", "total_profit": 2129313.5, "return_rate": -2.108000000000004, "score": 47.43, "daily_equity": 987154.43, "total_net_worth": 3.63858, "profit_rank": 15}, {"rank": 74, "name": "?鵐龘", "broker": "中信建投期货", "total_profit": 2026861.13, "return_rate": 3.004000000000005, "score": 47.692, "daily_equity": 1069806.17, "total_net_worth": 6.34044, "profit_rank": 16}, {"rank": 33, "name": "乔纳森资本", "broker": "银河期货", "total_profit": 2024515.66, "return_rate": 10.807000000000016, "score": 48.431, "daily_equity": 2127118.15, "total_net_worth": 3.61358, "profit_rank": 17}, {"rank": 21, "name": "小白", "broker": "长安期货", "total_profit": 2016155.99, "return_rate": -6.054999999999993, "score": 49.224, "daily_equity": 1030279.02, "total_net_worth": 5.01615, "profit_rank": 18}, {"rank": 26, "name": "江浩02", "broker": "东证期货", "total_profit": 2014352.58, "return_rate": -5.911000000000001, "score": 48.598, "daily_equity": 2652669.4, "total_net_worth": 3.93049, "profit_rank": 19}, {"rank": 85, "name": "炒股养猪猪", "broker": "中泰期货", "total_profit": 1971302.38, "return_rate": -1.1710000000000065, "score": 47.55, "daily_equity": 2274087.02, "total_net_worth": 3.88255, "profit_rank": 20}, {"rank": 38, "name": "馆陶", "broker": "东航期货", "total_profit": 1944923.01, "return_rate": 1.757000000000005, "score": 48.304, "daily_equity": 1272837.99, "total_net_worth": 4.73249, "profit_rank": 21}, {"rank": 30, "name": "汪老师", "broker": "信达期货", "total_profit": 1934843.02, "return_rate": -2.8370000000000033, "score": 48.499, "daily_equity": 2859537.86, "total_net_worth": 3.09237, "profit_rank": 22}, {"rank": 31, "name": "小镰刀", "broker": "正信期货", "total_profit": 1925285.24, "return_rate": -1.6460000000000008, "score": 48.469, "daily_equity": 1594244.63, "total_net_worth": 3.29761, "profit_rank": 23}, {"rank": 34, "name": "觅知行者", "broker": "方正中期期货", "total_profit": 1922896.44, "return_rate": -4.963999999999999, "score": 48.418, "daily_equity": 1166992.46, "total_net_worth": 3.49691, "profit_rank": 24}, {"rank": 51, "name": "象牙村格格巫", "broker": "华安期货", "total_profit": 1895215.23, "return_rate": 3.799999999999997, "score": 48.045, "daily_equity": 1570981.01, "total_net_worth": 4.39963, "profit_rank": 25}, {"rank": 49, "name": "煜弟哥哥", "broker": "平安期货", "total_profit": 1880161.98, "return_rate": -4.561000000000007, "score": 48.052, "daily_equity": 2592963.28, "total_net_worth": 2.52952, "profit_rank": 26}, {"rank": 78, "name": "云淡风轻bj", "broker": "中国国际期货", "total_profit": 1706090.93, "return_rate": 7.9210000000000065, "score": 47.646, "daily_equity": 2158398.76, "total_net_worth": 3.48249, "profit_rank": 27}, {"rank": 68, "name": "YY", "broker": "方正中期期货", "total_profit": 1641903.93, "return_rate": 1.5039999999999907, "score": 47.808, "daily_equity": 1874965.56, "total_net_worth": 6.06645, "profit_rank": 28}, {"rank": 71, "name": "陈先生", "broker": "国贸期货", "total_profit": 1626728.9, "return_rate": -4.619, "score": 47.74, "daily_equity": 2330000.04, "total_net_worth": 3.6523, "profit_rank": 29}, {"rank": 69, "name": "宏", "broker": "国贸期货", "total_profit": 1618987.99, "return_rate": -4.459999999999994, "score": 47.795, "daily_equity": 2604129.36, "total_net_worth": 2.90372, "profit_rank": 30}, {"rank": 98, "name": "天边一匹马", "broker": "新湖期货", "total_profit": 1604041.36, "return_rate": -5.409999999999997, "score": 47.446, "daily_equity": 2318349.72, "total_net_worth": 3.24552, "profit_rank": 31}, {"rank": 53, "name": "陶瓷", "broker": "大越期货", "total_profit": 1594243.98, "return_rate": -6.438000000000002, "score": 48.015, "daily_equity": 954271.86, "total_net_worth": 4.12469, "profit_rank": 32}, {"rank": 44, "name": "乘风一号", "broker": "国贸期货", "total_profit": 1579022.9, "return_rate": -7.481999999999999, "score": 48.091, "daily_equity": 1806929.25, "total_net_worth": 3.24486, "profit_rank": 33}, {"rank": 35, "name": "lyyy", "broker": "齐盛期货", "total_profit": 1568143.31, "return_rate": 0.1490000000000009, "score": 48.376, "daily_equity": 2165222.19, "total_net_worth": 2.97433, "profit_rank": 34}, {"rank": 82, "name": "天边一匹马", "broker": "海通期货", "total_profit": 1559836.72, "return_rate": -5.006, "score": 47.603, "daily_equity": 2261957.23, "total_net_worth": 3.2215, "profit_rank": 35}, {"rank": 40, "name": "龙飞凤舞", "broker": "福能期货", "total_profit": 1529209.5, "return_rate": -5.969000000000008, "score": 48.293, "daily_equity": 2205895.2, "total_net_worth": 3.25671, "profit_rank": 36}, {"rank": 22, "name": "之乎者也", "broker": "广发期货", "total_profit": 1447180.74, "return_rate": 0.0, "score": 49.221, "daily_equity": 1387855.41, "total_net_worth": 3.33932, "profit_rank": 37}, {"rank": 13, "name": "三个月", "broker": "广发期货", "total_profit": 1433429.06, "return_rate": -4.810000000000002, "score": 51.136, "daily_equity": 647103.31, "total_net_worth": 19.15737, "profit_rank": 38}, {"rank": 52, "name": "超华中信", "broker": "中信期货", "total_profit": 1385485.22, "return_rate": 0.20999999999999375, "score": 48.029, "daily_equity": 1766807.48, "total_net_worth": 4.04146, "profit_rank": 39}, {"rank": 39, "name": "威廉斯", "broker": "海通期货", "total_profit": 1346658.33, "return_rate": -3.227000000000004, "score": 48.295, "daily_equity": 998843.49, "total_net_worth": 5.0762, "profit_rank": 40}, {"rank": 43, "name": "指术投资", "broker": "华鑫期货", "total_profit": 1269702.38, "return_rate": -3.129000000000005, "score": 48.098, "daily_equity": 1965348.09, "total_net_worth": 2.48942, "profit_rank": 41}, {"rank": 66, "name": "越简单越好", "broker": "宝城期货", "total_profit": 1257737.96, "return_rate": 0.0, "score": 47.822, "daily_equity": 1394353.85, "total_net_worth": 2.74362, "profit_rank": 42}, {"rank": 97, "name": "小贤", "broker": "格林大华期货", "total_profit": 1221272.19, "return_rate": 0.0, "score": 47.452, "daily_equity": 0.0, "total_net_worth": 2.6956, "profit_rank": 43}, {"rank": 47, "name": "无所吊谓", "broker": "东航期货", "total_profit": 1213032.37, "return_rate": -1.0120000000000005, "score": 48.058, "daily_equity": 112505.57, "total_net_worth": 1.92517, "profit_rank": 44}, {"rank": 65, "name": "27", "broker": "徽商期货", "total_profit": 1157057.92, "return_rate": 0.9309999999999974, "score": 47.822, "daily_equity": 1830265.85, "total_net_worth": 2.24541, "profit_rank": 45}, {"rank": 36, "name": "期迹", "broker": "正信期货", "total_profit": 1104818.88, "return_rate": -1.2329999999999899, "score": 48.372, "daily_equity": 1893111.16, "total_net_worth": 2.40164, "profit_rank": 46}, {"rank": 75, "name": "禾汝鬼", "broker": "金瑞期货", "total_profit": 1095114.24, "return_rate": 60.535, "score": 47.692, "daily_equity": 5303.9, "total_net_worth": 15.87497, "profit_rank": 47}, {"rank": 94, "name": "神秘剑客_8067", "broker": "海通期货", "total_profit": 1079284.46, "return_rate": -1.7680000000000007, "score": 47.465, "daily_equity": 1798421.8, "total_net_worth": 2.50067, "profit_rank": 48}, {"rank": 59, "name": "心动百倍", "broker": "银河期货", "total_profit": 1074172.22, "return_rate": -1.7240000000000038, "score": 47.913, "daily_equity": 875430.52, "total_net_worth": 12.97957, "profit_rank": 49}, {"rank": 62, "name": "C1D1", "broker": "华泰期货", "total_profit": 1064320.07, "return_rate": -3.7439999999999998, "score": 47.875, "daily_equity": 1064318.07, "total_net_worth": 2.99807, "profit_rank": 50}, {"rank": 64, "name": "陈*妹", "broker": "国贸期货", "total_profit": 1056442.0, "return_rate": -4.625999999999991, "score": 47.826, "daily_equity": 1032994.75, "total_net_worth": 3.76406, "profit_rank": 51}, {"rank": 79, "name": "JYl壮强", "broker": "华联期货", "total_profit": 1056068.26, "return_rate": -0.9480000000000075, "score": 47.633, "daily_equity": 1227908.75, "total_net_worth": 2.60569, "profit_rank": 52}, {"rank": 55, "name": "骏", "broker": "国贸期货", "total_profit": 1043519.4, "return_rate": -2.8760000000000048, "score": 47.991, "daily_equity": 926324.85, "total_net_worth": 4.9959, "profit_rank": 53}, {"rank": 67, "name": "万马奔腾", "broker": "中粮期货", "total_profit": 989196.53, "return_rate": -0.416000000000011, "score": 47.814, "daily_equity": 1503165.02, "total_net_worth": 2.92485, "profit_rank": 54}, {"rank": 54, "name": "fyy", "broker": "国贸期货", "total_profit": 968625.7, "return_rate": -2.8599999999999994, "score": 48.003, "daily_equity": 1432094.7, "total_net_worth": 3.09004, "profit_rank": 55}, {"rank": 73, "name": "小鹏", "broker": "上海中期期货", "total_profit": 960196.9, "return_rate": -2.944999999999993, "score": 47.709, "daily_equity": 1091151.83, "total_net_worth": 5.97746, "profit_rank": 56}, {"rank": 46, "name": "绵羊", "broker": "国泰君安期货", "total_profit": 957906.64, "return_rate": -1.9190000000000111, "score": 48.087, "daily_equity": 1283884.46, "total_net_worth": 3.31869, "profit_rank": 57}, {"rank": 25, "name": "candy-boy", "broker": "福能期货", "total_profit": 955649.52, "return_rate": 16.665999999999997, "score": 48.643, "daily_equity": 962063.64, "total_net_worth": 20.88871, "profit_rank": 58}, {"rank": 57, "name": "晟品兴", "broker": "国贸期货", "total_profit": 941205.67, "return_rate": 0.0, "score": 47.945, "daily_equity": 1425557.9, "total_net_worth": 2.94314, "profit_rank": 59}, {"rank": 60, "name": "ADHD", "broker": "国联期货", "total_profit": 930608.13, "return_rate": 0.0, "score": 47.912, "daily_equity": 10.0, "total_net_worth": 2.666, "profit_rank": 60}, {"rank": 81, "name": "飞得更高", "broker": "中泰期货", "total_profit": 925979.71, "return_rate": -1.3850000000000051, "score": 47.606, "daily_equity": 1275799.41, "total_net_worth": 1.9957, "profit_rank": 61}, {"rank": 93, "name": "侯门", "broker": "中财期货", "total_profit": 923775.79, "return_rate": -2.608000000000004, "score": 47.469, "daily_equity": 1201727.51, "total_net_worth": 4.32318, "profit_rank": 62}, {"rank": 76, "name": "钱塘潮信", "broker": "东证期货", "total_profit": 860278.33, "return_rate": 1.3670000000000044, "score": 47.684, "daily_equity": 1516896.56, "total_net_worth": 2.61518, "profit_rank": 63}, {"rank": 89, "name": "中鑫资本", "broker": "中信期货", "total_profit": 836973.12, "return_rate": -3.686000000000007, "score": 47.493, "daily_equity": 1038876.44, "total_net_worth": 2.69622, "profit_rank": 64}, {"rank": 72, "name": "小美", "broker": "国贸期货", "total_profit": 827304.77, "return_rate": -5.840999999999994, "score": 47.737, "daily_equity": 678015.6, "total_net_worth": 3.43008, "profit_rank": 65}, {"rank": 42, "name": "胤摷季＊弗吏", "broker": "中粮期货", "total_profit": 798717.46, "return_rate": 10.358000000000004, "score": 48.103, "daily_equity": 597740.14, "total_net_worth": 28.45923, "profit_rank": 66}, {"rank": 95, "name": "惠丰顾盈2号", "broker": "华联期货", "total_profit": 758555.07, "return_rate": -5.405000000000001, "score": 47.457, "daily_equity": 2133691.83, "total_net_worth": 2.73826, "profit_rank": 67}, {"rank": 83, "name": "whday", "broker": "东证期货", "total_profit": 706224.87, "return_rate": 0.0, "score": 47.593, "daily_equity": 0.22, "total_net_worth": 3.0022, "profit_rank": 68}, {"rank": 84, "name": "虎哥", "broker": "创元期货", "total_profit": 696498.38, "return_rate": -4.308000000000007, "score": 47.571, "daily_equity": 925436.19, "total_net_worth": 3.0609, "profit_rank": 69}, {"rank": 61, "name": "沙漠草", "broker": "华金期货", "total_profit": 681577.87, "return_rate": 0.0, "score": 47.901, "daily_equity": 1387368.06, "total_net_worth": 1.98958, "profit_rank": 70}, {"rank": 27, "name": "钟*豪", "broker": "国海良时期货", "total_profit": 667800.92, "return_rate": 0.0, "score": 48.594, "daily_equity": 0.0, "total_net_worth": 1.68536, "profit_rank": 71}, {"rank": 58, "name": "曹", "broker": "福能期货", "total_profit": 609149.06, "return_rate": 1.1679999999999922, "score": 47.935, "daily_equity": 839149.06, "total_net_worth": 3.79935, "profit_rank": 72}, {"rank": 99, "name": "真名怕被打", "broker": "东证期货", "total_profit": 596721.8, "return_rate": -5.081999999999994, "score": 47.435, "daily_equity": 343737.33, "total_net_worth": 2.62402, "profit_rank": 73}, {"rank": 86, "name": "十门", "broker": "华金期货", "total_profit": 579499.15, "return_rate": 1.0750000000000028, "score": 47.527, "daily_equity": 1657462.19, "total_net_worth": 1.93145, "profit_rank": 74}, {"rank": 63, "name": "往是如风", "broker": "徽商期货", "total_profit": 530966.52, "return_rate": 0.05500000000000682, "score": 47.861, "daily_equity": 915478.65, "total_net_worth": 2.01049, "profit_rank": 75}, {"rank": 45, "name": "皮皮虾24号", "broker": "国富期货", "total_profit": 528900.24, "return_rate": -0.08799999999999386, "score": 48.09, "daily_equity": 502361.05, "total_net_worth": 3.16926, "profit_rank": 76}, {"rank": 7, "name": "武林侠客_8036", "broker": "海通期货", "total_profit": 462388.21, "return_rate": -42.662, "score": 57.772, "daily_equity": 967.68, "total_net_worth": 0.30657, "profit_rank": 77}, {"rank": 10, "name": "静夜思", "broker": "光大期货", "total_profit": 376121.96, "return_rate": 5.128, "score": 52.994, "daily_equity": 166335.46, "total_net_worth": 1.88378, "profit_rank": 78}, {"rank": 32, "name": "本格量化-王哥", "broker": "宝城期货", "total_profit": 371318.11, "return_rate": 0.26900000000000546, "score": 48.467, "daily_equity": 110112.84, "total_net_worth": 12.68388, "profit_rank": 79}, {"rank": 80, "name": "小虎生威", "broker": "徽商期货", "total_profit": 284394.12, "return_rate": 0.0, "score": 47.61, "daily_equity": 102.37, "total_net_worth": 10.80414, "profit_rank": 80}, {"rank": 12, "name": "东西堂主", "broker": "华安期货", "total_profit": 254835.52, "return_rate": 5.037000000000006, "score": 51.279, "daily_equity": 54185.71, "total_net_worth": 48.82138, "profit_rank": 81}, {"rank": 2, "name": "龙哥", "broker": "国元期货", "total_profit": 227882.92, "return_rate": 0.07099999999999795, "score": 79.241, "daily_equity": 2799.57, "total_net_worth": 167.89966, "profit_rank": 82}, {"rank": 77, "name": "玮我有琳", "broker": "国金期货", "total_profit": 203488.26, "return_rate": 0.5260000000000105, "score": 47.679, "daily_equity": 59223.52, "total_net_worth": 6.92646, "profit_rank": 83}, {"rank": 5, "name": "翘辫子", "broker": "银河期货", "total_profit": 192305.59, "return_rate": 12.264999999999986, "score": 60.938, "daily_equity": 34904.62, "total_net_worth": 703588390.92768, "profit_rank": 84}, {"rank": 1, "name": "吾剑", "broker": "中衍期货", "total_profit": 175945.23, "return_rate": 3.1239999999999952, "score": 79.428, "daily_equity": 105945.23, "total_net_worth": 380.80114, "profit_rank": 85}, {"rank": 70, "name": "鸿云投资", "broker": "国贸期货", "total_profit": 158615.34, "return_rate": 0.0, "score": 47.792, "daily_equity": 41584.95, "total_net_worth": 191.81283, "profit_rank": 86}, {"rank": 50, "name": "挖矿工", "broker": "徽商期货", "total_profit": 127917.6, "return_rate": -13.038000000000011, "score": 48.052, "daily_equity": 26725.03, "total_net_worth": 67.0704, "profit_rank": 87}, {"rank": 4, "name": "龙蛇灵变", "broker": "民生期货", "total_profit": 124518.05, "return_rate": 0.9470000000000027, "score": 63.509, "daily_equity": 115515.83, "total_net_worth": 152.30658, "profit_rank": 88}, {"rank": 6, "name": "蔡神驾到", "broker": "山西三立期货", "total_profit": 88979.79, "return_rate": 13.382000000000005, "score": 59.242, "daily_equity": 89980.29, "total_net_worth": 89.93758, "profit_rank": 89}, {"rank": 8, "name": "常红", "broker": "中衍期货", "total_profit": 76236.31, "return_rate": 0.0, "score": 55.285, "daily_equity": 27471.51, "total_net_worth": 50.90975, "profit_rank": 90}, {"rank": 14, "name": "剑破苍穹", "broker": "徽商期货", "total_profit": 66818.61, "return_rate": 5.9140000000000015, "score": 50.389, "daily_equity": 11951.87, "total_net_worth": 555.3709, "profit_rank": 91}, {"rank": 48, "name": "金汐", "broker": "中泰期货", "total_profit": 65527.73, "return_rate": -0.35999999999999943, "score": 48.053, "daily_equity": 72528.14, "total_net_worth": 10.3608, "profit_rank": 92}, {"rank": 23, "name": "勇猛精进", "broker": "山金期货", "total_profit": 60931.74, "return_rate": 0.0, "score": 49.103, "daily_equity": 2653.65, "total_net_worth": 32.85, "profit_rank": 93}, {"rank": 9, "name": "争霸平安", "broker": "平安期货", "total_profit": 53173.25, "return_rate": 0.0, "score": 55.245, "daily_equity": 11273.25, "total_net_worth": 292.70236, "profit_rank": 94}, {"rank": 90, "name": "防守进攻", "broker": "创元期货", "total_profit": 47129.26, "return_rate": 0.0, "score": 47.493, "daily_equity": 129.18, "total_net_worth": 1.86013, "profit_rank": 95}, {"rank": 41, "name": "药师", "broker": "海通期货", "total_profit": 44817.7, "return_rate": 0.0, "score": 48.293, "daily_equity": 1834.56, "total_net_worth": 12.31545, "profit_rank": 96}, {"rank": 56, "name": "九十一", "broker": "国元期货", "total_profit": 25021.62, "return_rate": 0.0, "score": 47.952, "daily_equity": 0.0, "total_net_worth": 4.31754, "profit_rank": 97}, {"rank": 29, "name": "星月神话", "broker": "兴业期货", "total_profit": 17349.03, "return_rate": 0.0, "score": 48.535, "daily_equity": 10449.03, "total_net_worth": 128.35758, "profit_rank": 98}, {"rank": 37, "name": "剑斩虚空", "broker": "大越期货", "total_profit": 10940.73, "return_rate": 0.0, "score": 48.369, "daily_equity": 12590.75, "total_net_worth": 7.63069, "profit_rank": 99}, {"rank": 87, "name": "凤舞九天", "broker": "山金期货", "total_profit": 4918.38, "return_rate": 0.0, "score": 47.52, "daily_equity": 6086.37, "total_net_worth": 5.21099, "profit_rank": 100}];
 
         // 初始化页面
         function init() {
@@ -522,65 +411,37 @@
             const top3 = PLAYERS_DATA.slice(0, 3);
             const classes = ['gold', 'silver', 'bronze'];
 
-            let html = '';
-            top3.forEach((player, index) => {
-                const cardClass = classes[index];
-                const profitWan = (player.total_profit / 10000).toFixed(2);
-
-                html += `
-                    <div class="player-card ${cardClass}">
-                        <div class="rank-badge">${index + 1}</div>
-                        <div class="player-name">${player.name}</div>
-                        <div class="player-stats">
-                            <div class="player-stat">
-                                <span class="stat-label-small">累计净利润</span>
-                                <span class="stat-value-small">${profitWan} 万元</span>
-                            </div>
-                            <div class="player-stat">
-                                <span class="stat-label-small">累计收益率</span>
-                                <span class="stat-value-small">${player.return_rate}%</span>
-                            </div>
-                            <div class="player-stat">
-                                <span class="stat-label-small">综合得分</span>
-                                <span class="stat-value-small">${player.score}</span>
-                            </div>
-                            <div class="player-stat">
-                                <span class="stat-label-small">期货公司</span>
-                                <span class="stat-value-small">${player.broker}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            topPlayersDiv.innerHTML = html;
+            topPlayersDiv.innerHTML = top3.map((player, index) => `
+                <div class="player-card ${classes[index]}">
+                    <div class="rank-badge">${index + 1}</div>
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-info"><strong>期货公司：</strong>${player.broker}</div>
+                    <div class="player-info"><strong>累计净利润：</strong>${(player.total_profit / 10000).toFixed(2)} 万元</div>
+                    <div class="player-info"><strong>收益率：</strong>${player.return_rate.toFixed(2)}%</div>
+                    <div class="player-info"><strong>综合得分：</strong>${player.score.toFixed(2)}</div>
+                </div>
+            `).join('');
         }
 
         // 显示完整排行榜
         function displayRankings() {
-            const tbody = document.getElementById('rankingsBody');
-            let html = '';
+            const tableBody = document.getElementById('rankingTable');
 
-            PLAYERS_DATA.forEach(player => {
-                const profitWan = (player.total_profit / 10000).toFixed(2);
-                let rankClass = '';
-                if (player.rank === 1) rankClass = 'rank-top1';
-                else if (player.rank === 2) rankClass = 'rank-top2';
-                else if (player.rank === 3) rankClass = 'rank-top3';
+            tableBody.innerHTML = PLAYERS_DATA.map((player, index) => {
+                const rankClass = index === 0 ? 'rank-top1' : index === 1 ? 'rank-top2' : index === 2 ? 'rank-top3' : '';
+                const profitClass = player.total_profit >= 0 ? 'profit-positive' : 'profit-negative';
 
-                html += `
-                    <tr>
-                        <td><span class="rank-number ${rankClass}">${player.rank}</span></td>
-                        <td><strong>${player.name}</strong></td>
+                return `
+                    <tr class="${rankClass}">
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${player.name}</td>
                         <td>${player.score.toFixed(2)}</td>
-                        <td>${player.return_rate.toFixed(2)}%</td>
-                        <td><span class="profit-positive">${profitWan}</span></td>
+                        <td class="${player.return_rate >= 0 ? 'profit-positive' : 'profit-negative'}">${player.return_rate.toFixed(2)}%</td>
+                        <td class="${profitClass}">${(player.total_profit / 10000).toFixed(2)}</td>
                         <td>${player.broker}</td>
                     </tr>
                 `;
-            });
-
-            tbody.innerHTML = html;
+            }).join('');
         }
 
         // 页面加载完成后初始化
