@@ -485,39 +485,25 @@
                     <strong>📊 数据来源</strong>：期货日报第十届实盘大赛（2025年历史数据）
                     <br>
                     <strong>📅 比赛时间</strong>：2025年3月28日 — 2025年9月26日
-                    <br>
-                    <strong>✓ 数据已内嵌</strong>：无需网络连接，本地即可访问
                 </div>
             </div>
 
             <!-- 官方查询链接 -->
-            <div class="search-banner" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%); border-left: 4px solid #ffa000; padding: 25px; margin-bottom: 30px; border-radius: 10px;">
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div style="font-size: 3em;">🔍</div>
-                    <div style="flex: 1;">
-                        <h3 style="color: #e65100; margin: 0 0 10px 0;">查询最新账户排名</h3>
-                        <p style="margin: 0 0 15px 0; color: #666; font-size: 1.05em;">
-                            要查询"酒色财炁"（账户号：178020）或其他参赛选手的实时排名，请访问期货日报实盘大赛官方查询网站
-                        </p>
-                        <a href="https://spdspc.qhrb.com.cn/#/" target="_blank" style="
-                            display: inline-block;
-                            padding: 12px 30px;
-                            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 25px;
-                            font-weight: 600;
-                            font-size: 16px;
-                            transition: all 0.3s;
-                            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
-                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(240, 147, 251, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(240, 147, 251, 0.3)'">
-                            🎯 前往期货日报官方查询网站
-                        </a>
-                    </div>
-                </div>
-                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ffe0b2; font-size: 0.9em; color: #e65100;">
-                    <strong>💡 提示</strong>：在官方网站搜索框中输入"酒色财炁"或账户号"178020"即可查看轻量组中的详细排名和交易数据
-                </div>
+            <div class="search-banner" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%); border-left: 4px solid #ffa000; padding: 25px; margin-bottom: 30px; border-radius: 10px; text-align: center;">
+                <a href="https://spdspc.qhrb.com.cn/#/" target="_blank" style="
+                    display: inline-block;
+                    padding: 12px 30px;
+                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 25px;
+                    font-weight: 600;
+                    font-size: 16px;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(240, 147, 251, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(240, 147, 251, 0.3)'">
+                    🎯 前往期货日报官方查询网站
+                </a>
             </div>
 
             <!-- 数据统计概览 -->
@@ -680,10 +666,6 @@
 
         // 初始化
         function init() {
-            // 更新时间显示
-            document.getElementById('updateTime').textContent =
-                '更新时间: ' + new Date(allData.update_time).toLocaleString('zh-CN');
-
             // 更新显示
             updateDisplay(currentGroup);
             updateStats(allData);
