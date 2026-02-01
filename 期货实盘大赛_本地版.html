@@ -507,11 +507,10 @@
             </div>
 
             <!-- 数据统计概览 -->
+            <div style="text-align: center; color: #666; margin-bottom: 20px; font-size: 0.95em;">
+                📊 <strong>统计说明</strong>：以下数据为重量组、中量组、轻量组、期权组前10名选手的汇总统计
+            </div>
             <div class="stats-overview" id="statsOverview">
-                <div class="stat-card">
-                    <div class="stat-card-value" id="totalPlayers">-</div>
-                    <div class="stat-card-label">参赛选手</div>
-                </div>
                 <div class="stat-card">
                     <div class="stat-card-value" id="totalProfit">-</div>
                     <div class="stat-card-label">总净利润(万)</div>
@@ -827,7 +826,6 @@
         function updateStats(data) {
             if (!data || !data.groups) return;
 
-            let totalPlayers = 0;
             let totalProfit = 0;
             let totalScore = 0;
             let topProfit = 0;
@@ -836,7 +834,6 @@
             for (const groupKey of Object.keys(data.groups)) {
                 const group = data.groups[groupKey];
                 if (group && group.players) {
-                    totalPlayers += group.players.length;
                     group.players.forEach(player => {
                         if (player) {
                             if (player.total_profit) {
@@ -852,7 +849,6 @@
                 }
             }
 
-            document.getElementById('totalPlayers').textContent = totalPlayers;
             document.getElementById('totalProfit').textContent = formatNumber(totalProfit);
             document.getElementById('avgScore').textContent = playerCount > 0 ? (totalScore / playerCount).toFixed(2) : '-';
             document.getElementById('topProfit').textContent = formatNumber(topProfit);
