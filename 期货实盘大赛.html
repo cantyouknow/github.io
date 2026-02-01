@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期货日报实盘大赛排行榜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .nav-button a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: white;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button a:hover {
+            background: #f5576c;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .update-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .update-info.loading {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+
+        .update-info.error {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+
+        .refresh-btn {
+            padding: 10px 20px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+        }
+
+        .refresh-btn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            border-left: 5px solid #f5576c;
+            padding-left: 15px;
+        }
+
+        /* 酒色财炁专栏 */
+        .featured-account {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-account::before {
+            content: '★';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 150px;
+            opacity: 0.1;
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .featured-badge {
+            background: #ff4757;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .featured-title {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .stat-value.positive {
+            color: #4caf50;
+        }
+
+        .stat-value.negative {
+            color: #f44336;
+        }
+
+        /* 排行榜样式 */
+        .top-players {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .player-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .player-card.gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+        }
+
+        .player-card.silver {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            color: #333;
+        }
+
+        .player-card.bronze {
+            background: linear-gradient(135deg, #cd7f32 0%, #e6a068 100%);
+            color: white;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #f5576c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .player-stats {
+            display: grid;
+            gap: 10px;
+        }
+
+        .player-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .player-stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label-small {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        .stat-value-small {
+            font-weight: 600;
+        }
+
+        /* 全部参赛账户表格 */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        tbody tr.highlight-account {
+            background: #fff9c4;
+            font-weight: 600;
+        }
+
+        tbody tr.highlight-account:hover {
+            background: #fff59d;
+        }
+
+        .rank-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .rank-top1 {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .rank-top2 {
+            background: #c0c0c0;
+        }
+
+        .rank-top3 {
+            background: #cd7f32;
+            color: white;
+        }
+
+        .profit-positive {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .profit-negative {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .score-high {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* 加载动画 */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-button {
+                position: static;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .featured-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-value {
+                font-size: 1.5em;
+            }
+
+            .top-players {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .featured-title {
+                font-size: 1.5em;
+            }
+        }
+
+        /* 搜索框 */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* 数据统计卡片 */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-card-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 期货日报实盘大赛排行榜</h1>
+            <p>实时追踪参赛选手表现 · 数据来源：期货日报官方</p>
+            <div class="nav-button">
+                <a href="./">← 返回首页</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 更新信息 -->
+            <div class="update-info" id="updateInfo">
+                <div>
+                    <strong id="updateStatus">准备加载数据...</strong>
+                    <span id="updateTime"></span>
+                </div>
+                <button class="refresh-btn" id="refreshBtn" onclick="loadData()">
+                    🔄 刷新数据
+                </button>
+            </div>
+
+            <!-- 数据统计概览 -->
+            <div class="stats-overview" id="statsOverview" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="totalPlayers">-</div>
+                    <div class="stat-card-label">参赛选手</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="totalProfit">-</div>
+                    <div class="stat-card-label">总净利润(万)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="avgScore">-</div>
+                    <div class="stat-card-label">平均综合得分</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="topProfit">-</div>
+                    <div class="stat-card-label">最高净利润(万)</div>
+                </div>
+            </div>
+
+            <!-- 酒色财炁专栏 -->
+            <div class="section" id="featuredSection" style="display: none;">
+                <h2 class="section-title">🌟 酒色财炁专栏</h2>
+                <div class="featured-account" id="featuredAccount">
+                    <div class="featured-header">
+                        <span class="featured-badge">我的账户</span>
+                        <div class="featured-title" id="featuredName">酒色财炁</div>
+                    </div>
+                    <div class="featured-stats" id="featuredStats">
+                        <!-- 动态填充 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 前三名选手 -->
+            <div class="section">
+                <h2 class="section-title">🥇 领跑前三名</h2>
+                <div class="top-players" id="topPlayers">
+                    <p style="color: #999;">加载中...</p>
+                </div>
+            </div>
+
+            <!-- 全部参赛账户 -->
+            <div class="section">
+                <h2 class="section-title">📊 全部参赛账户</h2>
+
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 搜索账户昵称..." oninput="filterTable()">
+                </div>
+
+                <div class="table-container">
+                    <table id="rankingsTable">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>客户昵称</th>
+                                <th>当日权益</th>
+                                <th>净利润(万)</th>
+                                <th>累计净值</th>
+                                <th>综合得分</th>
+                                <th>收益率(%)</th>
+                                <th>指定交易商</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingsBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #999;">
+                                    正在加载数据...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TARGET_ACCOUNT = '酒色财炁';
+        const DATA_URL = 'http://spds.qhrb.com.cn:8888/';
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(DATA_URL);
+
+        let allData = [];
+
+        // 加载数据
+        async function loadData() {
+            const updateInfo = document.getElementById('updateInfo');
+            const updateStatus = document.getElementById('updateStatus');
+            const refreshBtn = document.getElementById('refreshBtn');
+            const updateTime = document.getElementById('updateTime');
+
+            updateInfo.className = 'update-info loading';
+            updateStatus.innerHTML = '正在加载数据... <span class="loading-spinner"></span>';
+            refreshBtn.disabled = true;
+
+            try {
+                const response = await fetch(CORS_PROXY);
+                if (!response.ok) throw new Error('网络请求失败');
+
+                const html = await response.text();
+                allData = parseHTML(html);
+
+                if (allData.length === 0) {
+                    throw new Error('未能解析到有效数据');
+                }
+
+                // 更新显示
+                updateDisplay(allData);
+                updateStats(allData);
+
+                updateInfo.className = 'update-info';
+                updateStatus.textContent = '✓ 数据更新成功';
+                updateTime.textContent = new Date().toLocaleString('zh-CN');
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                updateInfo.className = 'update-info error';
+                updateStatus.textContent = '✗ 数据加载失败: ' + error.message;
+                updateTime.textContent = '请稍后重试';
+            } finally {
+                refreshBtn.disabled = false;
+            }
+        }
+
+        // 解析HTML数据
+        function parseHTML(html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const rows = doc.querySelectorAll('tr');
+
+            const data = [];
+            rows.forEach((row, index) => {
+                if (index === 0) return; // 跳过表头
+
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 8) {
+                    const rank = cells[0]?.textContent?.trim() || '';
+                    const nickname = cells[1]?.textContent?.trim() || '';
+                    const equity = cells[2]?.textContent?.trim() || '0';
+                    const profit = cells[4]?.textContent?.trim() || '0';
+                    const netValue = cells[9]?.textContent?.trim() || '0';
+                    const score = cells[11]?.textContent?.trim() || '0';
+                    const returnRate = cells[12]?.textContent?.trim() || '0';
+                    const broker = cells[13]?.textContent?.trim() || '-';
+
+                    // 排除无效数据
+                    if (rank && nickname && !isNaN(parseFloat(profit))) {
+                        data.push({
+                            rank: parseInt(rank),
+                            nickname: nickname,
+                            equity: parseFloat(equity) || 0,
+                            profit: parseFloat(profit) || 0,
+                            netValue: parseFloat(netValue) || 0,
+                            score: parseFloat(score) || 0,
+                            returnRate: parseFloat(returnRate) || 0,
+                            broker: broker
+                        });
+                    }
+                }
+            });
+
+            return data;
+        }
+
+        // 更新显示
+        function updateDisplay(data) {
+            // 显示前三名
+            displayTopPlayers(data.slice(0, 3));
+
+            // 显示完整表格
+            displayTable(data);
+
+            // 显示酒色财炁专栏
+            displayFeaturedAccount(data);
+        }
+
+        // 显示前三名
+        function displayTopPlayers(topThree) {
+            const container = document.getElementById('topPlayers');
+            const medals = ['gold', 'silver', 'bronze'];
+            const medalEmojis = ['🥇', '🥈', '🥉'];
+
+            container.innerHTML = topThree.map((player, index) => `
+                <div class="player-card ${medals[index]}">
+                    <div class="rank-badge">${medalEmojis[index]}</div>
+                    <div class="player-name">${escapeHtml(player.nickname)}</div>
+                    <div class="player-stats">
+                        <div class="player-stat">
+                            <span class="stat-label-small">当日权益</span>
+                            <span class="stat-value-small">${formatNumber(player.equity)}</span>
+                        </div>
+                        <div class="player-stat">
+                            <span class="stat-label-small">净利润</span>
+                            <span class="stat-value-small profit-positive">${formatNumber(player.profit)}万</span>
+                        </div>
+                        <div class="player-stat">
+                            <span class="stat-label-small">累计净值</span>
+                            <span class="stat-value-small">${player.netValue.toFixed(2)}</span>
+                        </div>
+                        <div class="player-stat">
+                            <span class="stat-label-small">综合得分</span>
+                            <span class="stat-value-small score-high">${player.score.toFixed(2)}</span>
+                        </div>
+                        <div class="player-stat">
+                            <span class="stat-label-small">收益率</span>
+                            <span class="stat-value-small">${player.returnRate.toFixed(2)}%</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 显示完整表格
+        function displayTable(data) {
+            const tbody = document.getElementById('rankingsBody');
+
+            tbody.innerHTML = data.map(player => {
+                const isTarget = player.nickname === TARGET_ACCOUNT;
+                const rankClass = player.rank === 1 ? 'rank-top1' :
+                                 player.rank === 2 ? 'rank-top2' :
+                                 player.rank === 3 ? 'rank-top3' : '';
+
+                return `
+                    <tr class="${isTarget ? 'highlight-account' : ''}">
+                        <td><span class="rank-number ${rankClass}">${player.rank}</span></td>
+                        <td>${escapeHtml(player.nickname)}${isTarget ? ' ⭐' : ''}</td>
+                        <td>${formatNumber(player.equity)}</td>
+                        <td class="${player.profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${formatNumber(player.profit)}万
+                        </td>
+                        <td>${player.netValue.toFixed(2)}</td>
+                        <td class="score-high">${player.score.toFixed(2)}</td>
+                        <td>${player.returnRate.toFixed(2)}%</td>
+                        <td>${escapeHtml(player.broker)}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 显示酒色财炁专栏
+        function displayFeaturedAccount(data) {
+            const account = data.find(p => p.nickname === TARGET_ACCOUNT);
+
+            if (!account) {
+                document.getElementById('featuredSection').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('featuredSection').style.display = 'block';
+            document.getElementById('featuredName').textContent = account.nickname;
+
+            const statsHtml = `
+                <div class="stat-item">
+                    <div class="stat-label">当前排名</div>
+                    <div class="stat-value">#${account.rank}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">当日权益</div>
+                    <div class="stat-value">${formatNumber(account.equity)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">累计净利润</div>
+                    <div class="stat-value ${account.profit >= 0 ? 'positive' : 'negative'}">
+                        ${formatNumber(account.profit)}万
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">累计净值</div>
+                    <div class="stat-value">${account.netValue.toFixed(2)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">综合得分</div>
+                    <div class="stat-value">${account.score.toFixed(2)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">参考收益率</div>
+                    <div class="stat-value">${account.returnRate.toFixed(2)}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">指定交易商</div>
+                    <div class="stat-value">${escapeHtml(account.broker)}</div>
+                </div>
+            `;
+
+            document.getElementById('featuredStats').innerHTML = statsHtml;
+        }
+
+        // 更新统计数据
+        function updateStats(data) {
+            const totalPlayers = data.length;
+            const totalProfit = data.reduce((sum, p) => sum + p.profit, 0);
+            const avgScore = data.reduce((sum, p) => sum + p.score, 0) / totalPlayers;
+            const topProfit = Math.max(...data.map(p => p.profit));
+
+            document.getElementById('totalPlayers').textContent = totalPlayers;
+            document.getElementById('totalProfit').textContent = formatNumber(totalProfit);
+            document.getElementById('avgScore').textContent = avgScore.toFixed(2);
+            document.getElementById('topProfit').textContent = formatNumber(topProfit);
+
+            document.getElementById('statsOverview').style.display = 'grid';
+        }
+
+        // 搜索过滤
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const tbody = document.getElementById('rankingsBody');
+            const rows = tbody.getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const nickname = row.getElementsByTagName('td')[1]?.textContent.toLowerCase() || '';
+                row.style.display = nickname.includes(searchTerm) ? '' : 'none';
+            }
+        }
+
+        // 工具函数
+        function formatNumber(num) {
+            if (num >= 10000) {
+                return (num / 10000).toFixed(2) + '万';
+            }
+            return num.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 页面加载时自动获取数据
+        window.addEventListener('DOMContentLoaded', () => {
+            loadData();
+
+            // 每5分钟自动刷新数据
+            setInterval(() => {
+                loadData();
+            }, 5 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>

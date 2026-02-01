@@ -3,8 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年康波周期投资策略报告</title>
+    <title>2026年康波周期投资策略报告（2026年1月版）</title>
     <style>
+        /* 历史版本横幅样式 */
+        .version-banner {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-bottom: 3px solid #ffa000;
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .version-banner p {
+            margin: 0;
+            color: #e65100;
+            font-weight: 600;
+        }
+        .version-banner a {
+            color: #1565c0;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 2px solid #1565c0;
+        }
+        .version-banner a:hover {
+            color: #0d47a1;
+            border-bottom-color: #0d47a1;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -324,57 +351,16 @@
     </style>
 </head>
 <body>
+    <!-- 历史版本横幅 -->
+    <div class="version-banner">
+        <p>📜 这是历史版本（2026年1月）| <a href="康波周期可视化报告.html">📊 查看最新版本（2026年2月）</a></p>
+    </div>
+
     <div class="container">
         <!-- 导航按钮 -->
         <div class="nav-button">
-            <a href="index.html" style="margin-right: 10px;">🌤️ 返回心情天气站</a>
-            <a href="#history-versions" onclick="toggleHistory()" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);">📚 历史版本</a>
+            <a href="index.html">🌤️ 返回心情天气站</a>
         </div>
-
-        <!-- 历史版本面板 -->
-        <div id="history-panel" style="display: none; position: fixed; top: 80px; right: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px; z-index: 1000; min-width: 300px; max-height: 80vh; overflow-y: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: #f5576c; margin: 0;">📚 历史版本</h3>
-                <button onclick="toggleHistory()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
-            </div>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
-                    <a href="康波周期可视化报告.html" style="color: #667eea; text-decoration: none; font-weight: 600;">
-                        🔵 当前版本
-                    </a>
-                    <p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">2026年2月1日 | 史诗级跳水后更新</p>
-                </li>
-                <li style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
-                    <a href="康波周期可视化报告_2026年1月.html" style="color: #667eea; text-decoration: none;">
-                        📄 2026年1月版
-                    </a>
-                    <p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">2026年1月 | 原始版本</p>
-                </li>
-            </ul>
-            <p style="font-size: 0.85em; color: #999; margin-top: 15px; padding-top: 10px; border-top: 1px solid #e0e0e0;">
-                💡 每月月初更新，保留历史版本供参考
-            </p>
-        </div>
-
-        <script>
-            function toggleHistory() {
-                const panel = document.getElementById('history-panel');
-                if (panel.style.display === 'none') {
-                    panel.style.display = 'block';
-                } else {
-                    panel.style.display = 'none';
-                }
-            }
-
-            // 点击外部关闭面板
-            document.addEventListener('click', function(event) {
-                const panel = document.getElementById('history-panel');
-                const button = event.target.closest('[onclick="toggleHistory()"]');
-                if (!panel.contains(event.target) && !button && panel.style.display === 'block') {
-                    panel.style.display = 'none';
-                }
-            });
-        </script>
 
         <div class="header">
             <h1>📊 2026年康波周期投资策略报告</h1>
