@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期货日报实盘大赛 - 2025年第十届历史数据</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .nav-button a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: white;
+            color: #19547b;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button a:hover {
+            background: #19547b;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .update-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        /* 酒色财炁专栏 */
+        .featured-account {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .featured-account.show {
+            display: block;
+        }
+
+        .featured-account::before {
+            content: '★';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 150px;
+            opacity: 0.1;
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .featured-badge {
+            background: #ff4757;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .featured-title {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .stat-value.positive {
+            color: #4caf50;
+        }
+
+        .stat-value.negative {
+            color: #f44336;
+        }
+
+        /* 排行榜样式 */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            border-left: 5px solid #19547b;
+            padding-left: 15px;
+        }
+
+        .group-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .group-tab {
+            padding: 12px 30px;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .group-tab:hover {
+            border-color: #19547b;
+        }
+
+        .group-tab.active {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            border-color: #19547b;
+        }
+
+        .top-players {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .player-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .player-card.gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+        }
+
+        .player-card.silver {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            color: #333;
+        }
+
+        .player-card.bronze {
+            background: linear-gradient(135deg, #cd7f32 0%, #e6a068 100%);
+            color: white;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #f5576c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .player-stats {
+            display: grid;
+            gap: 10px;
+        }
+
+        .player-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .player-stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label-small {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        .stat-value-small {
+            font-weight: 600;
+        }
+
+        /* 全部参赛账户表格 */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        tbody tr.highlight-account {
+            background: #fff9c4;
+            font-weight: 600;
+        }
+
+        tbody tr.highlight-account:hover {
+            background: #fff59d;
+        }
+
+        .rank-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .rank-top1 {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .rank-top2 {
+            background: #c0c0c0;
+        }
+
+        .rank-top3 {
+            background: #cd7f32;
+            color: white;
+        }
+
+        .profit-positive {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .profit-negative {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .score-high {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* 数据统计卡片 */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-card-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        /* 搜索框 */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #19547b;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-button {
+                position: static;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .featured-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-value {
+                font-size: 1.5em;
+            }
+
+            .top-players {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 期货日报实盘大赛排行榜</h1>
+            <p>2025年第十届历史数据 · 数据来源：期货日报实盘大赛官方网站</p>
+            <div class="nav-button">
+                <a href="index.html">← 返回首页</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 更新信息 -->
+            <div class="update-info">
+                <div>
+                    <strong>📊 数据来源</strong>：期货日报第十届实盘大赛（2025年历史数据）
+                    <br>
+                    <strong>📅 比赛时间</strong>：2025年3月28日 — 2025年9月26日
+                    <br>
+                    <strong>✓ 数据已内嵌</strong>：无需网络连接，本地即可访问
+                </div>
+            </div>
+
+            <!-- 官方查询链接 -->
+            <div class="search-banner" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%); border-left: 4px solid #ffa000; padding: 25px; margin-bottom: 30px; border-radius: 10px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 3em;">🔍</div>
+                    <div style="flex: 1;">
+                        <h3 style="color: #e65100; margin: 0 0 10px 0;">查询最新账户排名</h3>
+                        <p style="margin: 0 0 15px 0; color: #666; font-size: 1.05em;">
+                            要查询"酒色财炁"（账户号：178020）或其他参赛选手的实时排名，请访问期货日报实盘大赛官方查询网站
+                        </p>
+                        <a href="https://spdspc.qhrb.com.cn/#/" target="_blank" style="
+                            display: inline-block;
+                            padding: 12px 30px;
+                            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 25px;
+                            font-weight: 600;
+                            font-size: 16px;
+                            transition: all 0.3s;
+                            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(240, 147, 251, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(240, 147, 251, 0.3)'">
+                            🎯 前往期货日报官方查询网站
+                        </a>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ffe0b2; font-size: 0.9em; color: #e65100;">
+                    <strong>💡 提示</strong>：在官方网站搜索框中输入"酒色财炁"或账户号"178020"即可查看轻量组中的详细排名和交易数据
+                </div>
+            </div>
+
+            <!-- 数据统计概览 -->
+            <div class="stats-overview" id="statsOverview">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="totalPlayers">-</div>
+                    <div class="stat-card-label">参赛选手</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="totalProfit">-</div>
+                    <div class="stat-card-label">总净利润(万)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="avgScore">-</div>
+                    <div class="stat-card-label">平均综合得分</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="topProfit">-</div>
+                    <div class="stat-card-label">最高净利润(万)</div>
+                </div>
+            </div>
+
+            <!-- 酒色财炁专栏已禁用（期货日报数据不包含该账户） -->
+            <!--
+            <div class="section" id="featuredSection">
+                <h2 class="section-title">🌟 酒色财炁专栏</h2>
+                <div class="featured-account" id="featuredAccount">
+                    <div class="featured-header">
+                        <span class="featured-badge">我的账户</span>
+                        <div class="featured-title" id="featuredName">酒色财炁</div>
+                    </div>
+                    <div class="featured-stats" id="featuredStats">
+                        <! 动态填充 -->
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- 组别选择 -->
+            <div class="section">
+                <h2 class="section-title">📊 大赛排行榜</h2>
+                <div class="group-tabs" id="groupTabs">
+                    <div class="group-tab active" data-group="heavy">重量组</div>
+                    <div class="group-tab" data-group="medium">中量组</div>
+                    <div class="group-tab" data-group="light">轻量组</div>
+                    <div class="group-tab" data-group="options">期权组</div>
+                </div>
+
+                <!-- 前三名选手 -->
+                <div class="top-players" id="topPlayers">
+                    <p style="color: #999;">加载中...</p>
+                </div>
+            </div>
+
+            <!-- 全部参赛账户 -->
+            <div class="section">
+                <h2 class="section-title">📋 完整排行榜</h2>
+
+                <div class="table-container">
+                    <table id="rankingsTable">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>客户昵称</th>
+                                <th>综合得分</th>
+                                <th>累计收益率(%)</th>
+                                <th>当日收益(万)</th>
+                                <th>累计净利润(万)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingsBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #999;">
+                                    正在加载数据...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据内嵌区域 ====================
+        // 数据来源：期货日报实盘大赛2025年第十届排行榜
+        // 更新时间：2025年数据（历史比赛数据）
+        const EMBEDDED_DATA = {
+            "update_time": "2025-09-26T18:00:00.000000",
+            "source": "期货日报第十届实盘大赛",
+            "groups": {
+                "heavy": {
+                    "name": "重量组",
+                    "players": [
+                        {"rank": 1, "name": "mile", "score": 91.86, "return_rate": 969.02, "daily_profit": 15108.75, "total_profit": 1510874.69},
+                        {"rank": 2, "name": "zhi", "score": 74.88, "return_rate": 106.18, "daily_profit": 125204.57, "total_profit": 12520457.39},
+                        {"rank": 3, "name": "342", "score": 74.43, "return_rate": 280.56, "daily_profit": 33222.70, "total_profit": 3322269.02},
+                        {"rank": 4, "name": "长春3号", "score": 72.79, "return_rate": 444.90, "daily_profit": 56939.07, "total_profit": 5693907.20},
+                        {"rank": 5, "name": "小小小", "score": 72.76, "return_rate": 223.23, "daily_profit": 5125.21, "total_profit": 512520.72},
+                        {"rank": 6, "name": "1101889", "score": 72.65, "return_rate": 105.57, "daily_profit": 71851.14, "total_profit": 7185114.11},
+                        {"rank": 7, "name": "大易斋主", "score": 72.38, "return_rate": 119.85, "daily_profit": 11883.76, "total_profit": 1188375.72},
+                        {"rank": 8, "name": "宝地生金", "score": 72.26, "return_rate": 106.01, "daily_profit": 4431.37, "total_profit": 443136.98},
+                        {"rank": 9, "name": "杨**", "score": 72.07, "return_rate": 135.35, "daily_profit": 8496.08, "total_profit": 849608.00},
+                        {"rank": 10, "name": "拾荒者", "score": 71.99, "return_rate": 102.09, "daily_profit": 3788.79, "total_profit": 378879.13}
+                    ]
+                },
+                "medium": {
+                    "name": "中量组",
+                    "players": [
+                        {"rank": 11, "name": "wfncp11", "score": 71.90, "return_rate": 92.22, "daily_profit": 5412.46, "total_profit": 541246.46},
+                        {"rank": 12, "name": "大豆", "score": 71.85, "return_rate": 111.28, "daily_profit": 3413.68, "total_profit": 341368.46},
+                        {"rank": 13, "name": "估神", "score": 71.81, "return_rate": 134.11, "daily_profit": 1647.33, "total_profit": 164733.05},
+                        {"rank": 14, "name": "wfncp18", "score": 71.65, "return_rate": 92.00, "daily_profit": 2233.25, "total_profit": 223325.41},
+                        {"rank": 15, "name": "LRM", "score": 71.57, "return_rate": 80.78, "daily_profit": 7798.86, "total_profit": 779886.38},
+                        {"rank": 16, "name": "姚明", "score": 71.54, "return_rate": 151.67, "daily_profit": 4025.21, "total_profit": 402521.15},
+                        {"rank": 17, "name": "sd001", "score": 71.54, "return_rate": 186.19, "daily_profit": 13073.47, "total_profit": 1307347.36},
+                        {"rank": 18, "name": "张明明", "score": 71.53, "return_rate": 100.88, "daily_profit": 5734.20, "total_profit": 573420.16},
+                        {"rank": 19, "name": "许**", "score": 71.49, "return_rate": 146.92, "daily_profit": 13568.79, "total_profit": 1356879.30},
+                        {"rank": 20, "name": "盘古二号", "score": 71.47, "return_rate": 113.07, "daily_profit": 2312.37, "total_profit": 231237.34}
+                    ]
+                },
+                "light": {
+                    "name": "轻量组",
+                    "players": [
+                        {"rank": 21, "name": "高明明", "score": 71.43, "return_rate": 215.66, "daily_profit": 1129.20, "total_profit": 112919.72},
+                        {"rank": 22, "name": "2271123", "score": 71.30, "return_rate": 127.87, "daily_profit": 1206.87, "total_profit": 120686.82},
+                        {"rank": 23, "name": "078", "score": 71.27, "return_rate": 152.49, "daily_profit": 3673.23, "total_profit": 367322.96},
+                        {"rank": 24, "name": "晓城", "score": 71.27, "return_rate": 71.15, "daily_profit": 3112.96, "total_profit": 311295.60},
+                        {"rank": 25, "name": "*广才", "score": 71.26, "return_rate": 145.46, "daily_profit": 5855.51, "total_profit": 585550.98},
+                        {"rank": 26, "name": "吴晓东", "score": 71.23, "return_rate": 99.96, "daily_profit": 6372.16, "total_profit": 637216.32},
+                        {"rank": 27, "name": "慈航投资", "score": 71.21, "return_rate": 140.72, "daily_profit": 5249.98, "total_profit": 524997.60},
+                        {"rank": 28, "name": "歼击机二号", "score": 71.20, "return_rate": 128.29, "daily_profit": 4959.25, "total_profit": 495924.60},
+                        {"rank": 29, "name": "范先生", "score": 71.19, "return_rate": 95.77, "daily_profit": 9097.64, "total_profit": 909764.48},
+                        {"rank": 30, "name": "墩儿1", "score": 71.18, "return_rate": 98.57, "daily_profit": 3841.34, "total_profit": 384134.24}
+                    ]
+                },
+                "options": {
+                    "name": "期权组",
+                    "players": [
+                        {"rank": 31, "name": "华泰21", "score": 71.13, "return_rate": 84.58, "daily_profit": 1958.36, "total_profit": 195836.42},
+                        {"rank": 32, "name": "海边蛤蜊", "score": 71.13, "return_rate": 167.82, "daily_profit": 14218.61, "total_profit": 1421861.08},
+                        {"rank": 33, "name": "周*", "score": 71.11, "return_rate": 171.50, "daily_profit": 7102.47, "total_profit": 710247.00},
+                        {"rank": 34, "name": "马**", "score": 71.11, "return_rate": 78.79, "daily_profit": 5172.68, "total_profit": 517267.92},
+                        {"rank": 35, "name": "奚鹏彬", "score": 71.07, "return_rate": 125.87, "daily_profit": 9005.15, "total_profit": 900515.09},
+                        {"rank": 36, "name": "完美博哥", "score": 71.06, "return_rate": 99.09, "daily_profit": 1651.01, "total_profit": 165100.89},
+                        {"rank": 37, "name": "眼镜格格", "score": 71.05, "return_rate": 87.08, "daily_profit": 1821.60, "total_profit": 182159.60},
+                        {"rank": 38, "name": "3231326", "score": 71.04, "return_rate": 109.01, "daily_profit": 583.24, "total_profit": 58323.81},
+                        {"rank": 39, "name": "大同吃玉米", "score": 71.03, "return_rate": 120.26, "daily_profit": 1129.98, "total_profit": 112997.86},
+                        {"rank": 40, "name": "jiangyu", "score": 71.03, "return_rate": 67.90, "daily_profit": 2637.83, "total_profit": 263782.83}
+                    ]
+                }
+            }
+        };
+        // ==================== 数据内嵌结束 ====================
+
+        // 目标账户功能已禁用（期货日报数据不包含该账户）
+        const TARGET_ACCOUNT = null;
+        let allData = EMBEDDED_DATA;
+        let currentGroup = 'heavy';
+
+        // 初始化
+        function init() {
+            // 更新时间显示
+            document.getElementById('updateTime').textContent =
+                '更新时间: ' + new Date(allData.update_time).toLocaleString('zh-CN');
+
+            // 更新显示
+            updateDisplay(currentGroup);
+            updateStats(allData);
+        }
+
+        // 更新显示
+        function updateDisplay(groupKey) {
+            if (!allData || !allData.groups || !allData.groups[groupKey]) {
+                console.error('组别数据不存在:', groupKey);
+                return;
+            }
+
+            const groupData = allData.groups[groupKey];
+
+            // 显示前三名
+            displayTopPlayers(groupData.players.slice(0, 3));
+
+            // 显示完整表格
+            displayTable(groupData.players);
+
+            // 显示酒色财炁专栏（已禁用，期货日报数据不包含该账户）
+            // displayFeaturedAccount();
+        }
+
+        // 显示前三名
+        function displayTopPlayers(topThree) {
+            const container = document.getElementById('topPlayers');
+            const medals = ['gold', 'silver', 'bronze'];
+            const medalEmojis = ['🥇', '🥈', '🥉'];
+
+            if (!topThree || topThree.length === 0) {
+                container.innerHTML = '<p style="color: #999;">暂无数据</p>';
+                return;
+            }
+
+            container.innerHTML = topThree.map((player, index) => {
+                if (!player) return '';
+
+                return `
+                    <div class="player-card ${medals[index]}">
+                        <div class="rank-badge">${medalEmojis[index]}</div>
+                        <div class="player-name">${escapeHtml(player.name)}</div>
+                        <div class="player-stats">
+                            <div class="player-stat">
+                                <span class="stat-label-small">综合得分</span>
+                                <span class="stat-value-small score-high">${player.score?.toFixed(2) || '-'}</span>
+                            </div>
+                            <div class="player-stat">
+                                <span class="stat-label-small">累计收益率</span>
+                                <span class="stat-value-small">${player.return_rate?.toFixed(2) || '-'}%</span>
+                            </div>
+                            <div class="player-stat">
+                                <span class="stat-label-small">当日收益</span>
+                                <span class="stat-value-small profit-positive">${formatNumber(player.daily_profit)}万</span>
+                            </div>
+                            <div class="player-stat">
+                                <span class="stat-label-small">累计净利润</span>
+                                <span class="stat-value-small profit-positive">${formatNumber(player.total_profit)}万</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 显示完整表格
+        function displayTable(players) {
+            const tbody = document.getElementById('rankingsBody');
+
+            if (!players || players.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">暂无数据</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = players.map(player => {
+                if (!player) return '';
+
+                const isTarget = player.name === TARGET_ACCOUNT;
+                const rankClass = player.rank === 1 ? 'rank-top1' :
+                                 player.rank === 2 ? 'rank-top2' :
+                                 player.rank === 3 ? 'rank-top3' : '';
+
+                return `
+                    <tr class="${isTarget ? 'highlight-account' : ''}">
+                        <td><span class="rank-number ${rankClass}">${player.rank}</span></td>
+                        <td>${escapeHtml(player.name)}${isTarget ? ' ⭐' : ''}</td>
+                        <td class="score-high">${player.score?.toFixed(2) || '-'}</td>
+                        <td>${player.return_rate?.toFixed(2) || '-'}%</td>
+                        <td class="${player.daily_profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${formatNumber(player.daily_profit)}万
+                        </td>
+                        <td class="${player.total_profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${formatNumber(player.total_profit)}万
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 显示酒色财炁专栏
+        function displayFeaturedAccount() {
+            const featuredAccount = document.getElementById('featuredAccount');
+
+            let foundAccount = null;
+
+            // 在所有组别中搜索酒色财炁
+            if (allData && allData.groups) {
+                for (const groupKey of Object.keys(allData.groups)) {
+                    const group = allData.groups[groupKey];
+                    if (group && group.players) {
+                        const account = group.players.find(p => p && p.name === TARGET_ACCOUNT);
+                        if (account) {
+                            foundAccount = account;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!foundAccount) {
+                featuredAccount.classList.remove('show');
+                return;
+            }
+
+            featuredAccount.classList.add('show');
+            document.getElementById('featuredName').textContent = foundAccount.name;
+
+            const statsHtml = `
+                <div class="stat-item">
+                    <div class="stat-label">当前排名</div>
+                    <div class="stat-value">#${foundAccount.rank}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">综合得分</div>
+                    <div class="stat-value">${foundAccount.score?.toFixed(2) || '-'}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">累计收益率</div>
+                    <div class="stat-value">${foundAccount.return_rate?.toFixed(2) || '-'}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">当日收益</div>
+                    <div class="stat-value ${foundAccount.daily_profit >= 0 ? 'positive' : 'negative'}">
+                        ${formatNumber(foundAccount.daily_profit)}万
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">累计净利润</div>
+                    <div class="stat-value ${foundAccount.total_profit >= 0 ? 'positive' : 'negative'}">
+                        ${formatNumber(foundAccount.total_profit)}万
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('featuredStats').innerHTML = statsHtml;
+        }
+
+        // 更新统计数据
+        function updateStats(data) {
+            if (!data || !data.groups) return;
+
+            let totalPlayers = 0;
+            let totalProfit = 0;
+            let totalScore = 0;
+            let topProfit = 0;
+            let playerCount = 0;
+
+            for (const groupKey of Object.keys(data.groups)) {
+                const group = data.groups[groupKey];
+                if (group && group.players) {
+                    totalPlayers += group.players.length;
+                    group.players.forEach(player => {
+                        if (player) {
+                            if (player.total_profit) {
+                                totalProfit += player.total_profit;
+                                topProfit = Math.max(topProfit, player.total_profit);
+                            }
+                            if (player.score) {
+                                totalScore += player.score;
+                                playerCount++;
+                            }
+                        }
+                    });
+                }
+            }
+
+            document.getElementById('totalPlayers').textContent = totalPlayers;
+            document.getElementById('totalProfit').textContent = formatNumber(totalProfit);
+            document.getElementById('avgScore').textContent = playerCount > 0 ? (totalScore / playerCount).toFixed(2) : '-';
+            document.getElementById('topProfit').textContent = formatNumber(topProfit);
+        }
+
+        // 工具函数
+        function formatNumber(num) {
+            if (num === undefined || num === null) return '-';
+            if (num >= 10000) {
+                return (num / 10000).toFixed(2);
+            }
+            return num.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 组别切换
+        document.getElementById('groupTabs').addEventListener('click', function(e) {
+            if (e.target.classList.contains('group-tab')) {
+                // 移除所有active状态
+                document.querySelectorAll('.group-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                // 添加当前active状态
+                e.target.classList.add('active');
+
+                // 切换组别
+                currentGroup = e.target.dataset.group;
+                updateDisplay(currentGroup);
+            }
+        });
+
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
