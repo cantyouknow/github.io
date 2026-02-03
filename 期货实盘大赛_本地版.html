@@ -33,6 +33,38 @@
             color: white;
             padding: 40px;
             text-align: center;
+            position: relative;
+        }
+
+        .nav-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link:hover {
+            background: white;
+            color: #19547b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-link {
+                position: static;
+                display: block;
+                width: fit-content;
+                margin: 0 auto 15px;
+            }
         }
 
         .header h1 {
@@ -253,6 +285,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <a href="index.html" class="nav-link">← 返回主站</a>
             <h1>🏆 期货日报实盘大赛</h1>
             <p>第十九届实盘大赛 - 组别排名TOP10</p>
             <p style="margin-top: 10px; font-size: 0.9em;">比赛日期: 2025年3月28日 - 9月26日</p>
