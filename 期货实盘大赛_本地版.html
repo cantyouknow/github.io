@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期货日报实盘大赛 - 组别排名TOP10</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .official-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .official-link:hover {
+            background: white;
+            color: #19547b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #19547b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ffd89b;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .stats-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.95em;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #19547b 0%, #2d6da3 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s;
+        }
+
+        .rank-1 {
+            background-color: #fff8e1 !important;
+            font-weight: bold;
+        }
+
+        .rank-2 {
+            background-color: #fafafa !important;
+        }
+
+        .rank-3 {
+            background-color: #fdfbf7 !important;
+        }
+
+        .profit-positive {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+
+        .deposit-value {
+            color: #1976d2;
+            font-weight: 600;
+        }
+
+        .principal-value {
+            color: #e65100;
+            font-weight: 600;
+        }
+
+        .na-value {
+            color: #999;
+            font-style: italic;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 30px 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 900px;
+            text-align: left;
+        }
+
+        .disclaimer-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .disclaimer-content {
+            color: #856404;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            th, td {
+                padding: 8px 6px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 期货日报实盘大赛</h1>
+            <p>第十九届实盘大赛 - 组别排名TOP10</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">比赛日期: 2025年3月28日 - 9月26日</p>
+            <a href="https://spdspc.qhrb.com.cn/#/" target="_blank" class="official-link">
+                🔗 官方查询网站
+            </a>
+        </div>
+
+        <div class="content">
+            <!-- 酒色财炁数据卡片 -->
+            <div class="section">
+                <div class="stats-card">
+                    <h2>🔍 参赛选手查询：酒色财炁</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">全局排名</div>
+                            <div class="stat-value">第 1,680 名</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">净利润</div>
+                            <div class="stat-value">99.22 万元</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">累计入金</div>
+                            <div class="stat-value">N/A</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">初始本金</div>
+                            <div class="stat-value">N/A</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">日权益</div>
+                            <div class="stat-value">4.41 万元</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">所属组别</div>
+                            <div class="stat-value">轻量组</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 高净值组 -->
+            <div class="section">
+                <h2 class="section-title">💎 高净值组 TOP10</h2>
+                <p style="margin-bottom: 15px; color: #666;">共 469 人参赛</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="70">排名</th>
+                            <th>账户名</th>
+                            <th width="130">净利润</th>
+                            <th width="130">累计入金</th>
+                            <th width="130">初始本金</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="rank-1">
+                            <td>1</td>
+                            <td>莫奈的花园</td>
+                            <td class="profit-positive">34,048.46万</td>
+                            <td class="deposit-value">7,700.87万</td>
+                            <td class="principal-value">193.06万</td>
+                        </tr>
+                        <tr class="rank-2">
+                            <td>2</td>
+                            <td>骏胜骏腾1号</td>
+                            <td class="profit-positive">11,674.15万</td>
+                            <td class="deposit-value">7,488.31万</td>
+                            <td class="principal-value">119.06万</td>
+                        </tr>
+                        <tr class="rank-3">
+                            <td>3</td>
+                            <td>塞尚的画</td>
+                            <td class="profit-positive">9,162.29万</td>
+                            <td class="deposit-value">5,709.97万</td>
+                            <td class="principal-value">105.37万</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>杨</td>
+                            <td class="profit-positive">7,649.33万</td>
+                            <td class="deposit-value">2,774.61万</td>
+                            <td class="principal-value">276.47万</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>王</td>
+                            <td class="profit-positive">7,110.97万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">183.61万</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>彩虹12</td>
+                            <td class="profit-positive">6,302.27万</td>
+                            <td class="deposit-value">10,440.20万</td>
+                            <td class="principal-value">59.64万</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>鲁四老爷</td>
+                            <td class="profit-positive">6,136.83万</td>
+                            <td class="deposit-value">12,652.85万</td>
+                            <td class="principal-value">41.63万</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>九堡佬</td>
+                            <td class="profit-positive">5,891.22万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">286.82万</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>成都曾某</td>
+                            <td class="profit-positive">5,674.94万</td>
+                            <td class="deposit-value">289.83万</td>
+                            <td class="principal-value">77.40万</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>碎银几两</td>
+                            <td class="profit-positive">5,604.95万</td>
+                            <td class="deposit-value">2,097.69万</td>
+                            <td class="principal-value">70.42万</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 重量组 -->
+            <div class="section">
+                <h2 class="section-title">⚖️ 重量组 TOP10</h2>
+                <p style="margin-bottom: 15px; color: #666;">共 487 人参赛</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="70">排名</th>
+                            <th>账户名</th>
+                            <th width="130">净利润</th>
+                            <th width="130">累计入金</th>
+                            <th width="130">初始本金</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="rank-1">
+                            <td>35</td>
+                            <td>突然的自我</td>
+                            <td class="profit-positive">2,940.55万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">695.32万</td>
+                        </tr>
+                        <tr class="rank-2">
+                            <td>36</td>
+                            <td>玉米</td>
+                            <td class="profit-positive">2,917.07万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">1,036.09万</td>
+                        </tr>
+                        <tr class="rank-3">
+                            <td>41</td>
+                            <td>定海神针</td>
+                            <td class="profit-positive">2,722.76万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">727.76万</td>
+                        </tr>
+                        <tr>
+                            <td>70</td>
+                            <td>姜先生</td>
+                            <td class="profit-positive">1,762.78万</td>
+                            <td class="deposit-value">158.44万</td>
+                            <td class="principal-value">619.77万</td>
+                        </tr>
+                        <tr>
+                            <td>101</td>
+                            <td>临江仙</td>
+                            <td class="profit-positive">1,377.71万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">253.51万</td>
+                        </tr>
+                        <tr>
+                            <td>107</td>
+                            <td>六星垚霖</td>
+                            <td class="profit-positive">1,337.30万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">157.10万</td>
+                        </tr>
+                        <tr>
+                            <td>130</td>
+                            <td>逸信臻萃多策略一号</td>
+                            <td class="profit-positive">1,158.58万</td>
+                            <td class="deposit-value">489.25万</td>
+                            <td class="principal-value">235.64万</td>
+                        </tr>
+                        <tr>
+                            <td>162</td>
+                            <td>小咸鱼</td>
+                            <td class="profit-positive">956.44万</td>
+                            <td class="deposit-value">15.64万</td>
+                            <td class="principal-value">397.56万</td>
+                        </tr>
+                        <tr>
+                            <td>179</td>
+                            <td>漫步的芳华</td>
+                            <td class="profit-positive">895.26万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="principal-value">344.33万</td>
+                        </tr>
+                        <tr>
+                            <td>182</td>
+                            <td>武松全</td>
+                            <td class="profit-positive">888.88万</td>
+                            <td class="deposit-value">221.19万</td>
+                            <td class="principal-value">280.08万</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 轻量组 -->
+            <div class="section">
+                <h2 class="section-title">🎯 轻量组 TOP10</h2>
+                <p style="margin-bottom: 15px; color: #666;">共 85,476 人参赛</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="70">排名</th>
+                            <th>账户名</th>
+                            <th width="130">净利润</th>
+                            <th width="130">累计入金</th>
+                            <th width="130">初始本金</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="rank-1">
+                            <td>288</td>
+                            <td>Quant</td>
+                            <td class="profit-positive">622.34万</td>
+                            <td class="deposit-value">54.69万</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr class="rank-2">
+                            <td>314</td>
+                            <td>命运的齿轮</td>
+                            <td class="profit-positive">570.47万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr class="rank-3">
+                            <td>325</td>
+                            <td>紅</td>
+                            <td class="profit-positive">559.98万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>329</td>
+                            <td>民</td>
+                            <td class="profit-positive">550.58万</td>
+                            <td class="deposit-value">34.37万</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>337</td>
+                            <td>奔富0382</td>
+                            <td class="profit-positive">543.92万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>383</td>
+                            <td>纯纯</td>
+                            <td class="profit-positive">488.70万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>395</td>
+                            <td>白马一号</td>
+                            <td class="profit-positive">466.06万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>432</td>
+                            <td>潜龙在渊</td>
+                            <td class="profit-positive">433.07万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>484</td>
+                            <td>牛没有上牙</td>
+                            <td class="profit-positive">389.30万</td>
+                            <td class="na-value">N/A</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                        <tr>
+                            <td>492</td>
+                            <td>好盈利额</td>
+                            <td class="profit-positive">386.38万</td>
+                            <td class="deposit-value">27.66万</td>
+                            <td class="na-value">N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <!-- 免责声明 -->
+            <div class="disclaimer">
+                <div class="disclaimer-title">⚠️ 免责声明</div>
+                <div class="disclaimer-content">
+                    本页面所有数据均来源于中国期货日报实盘大赛官方网站（spdspc.qhrb.com.cn）的公开查询结果，仅供学习研究参考。<br>
+                    本页面仅显示公开查询到的部分数据，不代表完整参赛数据。数据准确性以官方网站为准，本页面不对数据的完整性和准确性承担任何责任。<br>
+                    本页面内容版权归原作者所有，如有侵权请联系删除。
+                </div>
+            </div>
+
+            <p>数据来源：中国期货日报实盘大赛官方网站</p>
+            <p style="margin-top: 5px; font-size: 0.85em; color: #999;">
+                注：累计入金 = 日权益 - 净利润；初始本金（最大本金）数据覆盖率：4.0%
+            </p>
+        </div>
+    </div>
+</body>
+</html>
