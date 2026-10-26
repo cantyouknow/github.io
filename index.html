@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心情天气站</title>
+    <title>心情天气站 - 查天气、测心情、听心语</title>
+    <meta name="description" content="输入城市查天气，选择心情收寄语。治愈系小工具：实时天气查询 + 心情疏导寄语，还提供康波周期投资报告与期货实盘大赛工具页。">
+    <meta name="keywords" content="天气查询,心情寄语,治愈系,康波周期,期货实盘,每日心语">
+    <meta property="og:title" content="心情天气站 ☁️">
+    <meta property="og:description" content="查天气、测心情、听心语——你的治愈系小站">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cantyouknow.com/">
+    <link rel="canonical" href="https://cantyouknow.com/">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌤️</text></svg>">
     <style>
         * {
             margin: 0;
@@ -704,14 +712,13 @@
             return { text: adviceDatabase.default[randomIndex], author: "给你的建议", source: "本地智能开导" };
         }
 
-        // 在线API获取寄语（优化版，带超时）
+        // 在线API获取寄语（一言 hitokoto.cn，免费无需key，带超时）
         async function fetchOnlineQuote(mood) {
             try {
-                // 使用 Quotable API (免费，无需API key)
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000); // 3秒超时
+                const timeoutId = setTimeout(() => controller.abort(), 4000); // 4秒超时
 
-                const response = await fetch('https://api.quotable.io/quotes/random?limit=1&tags=' + getQuoteTag(mood), {
+                const response = await fetch('https://v1.hitokoto.cn/?encode=json&max_length=60&c=' + getQuoteTag(mood), {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json'
@@ -722,12 +729,11 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    if (data && data_quotes && data_quotes.length > 0) {
-                        const quote = data_quotes[0];
+                    if (data && data.hitokoto) {
                         return {
-                            text: quote.content,
-                            author: quote.author || "",
-                            source: "Quotable API"
+                            text: data.hitokoto,
+                            author: data.from_who || data.from || "",
+                            source: "一言 API"
                         };
                     }
                 }
@@ -742,18 +748,18 @@
             }
         }
 
-        // 根据心情获取对应的标签
+        // 根据心情获取对应的分类（一言API：a动画 b漫画 d文学 j诗词 k哲学 e原创）
         function getQuoteTag(mood) {
             const tagMap = {
-                'happy': 'wisdom,happiness',
-                'sad': 'hope,faith',
-                'anxious': 'courage,determination',
-                'tired': 'motivation,perseverance',
-                'excited': 'ambition,success',
-                'confused': 'wisdom,truth',
-                'daily': 'inspirational'
+                'happy': 'a,e',
+                'sad': 'd,k',
+                'anxious': 'k,j',
+                'tired': 'd,e',
+                'excited': 'a,b',
+                'confused': 'k,d',
+                'daily': 'd,k'
             };
-            return tagMap[mood] || 'inspirational';
+            return tagMap[mood] || 'd,k';
         }
 
         // 获取每日寄语（结合在线API）
