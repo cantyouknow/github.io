@@ -1,5 +1,7 @@
 {
   "files": [
-    { "file": "report-2026-10.json", "label": "2026年10月版" }
+    { "file": "report-2026-10.json", "label": "2026年10月版" },
+    { "file": "report-2026-02.json", "label": "2026年2月版" },
+    { "file": "report-2026-01.json", "label": "2026年1月版" }
   ]
 }
