@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年康波周期投资策略报告</title>
+    <title>2026年康波周期投资策略报告（2026年10月版）- 年初预测复盘与四季度展望</title>
+    <meta name="description" content="2026年10月版康波周期报告：复盘1月版与2月版预测（铜接棒黄金已验证、降息预期落空），基于最新市场数据给出四季度资产配置建议。周金涛康波周期理论实战应用。">
     <style>
         * {
             margin: 0;
@@ -29,7 +30,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5577c 100%);
             color: white;
             padding: 40px;
             text-align: center;
@@ -82,7 +83,7 @@
             font-size: 2em;
             color: #333;
             margin-bottom: 20px;
-            border-left: 5px solid #f5576c;
+            border-left: 5px solid #f5577c;
             padding-left: 15px;
         }
 
@@ -101,7 +102,7 @@
 
         .card-title {
             font-size: 1.4em;
-            color: #f5576c;
+            color: #f5577c;
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -144,11 +145,72 @@
         }
 
         .risk-box {
-            background: #ffebee;
-            border-left: 4px solid #f44336;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
             padding: 20px;
             margin: 15px 0;
             border-radius: 8px;
+        }
+
+        .verify-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .verify-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .verify-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.95em;
+            vertical-align: top;
+        }
+
+        .verify-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag-hit {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .tag-miss {
+            display: inline-block;
+            background: #f44336;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .tag-half {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         .rating {
@@ -192,52 +254,17 @@
         }
 
         .allocation-item:hover {
-            border-color: #f5576c;
+            border-color: #f5577c;
             transform: scale(1.05);
         }
 
         .allocation-percent {
             font-size: 2.5em;
             font-weight: 700;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5577c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, #f093fb, #f5576c);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 20px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #f5576c;
-            border: 3px solid white;
         }
 
         .highlight {
@@ -306,19 +333,9 @@
                 text-align: center;
                 gap: 5px;
             }
-        }
 
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.5em;
-            }
-
-            .section-title {
-                font-size: 1.3em;
-            }
-
-            .price-value {
-                font-size: 1.1em;
+            .verify-table {
+                font-size: 0.85em;
             }
         }
     </style>
@@ -327,393 +344,356 @@
     <div class="container">
         <!-- 导航按钮 -->
         <div class="nav-button">
-            <a href="index.html" style="margin-right: 10px;">🌤️ 返回心情天气站</a>
-            <a href="#history-versions" onclick="toggleHistory()" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);">📚 历史版本</a>
+            <a href="index.html">🌤️ 返回心情天气站</a>
         </div>
-
-        <!-- 历史版本面板 -->
-        <div id="history-panel" style="display: none; position: fixed; top: 80px; right: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px; z-index: 1000; min-width: 300px; max-height: 80vh; overflow-y: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: #f5576c; margin: 0;">📚 历史版本</h3>
-                <button onclick="toggleHistory()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
-            </div>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
-                    <a href="康波周期可视化报告.html" style="color: #667eea; text-decoration: none; font-weight: 600;">
-                        🔵 当前版本
-                    </a>
-                    <p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">2026年2月1日 | 史诗级跳水后更新</p>
-                </li>
-                <li style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
-                    <a href="康波周期可视化报告_2026年1月.html" style="color: #667eea; text-decoration: none;">
-                        📄 2026年1月版
-                    </a>
-                    <p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">2026年1月 | 原始版本</p>
-                </li>
-            </ul>
-            <p style="font-size: 0.85em; color: #999; margin-top: 15px; padding-top: 10px; border-top: 1px solid #e0e0e0;">
-                💡 每月月初更新，保留历史版本供参考
-            </p>
-        </div>
-
-        <script>
-            function toggleHistory() {
-                const panel = document.getElementById('history-panel');
-                if (panel.style.display === 'none') {
-                    panel.style.display = 'block';
-                } else {
-                    panel.style.display = 'none';
-                }
-            }
-
-            // 点击外部关闭面板
-            document.addEventListener('click', function(event) {
-                const panel = document.getElementById('history-panel');
-                const button = event.target.closest('[onclick="toggleHistory()"]');
-                if (!panel.contains(event.target) && !button && panel.style.display === 'block') {
-                    panel.style.display = 'none';
-                }
-            });
-        </script>
 
         <div class="header">
             <h1>📊 2026年康波周期投资策略报告</h1>
-            <p>基于2026年2月实时价格与市场环境的务实分析</p>
-            <p style="margin-top: 10px; font-size: 0.95em;">数据更新：2026年2月1日 | 史诗级跳水后的全新研判 | 周金涛康波周期理论实战应用</p>
+            <p>年初预测复盘 × 四季度展望 × 滞胀环境下的资产重估</p>
+            <p style="margin-top: 10px; font-size: 0.95em;">报告发布：2026年10月26日 | 数据截止：2026年10月23-26日 | 周金涛康波周期理论实战应用</p>
         </div>
 
         <div class="content">
-            <!-- 当前价格现状 -->
+            <!-- 当前市场现状 -->
             <div class="section">
-                <h2 class="section-title">📉 当前市场现状（2026年2月1日）</h2>
-
-                <div class="card" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);">
-                    <div class="card-title" style="color: #c62828;">🚨 紧急更新：史诗级跳水！</div>
-                    <p style="font-size: 1.1em;"><strong>2026年1月30-31日，贵金属市场遭遇40年来最惨烈暴跌！</strong></p>
-
-                    <div class="risk-box" style="background: white; border-left: 4px solid #d32f2f;">
-                        <strong>💥 暴跌数据</strong>
-                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 1.05em;">
-                            <li><strong>黄金</strong>：30小时暴跌$670，从$5,587跌至$4,880，跌幅超12%</li>
-                            <li><strong>白银</strong>：盘中一度暴跌36%，从$110跌至$74附近</li>
-                            <li><strong>跌幅</strong>：创40年来最大单日跌幅纪录</li>
-                            <li><strong>触发原因</strong>：特朗普提名凯文·沃什(Kevin Warsh)为新任美联储主席 + 技术性获利了结</li>
-                        </ul>
-                    </div>
-
-                    <div class="price-box" style="background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%);">
-                        <div class="price-item">
-                            <span class="price-label">🥇 黄金（跳水后）</span>
-                            <span class="price-value">$4,880 /盎司 ▼12%</span>
-                        </div>
-                        <div class="price-item">
-                            <span class="price-label">🥈 白银（跳水后）</span>
-                            <span class="price-value">$74-79 /盎司 ▼36%</span>
-                        </div>
-                        <div class="price-item">
-                            <span class="price-label">🥉 铜</span>
-                            <span class="price-value">110,990 元/吨</span>
-                        </div>
-                        <div class="price-item">
-                            <span class="price-label">📊 沪银主力</span>
-                            <span class="price-value">约7,600 元/千克 ▼</span>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="section-title">📉 当前市场现状（2026年10月26日）</h2>
 
                 <div class="card">
-                    <div class="card-title">🤔 这次暴跌意味着什么？</div>
-                    <p><strong>康波周期视角解读</strong>：这次暴跌是康波周期"回升期"的典型特征——<span class="highlight">价格在快速上涨后必然经历剧烈回调</span>。</p>
-                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
-                        <li style="margin: 10px 0;">✅ <strong>不是熊市开始</strong>：而是长期上涨趋势中的正常回撤</li>
-                        <li style="margin: 10px 0;">✅ <strong>健康的技术调整</strong>：前期涨幅过大，需要消化获利盘</li>
-                        <li style="margin: 10px 0;">✅ <strong>政策不确定性</strong>：新美联储主席提名引发货币政策担忧</li>
-                        <li style="margin: 10px 0;">✅ <strong>入场机会</strong>：回调后可能出现更好的买点</li>
-                    </ul>
-                </div>
-            </div>
+                    <div class="card-title">🧊 高利率回归：金价跌破4000美元，白银腰斩</div>
+                    <p>年初的"降息宽松"叙事已被彻底逆转：美联储于9月16日<strong>加息25个基点至3.75%-4.00%</strong>（2023年7月以来首次加息），点阵图转鹰，市场定价12月再度加息的概率约67%。高利率与强美元环境下，贵金属持续承压——10月23日现货黄金盘中失守4000美元关口，创近三个月新低；白银较年初高点已腰斩。而铜在AI与电气化需求支撑下依然坚挺于历史高位区。</p>
 
-            <!-- 2026年展望 -->
-            <div class="section">
-                <h2 class="section-title">🔮 暴跌后的2026年全新展望</h2>
-
-                <div class="card">
-                    <div class="card-title">🔄 暴跌改变了什么？</div>
-                    <p><strong>2026年1月30-31日的史诗级跳水，是康波周期回升期的第一次重大技术调整</strong>。这标志着市场从"狂热阶段"进入"理性阶段"。</p>
-
-                    <div class="forecast-box">
-                        <strong>✅ 重大变化</strong>
-                        <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li><strong>价格风险释放</strong>：短期泡沫被刺破，估值回归理性</li>
-                            <li><strong>政策不确定性增加</strong>：新美联储主席提名意味着货币政策可能转向鹰派</li>
-                            <li><strong>市场情绪转变</strong>：从单边看涨转为震荡分化</li>
-                            <li><strong>入场时机出现</strong>：回调创造了更好的配置机会</li>
-                        </ul>
+                    <div class="price-box">
+                        <div class="price-item">
+                            <span class="price-label">🥇 现货黄金</span>
+                            <span class="price-value">$3,995 /盎司 ▼（8月高点$4,755，回撤约13%）</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">🥈 现货白银</span>
+                            <span class="price-value">$53.9 /盎司 ▼▼（年初高点$110，近腰斩）</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">🥉 LME铜（3个月）</span>
+                            <span class="price-value">$14,265 /吨 ≈ 历史高位区</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">🛢️ 原油（布伦特12月）</span>
+                            <span class="price-value">$116.7 /桶 ▲（周涨6.2%，地缘溢价）</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">💵 美债10年期收益率</span>
+                            <span class="price-value">≈ 4.99% ▲</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">📈 上证指数 / 标普500</span>
+                            <span class="price-value">3,690 / 7,624 点</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">💍 国内金饰克价</span>
+                            <span class="price-value">≈ 1,195-1,202 元/克（较年内高点回落近500元）</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">宏观经济环境（更新）</div>
+                    <div class="card-title">🗝️ 本阶段三条主线</div>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin: 10px 0;">⚠️ <strong>美联储政策</strong>：新主席提名带来不确定性，降息节奏可能放缓</li>
-                        <li style="margin: 10px 0;">✅ <strong>通胀预期</strong>：温和修复，中国CPI约0.5%，美国回升至3%左右</li>
-                        <li style="margin: 10px 0;">✅ <strong>经济增长</strong>：全球经济增长稳健，AI热潮持续</li>
-                        <li style="margin: 10px 0;">✅ <strong>地缘政治</strong>：避险需求仍存，但影响被政策不确定性部分抵消</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">🎯 核心判断：震荡中寻找机会</div>
-                    <p>暴跌后，2026年市场将进入<span class="highlight">震荡分化阶段</span>，操作难度加大，但机会仍然存在。</p>
-                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
-                        <li style="margin: 10px 0;">• <strong>贵金属</strong>：短期震荡筑底，中长期仍有上涨空间</li>
-                        <li style="margin: 10px 0;">• <strong>基本金属（铜）</strong>：可能接棒，表现优于贵金属</li>
-                        <li style="margin: 10px 0;">• <strong>股票市场</strong>：受益于财政刺激，但需警惕政策风险</li>
-                        <li style="margin: 10px 0;">• <strong>AI相关资产</strong>：仍具成长空间，关注优质标的</li>
+                        <li style="margin: 10px 0;">🔥 <strong>滞胀特征明显</strong>：中东局势推升布油至116美元上方，美国通胀回升至3.4%，美联储被迫"更长时间维持高利率"——加息而非降息，是年内最大的宏观反转</li>
+                        <li style="margin: 10px 0;">🏛️ <strong>央行购金托底</strong>：俄罗斯宣布大幅增加购金，中国央行9月加快购金节奏，成为金价在4000美元下方最重要的边际支撑</li>
+                        <li style="margin: 10px 0;">🤖 <strong>AI从信仰走向分化</strong>：算力硬件需求依然旺盛（AWS产能被预订一空），但AI公司信用风险开始暴露，风险偏好回落，板块内部分化加剧</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- 各资产类别分析 -->
+            <!-- 预测复盘 -->
             <div class="section">
-                <h2 class="section-title">💼 暴跌后的2026年资产配置建议</h2>
+                <h2 class="section-title">🔍 年初预测复盘：对了什么，错了什么</h2>
+
+                <div class="card">
+                    <div class="card-title">📋 1月版/2月版预测 vs 现实（截至10月26日）</div>
+                    <table class="verify-table">
+                        <tr>
+                            <th style="width: 18%;">年初判断</th>
+                            <th style="width: 22%;">当时的预测</th>
+                            <th style="width: 35%;">现实（10月26日）</th>
+                            <th style="width: 12%;">结果</th>
+                            <th>点评</th>
+                        </tr>
+                        <tr>
+                            <td><strong>铜接棒黄金</strong></td>
+                            <td>"基本金属（铜）可能接棒，表现优于黄金"</td>
+                            <td>LME铜$14,265/吨稳居历史高位区；黄金从$4,880跌至$3,995</td>
+                            <td><span class="tag-hit">✓ 验证</span></td>
+                            <td>年内最有价值的判断：铜金比持续走阔</td>
+                        </tr>
+                        <tr>
+                            <td><strong>市场分化</strong></td>
+                            <td>"不再是普涨行情，分化加剧"</td>
+                            <td>铜创新高 vs 贵金属大跌；A股3,690点韧性 vs 美股高位震荡</td>
+                            <td><span class="tag-hit">✓ 验证</span></td>
+                            <td>选对赛道的意义远大于择时</td>
+                        </tr>
+                        <tr>
+                            <td><strong>美联储降息</strong></td>
+                            <td>"降息预期强烈，宽松政策延续"</td>
+                            <td>9月16日<strong>加息</strong>25bp至3.75%-4%，12月或再加</td>
+                            <td><span class="tag-miss">✗ 落空</span></td>
+                            <td>年度最大宏观误判：滞胀压力迫使政策转向</td>
+                        </tr>
+                        <tr>
+                            <td><strong>黄金中长期看涨</strong></td>
+                            <td>"$4,880更具吸引力，中长期看至$5,000-5,500"</td>
+                            <td>现价$3,995，低于2月暴跌后的水平</td>
+                            <td><span class="tag-miss">✗ 未兑现</span></td>
+                            <td>"暴跌即机会"在利率逆转面前失效，央行购金仅能托底而非反转</td>
+                        </tr>
+                        <tr>
+                            <td><strong>白银高风险</strong></td>
+                            <td>"波动极大，普通投资者远离杠杆"</td>
+                            <td>$110 → $53.9，较年初高点腰斩</td>
+                            <td><span class="tag-half">◐ 强验证</span></td>
+                            <td>2月暴跌36%已是警告，随后又跌去近三成</td>
+                        </tr>
+                        <tr>
+                            <td><strong>地产继续规避</strong></td>
+                            <td>"流动性差，建议规避"</td>
+                            <td>前三季度房地产开发投资同比-20.6%</td>
+                            <td><span class="tag-hit">✓ 验证</span></td>
+                            <td>下行趋势未止，判断维持</td>
+                        </tr>
+                    </table>
+
+                    <div class="risk-box">
+                        <strong>📖 复盘的教训</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li><strong>结构性判断（铜、分化）比宏观预测（降息）更可靠</strong>——供给侧与产业趋势的确定性远高于央行政策路径</li>
+                            <li><strong>暴跌后抄底的诱惑</strong>：2月版"$4,880分批建仓"的建议，在利率周期逆转的背景下被证伪——<span class="highlight">先看利率，再看价格</span></li>
+                            <li><strong>康波长逻辑没有错，错的是用长逻辑解释短波动</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 四季度展望 -->
+            <div class="section">
+                <h2 class="section-title">🔮 2026年四季度展望</h2>
+
+                <div class="card">
+                    <div class="card-title">宏观经济环境（10月更新）</div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 10px 0;">⚠️ <strong>美联储政策</strong>：10月28日议息预期按兵不动（概率约90%），但点阵图与12月9日会议偏鹰，年内"更高更久"的利率环境大概率延续</li>
+                        <li style="margin: 10px 0;">⚠️ <strong>通胀与油价</strong>：中东局势若持续推高油价，核心PCE存在超预期风险，将强化加息押注——这是四季度最大的宏观变数</li>
+                        <li style="margin: 10px 0;">✅ <strong>中国经济</strong>：前三季度GDP同比增长4.6%（三季度4.5%），9月工业增加值+5.5%，LPR按兵不动，宽基ETF出现历史天量成交，中长期资金入市意愿明确</li>
+                        <li style="margin: 10px 0;">⚠️ <strong>AI信用风险</strong>：算力需求与AI公司信用质量出现背离，三季报披露期（10月底密集）是检验成色的窗口</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🎯 核心判断：滞胀交易回归</div>
+                    <p>四季度市场的主线将从"复苏交易"切换为<span class="highlight">"滞胀交易"</span>：现金与大宗商品（铜、油）受益，长久期资产（成长股、贵金属、债券）承压。</p>
+                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                        <li style="margin: 10px 0;">• <strong>黄金</strong>：$3,800-4,200区间震荡概率大，央行购金提供下方支撑，但反弹需要等待利率拐点信号</li>
+                        <li style="margin: 10px 0;">• <strong>铜</strong>：超级周期逻辑（AI电网、电气化、供给瓶颈）未破坏，LME库存虽有累积但国内社会库存去化、精铜制杆开工率回升至78.6%，回调即是配置窗口</li>
+                        <li style="margin: 10px 0;">• <strong>A股</strong>：3,700点附近韧性突出，三季报业绩兑现的存储、锂电材料、光模块方向与高股息防御是四季度两条腿</li>
+                        <li style="margin: 10px 0;">• <strong>美股</strong>：估值对利率高度敏感，AI信用风险暴露期波动加大，防御为主</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 资产配置 -->
+            <div class="section">
+                <h2 class="section-title">💼 四季度资产配置建议（更新版）</h2>
 
                 <!-- 黄金 -->
                 <div class="card">
-                    <div class="card-title">🥇 黄金 <span class="rating rating-high">暴跌后有机会</span></div>
-                    <p><strong>跳水前价格</strong>：$5,587/盎司（历史最高）</p>
-                    <p><strong>当前价格</strong>：$4,880/盎司（30小时暴跌$670，跌幅12%）</p>
-                    <p><strong>2026年预测</strong>：短期震荡筑底，中长期仍看涨至$5,000-$5,500</p>
+                    <div class="card-title">🥇 黄金 <span class="rating rating-medium">观望→分批</span></div>
+                    <p><strong>当前价格</strong>：$3,995/盎司（8月高点$4,755回撤13%，破4000关口）</p>
+                    <p><strong>四季度预判</strong>：$3,800-4,200区间震荡；12月FOMC若加息落地且指引放缓，可能出现"利空出尽"反弹</p>
 
-                    <div class="forecast-box" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%); border-left: 4px solid #ffa000;">
-                        <strong>🎯 暴跌后的新观点</strong>
+                    <div class="forecast-box">
+                        <strong>✅ 支撑因素</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li><strong>价格更合理</strong>：$4,880的价格相比$5,587已经更具吸引力</li>
-                            <li><strong>技术支撑</strong>：$4,800-4,900区域是重要支撑位</li>
-                            <li><strong>入场时机</strong>：可考虑分批建仓，而不是追高</li>
-                            <li><strong>康波周期</strong>：这是回升期的正常回调，长期趋势未变</li>
+                            <li>俄罗斯宣布大幅增加购金，中国央行9月加快购金节奏</li>
+                            <li>金价已跌破国内金饰1,200元/克，实物消费明显回暖（水贝客流爆满）</li>
+                            <li>中东地缘风险未消除，避险需求随时回归</li>
                         </ul>
                     </div>
 
                     <div class="risk-box">
                         <strong>⚠️ 风险提示</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>短期可能继续震荡，测试$4,700支撑</li>
-                            <li>新美联储主席政策倾向不明，可能压制金价</li>
-                            <li>建议：分批入场，不要一次性重仓</li>
+                            <li>12月若再度加息且点阵图上移，$3,800支撑将受考验</li>
+                            <li>操作：不追空、不抄底，$3,800附近分批小仓位；等待利率拐点确认后再加</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- 白银 -->
                 <div class="card">
-                    <div class="card-title">🥈 白银 <span class="rating rating-medium">暴跌后观望</span></div>
-                    <p><strong>跳水前价格</strong>：$110/盎司</p>
-                    <p><strong>当前价格</strong>：$74-79/盎司（盘中一度暴跌36%）</p>
-                    <p><strong>波动性</strong>：极其剧烈，仅适合高风险偏好投资者</p>
-
-                    <div class="risk-box">
-                        <strong>⚠️ 暴跌后的警示</strong>
-                        <p style="margin-top: 10px;">白银这次暴跌再次证明了其<span class="highlight">极端波动性</span>。盘中36%的跌幅在40年来罕见，这意味着：</p>
-                        <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>杠杆交易可能爆仓</li>
-                            <li>散户投资者难以承受这种波动</li>
-                            <li>反弹可能迅速，但下跌更迅猛</li>
-                        </ul>
-                    </div>
-
-                    <div class="forecast-box">
-                        <strong>💡 配置建议（暴跌后更新）</strong>
-                        <p style="margin-top: 10px;"><strong>普通投资者：继续观望</strong>。即使暴跌，白银的波动性仍然太大。</p>
-                        <p style="margin-top: 10px;"><strong>高风险投资者：可小仓位试探</strong>。如果一定要参与，建议仓位不超过5%，并做好止损。</p>
-                    </div>
+                    <div class="card-title">🥈 白银 <span class="rating rating-low">继续回避</span></div>
+                    <p><strong>当前价格</strong>：$53.9/盎司（年初高点$110的"半价"，波动率全资产最高）</p>
+                    <p style="margin-top: 10px;"><strong>一句话建议</strong>：2月版"远离杠杆、谨慎白银"的警告，10月版只需重复一遍——它的工业属性（光伏）撑不住这么高的波动，普通投资者继续回避。</p>
                 </div>
 
                 <!-- 铜 -->
                 <div class="card">
-                    <div class="card-title">🥉 铜 <span class="rating rating-high">重点关注</span></div>
-                    <p><strong>当前价格</strong>：110,990元/吨（持续创新高）</p>
-                    <p><strong>2026年预测</strong>：机构普遍乐观，可能接棒黄金</p>
+                    <div class="card-title">🥉 铜 <span class="rating rating-high">主线维持</span></div>
+                    <p><strong>当前价格</strong>：LME $14,265/吨、沪铜108,740元/吨（历史高位区）</p>
+                    <p><strong>年初以来表现</strong>：本报告系列年初"铜接棒黄金"的核心判断，年内已充分兑现</p>
 
                     <div class="forecast-box">
-                        <strong>🚀 核心逻辑</strong>
+                        <strong>🚀 核心逻辑（四季度延续）</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li><strong>AI革命</strong>：人工智能和数据中心建设推动铜需求</li>
-                            <li><strong>供应短缺</strong>：摩根大通预测2026年精炼铜缺口约33万吨</li>
-                            <li><strong>资金轮动</strong>：大型投资者正从贵金属转向基本金属</li>
-                            <li><strong>机构看好</strong>：中信建投认为2026年铜将"完美接力"黄金</li>
+                            <li><strong>AI电力缺口</strong>：数据中心与电网改造的铜需求刚性，AWS等云厂产能被抢订印证算力扩张</li>
+                            <li><strong>供给硬约束</strong>：铜精矿TC现货-241美元/干吨，冶炼端亏损压力持续，矿端瓶颈未解</li>
+                            <li><strong>国内需求韧性</strong>：9月社零+1.1%、工业增加值+5.5%，精铜制杆开工率环比+5.3pct</li>
                         </ul>
                     </div>
 
-                    <p style="margin-top: 15px;"><strong>配置建议</strong>：作为2026年重点关注的品种，但需等待回调机会入场，避免追高。</p>
+                    <p style="margin-top: 15px;"><strong>配置建议</strong>：持有者继续持有；新资金不追高（$14,000上方），等待宏观压制（强美元）带来的回调分批入场。</p>
                 </div>
 
                 <!-- 股票 -->
                 <div class="card">
-                    <div class="card-title">📈 股票市场 <span class="rating rating-high">政策敏感期</span></div>
+                    <div class="card-title">📈 股票市场 <span class="rating rating-medium">结构分化</span></div>
 
                     <div class="forecast-box">
-                        <strong>🇺🇸 美股</strong>
+                        <strong>🇨🇳 A股（3,690点）</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>美联储政策不确定性增加，市场波动加大</li>
-                            <li>AI相关板块仍是最强主线</li>
-                            <li>贵金属暴跌后，资金可能流向股市</li>
+                            <li>宽基ETF历史天量成交，中长期资金入市信号明确</li>
+                            <li>四季度两条主线：三季报业绩兑现（存储/光模块/锂电材料）+ 高股息防御底仓</li>
+                            <li>上证指数编制新规10月26日实施，引导长期资金配置</li>
                         </ul>
                     </div>
 
-                    <div class="forecast-box">
-                        <strong>🇨🇳 A股</strong>
+                    <div class="risk-box">
+                        <strong>🇺🇸 美股（标普7,624点）</strong>
                         <ul style="margin-top: 10px; padding-left: 20px;">
-                            <li>CPI温和修复，经济基本面改善</li>
-                            <li>政策支持力度加大</li>
-                            <li>贵金属暴跌可能提振市场情绪</li>
-                            <li>关注AI、新能源、高端制造等成长板块</li>
+                            <li>10年期美债4.99%的高估值压力，叠加上AI公司信用风险暴露</li>
+                            <li>科技巨头财报周（谷歌/微软/亚马逊）与12月FOMC是两大波动源</li>
+                            <li>建议：降低仓位或转向防御板块，避免财报季重仓押注</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- 规避资产 -->
+                <!-- 能源 -->
                 <div class="card">
-                    <div class="card-title">🚫 2026年建议规避或降低配置</div>
-
-                    <div class="risk-box">
-                        <ul style="padding-left: 20px;">
-                            <li><strong>房地产</strong>：流动性差，政策前景不明朗</li>
-                            <li><strong>铝、锌、锂</strong>：机构态度偏谨慎，缺乏明确催化剂</li>
-                            <li><strong>高收益债</strong>：信用风险上升，需谨慎</li>
-                            <li><strong>新三板</strong>：流动性差，风险高</li>
-                            <li><strong>⚠️ 白银杠杆</strong>：这次暴跌证明，杠杆白银风险极大</li>
-                        </ul>
-                    </div>
+                    <div class="card-title">🛢️ 能源 <span class="rating rating-medium">地缘溢价</span></div>
+                    <p><strong>当前价格</strong>：WTI $103.3 / 布伦特 $116.7（周涨3-6%）</p>
+                    <p style="margin-top: 10px;">中东局势是四季度通胀预期的核心变量。油价维持$100上方越久，美联储转向的希望越渺茫，对全资产链都是压制。能源股/油气基金可作为组合的通胀对冲小仓位（≤10%），但切勿在地缘事件后追高。</p>
                 </div>
             </div>
 
-            <!-- 配置建议 -->
+            <!-- 配置策略 -->
             <div class="section">
-                <h2 class="section-title">🎯 暴跌后的2026年核心配置策略</h2>
-
-                <div class="card" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: none;">
-                    <div class="card-title" style="color: #2e7d32;">💡 暴跌后的核心策略</div>
-                    <p style="font-size: 1.1em;"><strong>暴跌不是危机，而是机会！</strong></p>
-                    <p style="margin-top: 10px;">康波周期回升期的第一次重大技术调整，为投资者提供了更好的入场时机。但切记：<span class="highlight">分批建仓，不要一次性重仓</span>。</p>
-                </div>
+                <h2 class="section-title">🎯 四季度核心配置策略</h2>
 
                 <div class="card">
-                    <div class="card-title">💎 稳健型投资者（暴跌后优化版）</div>
+                    <div class="card-title">💎 稳健型投资者</div>
                     <div class="allocation-grid">
                         <div class="allocation-item">
                             <div class="allocation-percent">35%</div>
                             <p>现金/货币基金</p>
-                            <p style="font-size: 0.9em; color: #666;">保持流动性，等待进一步回调</p>
+                            <p style="font-size: 0.9em; color: #666;">高利率下收益可观</p>
                         </div>
                         <div class="allocation-item">
                             <div class="allocation-percent">30%</div>
                             <p>债券（国债）</p>
-                            <p style="font-size: 0.9em; color: #666;">保守配置</p>
-                        </div>
-                        <div class="allocation-item">
-                            <div class="allocation-percent">20%</div>
-                            <p>股票指数基金</p>
-                            <p style="font-size: 0.9em; color: #666;">结构性机会</p>
+                            <p style="font-size: 0.9em; color: #666;">票息保护</p>
                         </div>
                         <div class="allocation-item">
                             <div class="allocation-percent">15%</div>
                             <p>黄金ETF</p>
-                            <p style="font-size: 0.9em; color: #666;">暴跌后分批入场</p>
+                            <p style="font-size: 0.9em; color: #666;">$3,800附近分批</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">15%</div>
+                            <p>A股宽基指数</p>
+                            <p style="font-size: 0.9em; color: #666;">ETF定投</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">5%</div>
+                            <p>铜/资源类</p>
+                            <p style="font-size: 0.9em; color: #666;">逢回调配置</p>
                         </div>
                     </div>
-                    <p style="margin-top: 15px; color: #666;"><strong>策略说明</strong>：提高黄金配置至15%，利用暴跌后的价格分批建仓。现金比例保持在35%，以应对可能的进一步下跌。</p>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">🚀 成长型投资者（暴跌后优化版）</div>
+                    <div class="card-title">🚀 成长型投资者</div>
                     <div class="allocation-grid">
                         <div class="allocation-item">
-                            <div class="allocation-percent">35%</div>
-                            <p>股票（AI、科技）</p>
-                            <p style="font-size: 0.9em; color: #666;">核心持仓</p>
+                            <div class="allocation-percent">30%</div>
+                            <p>A股（业绩兑现方向）</p>
+                            <p style="font-size: 0.9em; color: #666;">存储/光模块/高股息</p>
                         </div>
                         <div class="allocation-item">
                             <div class="allocation-percent">25%</div>
-                            <p>黄金（分批建仓）</p>
-                            <p style="font-size: 0.9em; color: #666;">暴跌后重点配置</p>
-                        </div>
-                        <div class="allocation-item">
-                            <div class="allocation-percent">20%</div>
                             <p>铜等基本金属</p>
-                            <p style="font-size: 0.9em; color: #666;">等待回调入场</p>
+                            <p style="font-size: 0.9em; color: #666;">主线品种，回调分批</p>
                         </div>
                         <div class="allocation-item">
                             <div class="allocation-percent">20%</div>
                             <p>现金</p>
-                            <p style="font-size: 0.9em; color: #666;">等待更好时机</p>
+                            <p style="font-size: 0.9em; color: #666;">等待12月FOMC后加仓</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">15%</div>
+                            <p>黄金</p>
+                            <p style="font-size: 0.9em; color: #666;">区间下沿布局</p>
+                        </div>
+                        <div class="allocation-item">
+                            <div class="allocation-percent">10%</div>
+                            <p>能源对冲</p>
+                            <p style="font-size: 0.9em; color: #666;">通胀保护小仓位</p>
                         </div>
                     </div>
-                    <p style="margin-top: 15px; color: #666;"><strong>策略说明</strong>：降低白银配置（波动过大），提高黄金配置至25%。在$4,800-4,900区域分批建仓黄金，而不是追高。</p>
                 </div>
             </div>
 
             <!-- 时间轴 -->
             <div class="section">
-                <h2 class="section-title">📅 2026年关键时间节点（暴跌后更新）</h2>
+                <h2 class="section-title">📅 四季度关键时间节点</h2>
 
-                <div class="timeline">
-                    <div class="timeline-item" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);">
-                        <strong>1月30-31日 - 史诗级跳水</strong>
-                        <p>黄金暴跌12%，白银暴跌36%。康波周期回升期的第一次重大技术调整。🔥 <strong>历史性事件</strong></p>
-                    </div>
-                    <div class="timeline-item">
-                        <strong>Q1（2-3月）</strong>
-                        <p>震荡筑底期：市场消化暴跌影响，测试支撑位，寻找新的平衡点</p>
-                    </div>
-                    <div class="timeline-item">
-                        <strong>Q2（4-6月）</strong>
-                        <p>观察期：美联储新主席政策方向明朗，关注资金轮动，基本金属可能启动</p>
-                    </div>
-                    <div class="timeline-item">
-                        <strong>Q3（7-9月）</strong>
-                        <p>关键期：美联储政策可能调整，市场波动加大</p>
-                    </div>
-                    <div class="timeline-item">
-                        <strong>Q4（10-12月）</strong>
-                        <p>布局期：为2027年做准备，关注年底行情</p>
+                <div class="card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%); border: none;">
+                    <div class="timeline">
+                        <div style="margin-bottom: 20px;">
+                            <strong>10月28日（周三）</strong>
+                            <p>美联储10月FOMC决议 + 鲍威尔发布会 —— 预期按兵不动，焦点在12月路径指引与核心PCE表态</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>10月底（周三/周五）</strong>
+                            <p>A股三季报密集披露（招行、茅台、中海油等龙头）+ 10月31日官方PMI —— 检验四季度开局成色</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>11月</strong>
+                            <p>美国三季度GDP、核心PCE数据窗口 —— 通胀若超预期，12月加息定价将强化，压制全资产</p>
+                        </div>
+                        <div>
+                            <strong>12月9日（周三）</strong>
+                            <p>美联储12月FOMC（附点阵图与经济预测）—— <span class="highlight">年内最关键风险事件</span>，落地前保持仓位弹性</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- 核心提示 -->
             <div class="section">
-                <h2 class="section-title">⚡ 暴跌后的2026年核心提示</h2>
-
-                <div class="card" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border: none;">
-                    <div class="card-title" style="color: #c62828;">🔥 暴跌教会我们的事（2026年1月30-31日）</div>
-                    <ol style="padding-left: 20px; font-size: 1.1em;">
-                        <li style="margin: 15px 0;"><strong>暴涨之后必有暴跌</strong> — 黄金从$5,587跌至$4,880，白银从$110跌至$74，40年来最惨烈下跌</li>
-                        <li style="margin: 15px 0;"><strong>杠杆是双刃剑</strong> — 白银36%的跌幅意味着高杠杆投资者爆仓，散户应远离杠杆</li>
-                        <li style="margin: 15px 0;"><strong>暴跌创造机会</strong> — $4,880的黄金比$5,587更具吸引力，是分批建仓的时机</li>
-                    </ol>
-                </div>
+                <h2 class="section-title">⚡ 10月版核心提示</h2>
 
                 <div class="card" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: none;">
-                    <div class="card-title" style="color: #e65100;">🎯 暴跌后的新策略</div>
+                    <div class="card-title" style="color: #e65100;">🔥 最重要的三句话</div>
                     <ol style="padding-left: 20px; font-size: 1.1em;">
-                        <li style="margin: 15px 0;"><strong>不要恐慌，但也不急于抄底</strong> — 市场可能继续震荡，分批建仓比一次性重仓更安全</li>
-                        <li style="margin: 15px 0;"><strong>白银风险极大，黄金相对安全</strong> — 这次暴跌证明白银的波动性远超黄金</li>
-                        <li style="margin: 15px 0;"><strong>关注美联储政策变化</strong> — 新主席提名意味着货币政策可能转向，需密切关注</li>
+                        <li style="margin: 15px 0;"><strong>滞胀期现金为王</strong> — 美债10Y近5%、货基收益可观，12月FOMC明朗前，拿住现金不丢人</li>
+                        <li style="margin: 15px 0;"><strong>铜是本轮康波主线</strong> — 年初判断已兑现一半，供给瓶颈+AI电力需求是十年级别叙事，回调分批而不是追高</li>
+                        <li style="margin: 15px 0;"><strong>先看利率，再看价格</strong> — 2月的教训：暴跌后"便宜"不是买入理由，利率拐点才是。白银继续远离</li>
                     </ol>
                 </div>
 
                 <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: none;">
-                    <div class="card-title" style="color: #1565c0;">💡 康波周期视角（暴跌后解读）</div>
-                    <p><strong>这次暴跌是康波周期回升期的第一次重大技术调整</strong>，完全符合周期规律。</p>
-                    <p style="margin-top: 15px;">根据周金涛的理论，康波周期的"回升期"并非单边上涨，而是<span class="highlight">震荡上行</span>。2026年1月30-31日的暴跌，就是这种震荡的典型体现。</p>
-                    <p style="margin-top: 15px;"><strong>对于1985-1995年出生的人</strong>：</p>
-                    <ul style="margin-top: 10px; padding-left: 20px;">
-                        <li>这是人生中第一次经历康波周期的重大调整</li>
-                        <li>暴跌不是危机，而是低成本入场的机会</li>
-                        <li>但切记：分批建仓，不要一次性重仓</li>
-                        <li>保持耐心，康波周期回升期还有5-10年的机会</li>
-                    </ul>
+                    <div class="card-title" style="color: #1565c0;">💡 康波周期视角（10月修正）</div>
+                    <p>年初我们将2026年定位为"回升期起点"，<strong>这一判断需要修正</strong>：油价站上$100、通胀3.4%、被迫加息、资产高波动——这些是康波理论中<span class="highlight">萧条期尾段的典型滞胀特征</span>，与1970年代（石油危机→滞胀→出清→回升）的路径更为吻合。</p>
+                    <p style="margin-top: 15px;">用周金涛的框架说：我们正处在"萧条转回升"的过渡带上，这是最难受、波动最剧烈的一段——旧资产（贵金属泡沫、长久期成长股）出清，新动能（AI电网、电气化、铜）在废墟中崛起。对于1985-1995年出生的人，这个窗口的意义不是"抓住每一次反弹"，而是<strong>在出清期保住本金，用便宜的价格布局下一个十年</strong>。</p>
+                    <p style="margin-top: 15px;">保持耐心——康波级别的机会，从来不怕晚到两年，只怕倒在黎明前。</p>
                 </div>
             </div>
 
@@ -721,19 +701,20 @@
             <div class="source">
                 <p><strong>数据来源</strong>：</p>
                 <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li>🔥 2026年1月30-31日史诗级跳水 - <a href="https://finance.sina.com.cn/roll/2026-01-31/doc-inhketnf6049058.shtml" target="_blank">新浪财经</a>、<a href="http://www.jingjiribao.cn/static/detail.jsp?id=635233" target="_blank">经济日报</a>、<a href="https://www.thepaper.cn/newsDetail_forward_32505461" target="_blank">澎湃新闻</a></li>
-                    <li>中国黄金基础金价 - <a href="http://gold.cnfol.com/jinshijiage/20250124/31128026.shtml" target="_blank">东方财富网</a></li>
-                    <li>白银期货价格 - <a href="https://ag.cngold.org/c/2025-01-29/c9705681.html" target="_blank">中国白银网</a></li>
-                    <li>铜价格行情 - <a href="https://finance.eastmoney.com/a/202512213597625748.html" target="_blank">东方财富网</a></li>
-                    <li>2026年宏观经济展望 - <a href="https://www.21jingji.com/article/20251229/herald/1228df47b7337a2eb7f4ff2f28aeacee.html" target="_blank">招商银行</a></li>
+                    <li>现货黄金/白银价格与金饰行情（2026-10-26） - <a href="http://m.cngold.org/quote/gjs/gjhj_xhhj.html" target="_blank">金投网</a>、中国商报</li>
+                    <li>LME官方价格（2026-10-23/26） - <a href="https://www.lme.com/market-data/reports-and-data/lme-official-prices" target="_blank">伦敦金属交易所</a></li>
+                    <li>周度贵金属/铜数据与央行购金 - <a href="https://news.qq.com/rain/a/20261026A0893800" target="_blank">华鑫证券研究报告（2026-10-26）</a></li>
+                    <li>美股/商品收盘与ETF动向（2026-10-23） - <a href="https://news.qq.com/rain/a/20261026A02ZDM00" target="_blank">华尔街见闻早餐FM</a></li>
+                    <li>美联储9月加息与利率路径 - <a href="https://bank.fx678.com/" target="_blank">汇通网央行专题</a></li>
+                    <li>中国三季度GDP与LPR - 国际金融报（2026-10-26当周）</li>
                     <li>康波周期理论 - 周金涛《涛动周期论》</li>
                 </ul>
 
                 <p style="margin-top: 20px;"><strong>⚠️ 免责声明</strong></p>
-                <p>本报告仅供学习参考，不构成任何投资建议。市场有风险，投资需谨慎。所有预测基于当前市场信息和公开数据分析，实际情况可能与预测存在偏差。请根据自身风险承受能力和投资目标，独立做出投资决策。</p>
+                <p>本报告仅供学习参考，不构成任何投资建议。市场有风险，投资需谨慎。所有预测基于当前市场信息和公开数据分析，实际情况可能与预测存在偏差（年初版本的预测复盘已经证明了这一点）。请根据自身风险承受能力和投资目标，独立做出投资决策。</p>
 
                 <p style="margin-top: 10px; font-size: 0.9em; color: #999;">
-                    报告生成时间：2026年2月1日 | 基于2026年1月30-31日暴跌数据更新 | 康波周期理论应用
+                    报告发布时间：2026年10月26日 | 数据截止：2026年10月23-26日 | 康波周期理论应用 | 上一版本：<a href="康波周期可视化报告_2026年1月.html">2026年1月版</a>
                 </p>
             </div>
         </div>
